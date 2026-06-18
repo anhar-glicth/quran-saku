@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF9F9F9">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+    <!-- Header Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/accent_color"
+        android:layout_marginBottom="16dp"
+        app:strokeWidth="0dp">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="18 Juni 2026 / 3 Dzulhijjah 1447 H"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:alpha="0.9" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selamat Beribadah, Anhar"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp" />
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="2dp"
+            android:background="#FFFFFF"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='&quot;Maka ingatlah kepada-Ku, Aku pun akan ingat kepadamu.&quot; (QS. Al-Baqarah: 152)'
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+      </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Section Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jadwal Sholat Hari Ini"
+        android:textColor="#212121"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Prayer Times Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="1dp"
+        app:cardBackgroundColor="#FFFFFF"
+        android:layout_marginBottom="20dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#FFEAEAEA">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp">
+
+        <!-- Shubuh -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Subuh"
+              android:textColor="#424242"
+              android:textSize="16sp"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="04:38"
+              android:textColor="@color/accent_color"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <!-- Dzuhur -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Dzuhur"
+              android:textColor="#424242"
+              android:textSize="16sp"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="11:58"
+              android:textColor="@color/accent_color"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <!-- Ashar -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Ashar"
+              android:textColor="#424242"
+              android:textSize="16sp"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="15:20"
+              android:textColor="@color/accent_color"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <!-- Maghrib -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Maghrib"
+              android:textColor="#424242"
+              android:textSize="16sp"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="18:12"
+              android:textColor="@color/accent_color"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <!-- Isya -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Isya"
+              android:textColor="#424242"
+              android:textSize="16sp"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="19:25"
+              android:textColor="@color/accent_color"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+      </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Tools Grid Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fitur Tambahan"
+        android:textColor="#212121"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
+
+      <!-- Dzikir Card -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          app:cardCornerRadius="12dp"
+          app:cardElevation="1dp"
+          app:cardBackgroundColor="#FFFFFF"
+          android:layout_marginEnd="8dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="📿"
+              android:textSize="28sp"
+              android:layout_marginBottom="4dp"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Dzikir Harian"
+              android:textColor="#212121"
+              android:textSize="14sp"
+              android:textStyle="bold" />
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- Kiblat Card -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          app:cardCornerRadius="12dp"
+          app:cardElevation="1dp"
+          app:cardBackgroundColor="#FFFFFF"
+          android:layout_marginStart="8dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="🧭"
+              android:textSize="28sp"
+              android:layout_marginBottom="4dp"/>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Arah Kiblat"
+              android:textColor="#212121"
+              android:textSize="14sp"
+              android:textStyle="bold" />
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+  </LinearLayout>
+</ScrollView>

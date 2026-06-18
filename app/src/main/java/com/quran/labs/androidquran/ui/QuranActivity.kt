@@ -27,9 +27,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.lifecycleScope
-import androidx.viewpager.widget.ViewPager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.quran.data.dao.RecentPagesDao
 import com.quran.labs.androidquran.AboutUsActivity
 import com.quran.labs.androidquran.HelpActivity
@@ -47,15 +46,16 @@ import com.quran.labs.androidquran.ui.fragment.AddTagDialog
 import com.quran.labs.androidquran.ui.fragment.AddTagDialog.Companion.newInstance
 import com.quran.labs.androidquran.ui.fragment.BookmarksFragment
 import com.quran.labs.androidquran.ui.fragment.JumpFragment
-import com.quran.labs.androidquran.ui.fragment.JuzListFragment
-import com.quran.labs.androidquran.ui.fragment.SuraListFragment
+import com.quran.labs.androidquran.ui.fragment.KomunitasFragment
+import com.quran.labs.androidquran.ui.fragment.PendampingIbadahFragment
+import com.quran.labs.androidquran.ui.fragment.ProfilFragment
 import com.quran.labs.androidquran.ui.fragment.TagBookmarkDialog
 import com.quran.labs.androidquran.ui.fragment.TagBookmarkDialog.OnBookmarkTagsUpdateListener
+import com.quran.labs.androidquran.ui.fragment.TilawahFragment
 import com.quran.labs.androidquran.ui.helpers.JumpDestination
 import com.quran.labs.androidquran.util.AudioUtils
 import com.quran.labs.androidquran.util.QuranSettings
 import com.quran.labs.androidquran.util.QuranUtils
-import com.quran.labs.androidquran.view.SlidingTabLayout
 import com.quran.mobile.di.ExtraScreenProvider
 import dev.zacsweers.metro.Inject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -68,14 +68,14 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit.MILLISECONDS
-import kotlin.math.abs
 
 /**
- * The home screen activity for the app. Displays a toolbar and 3 fragments:
+ * The home screen activity for the app. Displays a toolbar and 4 bottom navigation tabs:
  *
- *  * [SuraListFragment]
- *  * [JuzListFragment]
- *  * [BookmarksFragment]
+ *  * Pendamping Ibadah (Worship Companion)
+ *  * Komunitas (Community)
+ *  * Tilawah (Recitation) — contains the original SuraList, JuzList, Bookmarks pages
+ *  * Profil (Profile)
  *
  * When this activity is created, it may run a background check to see if updated translations
  * are available, and if so, show a dialog asking the user if they want to download them.
@@ -131,8 +131,6 @@ class QuranActivity : AppCompatActivity(),
   @Inject
   lateinit var extraScreens: Set<@JvmSuppressWildcards ExtraScreenProvider>
 
-  private var jumpToPageOnResume: Int? = null
-
   public override fun onCreate(savedInstanceState: Bundle?) {
     enableEdgeToEdge()
     super.onCreate(savedInstanceState)
@@ -158,10 +156,6 @@ class QuranActivity : AppCompatActivity(),
         leftMargin = insets.left
         rightMargin = insets.right
       }
-
-      // if we return WindowInsetsCompat.CONSUMED, the SnackBar won't
-      // be properly positioned on Android 29 and below (will be under
-      // the navigation bar).
       windowInsets
     }
 
@@ -170,16 +164,33 @@ class QuranActivity : AppCompatActivity(),
     val ab = supportActionBar
     ab?.setTitle(R.string.app_name)
 
-    val pager = findViewById<ViewPager>(R.id.index_pager)
-    pager.offscreenPageLimit = 3
-    val pagerAdapter = PagerAdapter(supportFragmentManager)
-    pager.adapter = pagerAdapter
-    val indicator = findViewById<SlidingTabLayout>(R.id.indicator)
-    indicator.setViewPager(pager)
-    jumpToPageOnResume = if (isRtl) {
-      TITLES.size - 1
+    // Set up BottomNavigationView
+    val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+    // Show Tilawah tab by default (index 2)
+    if (savedInstanceState == null) {
+      val defaultItemId = R.id.navigation_tilawah
+      bottomNav.selectedItemId = defaultItemId
+      switchFragment(TilawahFragment(), TAG_TILAWAH)
     } else {
-      0
+      // Restore the selected tab state from savedInstanceState
+      val selectedTag = savedInstanceState.getString(KEY_SELECTED_NAV_TAG, TAG_TILAWAH)
+      val selectedId = savedInstanceState.getInt(KEY_SELECTED_NAV_ID, R.id.navigation_tilawah)
+      bottomNav.selectedItemId = selectedId
+      val existingFragment = supportFragmentManager.findFragmentByTag(selectedTag)
+      if (existingFragment == null) {
+        switchFragment(fragmentForTag(selectedTag), selectedTag)
+      }
+    }
+
+    bottomNav.setOnItemSelectedListener { item ->
+      when (item.itemId) {
+        R.id.navigation_pendamping_ibadah -> switchFragment(PendampingIbadahFragment(), TAG_PENDAMPING)
+        R.id.navigation_komunitas        -> switchFragment(KomunitasFragment(), TAG_KOMUNITAS)
+        R.id.navigation_tilawah          -> switchFragment(TilawahFragment(), TAG_TILAWAH)
+        R.id.navigation_profil           -> switchFragment(ProfilFragment(), TAG_PROFIL)
+      }
+      true
     }
 
     if (savedInstanceState != null) {
@@ -206,6 +217,23 @@ class QuranActivity : AppCompatActivity(),
     quranIndexEventLogger.logAnalytics()
   }
 
+  private fun switchFragment(fragment: Fragment, tag: String) {
+    val existingFragment = supportFragmentManager.findFragmentByTag(tag)
+    supportFragmentManager.beginTransaction()
+      .replace(R.id.fragment_container, existingFragment ?: fragment, tag)
+      .commitAllowingStateLoss()
+  }
+
+  private fun fragmentForTag(tag: String): Fragment {
+    return when (tag) {
+      TAG_PENDAMPING -> PendampingIbadahFragment()
+      TAG_KOMUNITAS  -> KomunitasFragment()
+      TAG_TILAWAH    -> TilawahFragment()
+      TAG_PROFIL     -> ProfilFragment()
+      else           -> TilawahFragment()
+    }
+  }
+
   public override fun onResume() {
     super.onResume()
     val isRtl = isRtl()
@@ -213,28 +241,21 @@ class QuranActivity : AppCompatActivity(),
       val i = intent
       finish()
       startActivity(i)
-    } else {
-      val pageToJumpTo = jumpToPageOnResume
-      if (pageToJumpTo != null) {
-        findViewById<ViewPager>(R.id.index_pager).currentItem = pageToJumpTo
-        jumpToPageOnResume = null
-      }
-
-      compositeDisposable.add(
-          Completable.timer(500, MILLISECONDS)
-              .observeOn(AndroidSchedulers.mainThread())
-              .subscribe {
-                try {
-                  startService(
-                    audioUtils.getAudioIntent(this@QuranActivity, AudioService.ACTION_STOP)
-                  )
-                } catch (_: IllegalStateException) {
-                  // do nothing, we might be in the background
-                  // onPause should have stopped us from needing this, but it sometimes happens
-                }
-              }
-      )
     }
+
+    compositeDisposable.add(
+        Completable.timer(500, MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+              try {
+                startService(
+                  audioUtils.getAudioIntent(this@QuranActivity, AudioService.ACTION_STOP)
+                )
+              } catch (_: IllegalStateException) {
+                // do nothing, we might be in the background
+              }
+            }
+    )
     isPaused = false
   }
 
@@ -245,7 +266,6 @@ class QuranActivity : AppCompatActivity(),
   }
 
   override fun onDestroy() {
-    // only set to handle Android Q memory leaks
     backStackListener?.let {
       supportFragmentManager.removeOnBackStackChangedListener(it)
     }
@@ -254,8 +274,6 @@ class QuranActivity : AppCompatActivity(),
 
   // on back pressed, these are run in reverse order of registration
   private fun registerBackPressedCallbacks() {
-    // this block works around a memory leak in Android Q
-    // https://issuetracker.google.com/issues/139738913
     if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q && isTaskRoot) {
       val enabled = (supportFragmentManager.primaryNavigationFragment?.childFragmentManager?.backStackEntryCount ?: 0) == 0 &&
           supportFragmentManager.backStackEntryCount == 0
@@ -276,7 +294,6 @@ class QuranActivity : AppCompatActivity(),
       supportFragmentManager.addOnBackStackChangedListener(listener)
     }
 
-    // collapse the search view if it's expanded on back press
     val searchItemExpanded = searchItem?.isActionViewExpanded ?: false
     searchItemCollapserCallback = object : OnBackPressedCallback(searchItemExpanded) {
       override fun handleOnBackPressed() {
@@ -284,12 +301,10 @@ class QuranActivity : AppCompatActivity(),
         if (searchItem != null && searchItem.isActionViewExpanded) {
           searchItem.collapseActionView()
         }
-        // once it's collapsed, disable it
         isEnabled = false
       }
     }
 
-    // clear the action mode if it's active on back press
     val supportActionModeEnabled = supportActionMode != null
     supportActionModeClearingCallback = object : OnBackPressedCallback(supportActionModeEnabled) {
       override fun handleOnBackPressed() {
@@ -327,7 +342,6 @@ class QuranActivity : AppCompatActivity(),
         )
     )
 
-    // Add additional injected screens (if any)
     extraScreens
       .sortedBy { it.order }
       .forEach { menu.add(Menu.NONE, it.id, Menu.NONE, it.titleResId) }
@@ -379,20 +393,10 @@ class QuranActivity : AppCompatActivity(),
     supportActionModeClearingCallback.isEnabled = true
     super.onSupportActionModeStarted(mode)
 
-    /**
-     * hack to fix the status bar color when action mode starts.
-     * unfortunately, despite being edge to edge, switching to contextual action mode causes
-     * [androidx.appcompat.app.AppCompatDelegate] and its implementation to set a status guard
-     * under the status bar (white in light mode, black in dark mode). this breaks the edge to
-     * edge look and feel, so we manually set the status guard's background color.
-     */
     val abRoot = findViewById<ViewGroup>(androidx.appcompat.R.id.action_bar_root)
-    // has to be .post otherwise the background is set to the default color overriding this
     abRoot.post {
       val statusGuard = abRoot.getChildAt(abRoot.childCount - 1)
       statusGuard?.let {
-        // not using `is` here because i literally want a View, not a subclass of View.
-        // checking top to be 0 is just a second just in case check.
         if (statusGuard::class == View::class && statusGuard.top == 0) {
           statusGuard.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar))
         }
@@ -401,10 +405,17 @@ class QuranActivity : AppCompatActivity(),
   }
 
   override fun onSaveInstanceState(outState: Bundle) {
-    outState.putBoolean(
-        SI_SHOWED_UPGRADE_DIALOG,
-        showedTranslationUpgradeDialog
-    )
+    outState.putBoolean(SI_SHOWED_UPGRADE_DIALOG, showedTranslationUpgradeDialog)
+    val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+    outState.putInt(KEY_SELECTED_NAV_ID, bottomNav.selectedItemId)
+    val tag = when (bottomNav.selectedItemId) {
+      R.id.navigation_pendamping_ibadah -> TAG_PENDAMPING
+      R.id.navigation_komunitas        -> TAG_KOMUNITAS
+      R.id.navigation_tilawah          -> TAG_TILAWAH
+      R.id.navigation_profil           -> TAG_PROFIL
+      else                             -> TAG_TILAWAH
+    }
+    outState.putString(KEY_SELECTED_NAV_TAG, tag)
     super.onSaveInstanceState(outState)
   }
 
@@ -439,8 +450,6 @@ class QuranActivity : AppCompatActivity(),
     builder.setNegativeButton(R.string.translation_dialog_later) { dialog: DialogInterface, _: Int ->
       dialog.dismiss()
       upgradeDialog = null
-      // pretend we don't have updated translations.  we'll
-      // check again after 10 days.
       settings.setHaveUpdatedTranslations(false)
     }
 
@@ -521,56 +530,15 @@ class QuranActivity : AppCompatActivity(),
     dialog.show(fm, AddTagDialog.TAG)
   }
 
-  private inner class PagerAdapter(fm: FragmentManager) :
-      FragmentPagerAdapter(fm) {
-
-    override fun getCount() = 3
-
-    override fun getItem(position: Int): Fragment {
-      var pos = position
-      if (isRtl) {
-        pos = abs(position - 2)
-      }
-      return when (pos) {
-        SURA_LIST -> SuraListFragment.newInstance()
-        JUZ2_LIST -> JuzListFragment.newInstance()
-        BOOKMARKS_LIST -> BookmarksFragment.newInstance()
-        else -> BookmarksFragment.newInstance()
-      }
-    }
-
-    override fun getItemId(position: Int): Long {
-      val pos = if (isRtl) abs(position - 2) else position
-      return when (pos) {
-        SURA_LIST -> SURA_LIST.toLong()
-        JUZ2_LIST -> JUZ2_LIST.toLong()
-        BOOKMARKS_LIST -> BOOKMARKS_LIST.toLong()
-        else -> BOOKMARKS_LIST.toLong()
-      }
-    }
-
-    override fun getPageTitle(position: Int): CharSequence {
-      val resId = if (isRtl) ARABIC_TITLES[position] else TITLES[position]
-      return getString(resId)
-    }
-  }
-
   companion object {
-    private val TITLES = intArrayOf(
-        R.string.quran_sura,
-        R.string.quran_juz2,
-        R.string.menu_bookmarks
-    )
-    private val ARABIC_TITLES = intArrayOf(
-        R.string.menu_bookmarks,
-        R.string.quran_juz2,
-        R.string.quran_sura
-    )
     const val EXTRA_SHOW_TRANSLATION_UPGRADE = "transUp"
     private const val SI_SHOWED_UPGRADE_DIALOG = "si_showed_dialog"
-    private const val SURA_LIST = 0
-    private const val JUZ2_LIST = 1
-    private const val BOOKMARKS_LIST = 2
+    private const val KEY_SELECTED_NAV_ID = "selected_nav_id"
+    private const val KEY_SELECTED_NAV_TAG = "selected_nav_tag"
+    private const val TAG_PENDAMPING = "tab_pendamping"
+    private const val TAG_KOMUNITAS = "tab_komunitas"
+    const val TAG_TILAWAH = "tab_tilawah"
+    private const val TAG_PROFIL = "tab_profil"
     private var updatedTranslations = false
   }
 }
