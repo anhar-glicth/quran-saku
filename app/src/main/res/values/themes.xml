@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="Quran" parent="Theme.AppCompat">
+  <style name="Quran" parent="Theme.MaterialComponents.DayNight.Bridge">
     <item name="colorAccent">@color/accent_color</item>
     <item name="spinnerStyle">?attr/actionDropDownStyle</item>
     <item name="spinnerDropDownItemStyle">@style/SherlockDropDownItem</item>
     <item name="spinnerItemStyle">@style/SherlockSpinnerItem</item>
   </style>
 
-  <style name="QuranToolBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+  <style name="QuranToolBar" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
     <item name="android:windowBackground">@color/surface</item>
     <item name="colorAccent">@color/accent_color</item>
     <item name="windowActionModeOverlay">true</item>
@@ -17,7 +17,7 @@
     <item name="spinnerItemStyle">@style/SherlockSpinnerItem</item>
   </style>
 
-  <style name="QuranToolBarDayNight" parent="Theme.AppCompat.DayNight.NoActionBar">
+  <style name="QuranToolBarDayNight" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
     <item name="android:windowBackground">@color/surface</item>
     <item name="actionModeBackground">@color/toolbar</item>
     <item name="colorAccent">@color/accent_color</item>
@@ -41,5 +41,5 @@
     <item name="actionModeCloseButtonStyle">@style/QuranToolBarActionButton</item>
   </style>
 
-    <style name="QuranDialog" parent="Theme.AppCompat.DayNight.Dialog" />
+    <style name="QuranDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Bridge" />
 </resources>
