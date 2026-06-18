@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF8F4"
+    android:clickable="true"
+    android:focusable="true">
+
+  <!-- Header -->
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:background="#FFFFFF"
+      android:elevation="2dp"
+      android:paddingHorizontal="16dp">
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/ic_menu_revert"
+        android:rotation="180"
+        android:tint="#FF6D00"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Panduan Ilmu Tajwid"
+        android:textColor="#FF6D00"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+  </RelativeLayout>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+      <!-- Intro Card -->
+      <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="16dp"
+          app:cardCornerRadius="16dp"
+          app:cardElevation="2dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#FFFFFF">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Mengapa Belajar Tajwid?"
+              android:textColor="#333333"
+              android:textSize="14sp"
+              android:textStyle="bold"/>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="6dp"
+              android:text="Membaca Al-Qur'an dengan tajwid yang benar adalah kewajiban agar makna dan pelafalan ayat suci tetap terjaga sesuai dengan tuntunan Rasulullah SAW."
+              android:textColor="#666666"
+              android:textSize="12sp"
+              android:lineSpacingMultiplier="1.3"/>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <!-- Rule 1: Ikhfa -->
+      <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          app:cardCornerRadius="12dp"
+          app:cardElevation="1dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+            <View
+                android:id="@+id/color_ikhfa"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_centerVertical="true"
+                android:background="#FFC107"/> <!-- Yellow for Ikhfa -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/color_ikhfa"
+                android:layout_marginStart="8dp"
+                android:text="Ikhfa Haqiqi (Mendengung Samar)"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="14sp"/>
+          </RelativeLayout>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="8dp"
+              android:text="Apabila Nun Sukun (نْ) atau Tanwin bertemu dengan salah satu dari 15 huruf Ikhfa. Dibaca samar selama 2 harakat."
+              android:textColor="#666666"
+              android:textSize="12sp"/>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="6dp"
+              android:text="Contoh: مِنْ قَبْلِ (Min qabli) dibaca Mingqabli."
+              android:textColor="#FF6D00"
+              android:textStyle="italic"
+              android:textSize="12sp"/>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <!-- Rule 2: Idgham -->
+      <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          app:cardCornerRadius="12dp"
+          app:cardElevation="1dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+            <View
+                android:id="@+id/color_idgham"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_centerVertical="true"
+                android:background="#4CAF50"/> <!-- Green for Idgham -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/color_idgham"
+                android:layout_marginStart="8dp"
+                android:text="Idgham Bighunnah (Melebur dengan Dengung)"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="14sp"/>
+          </RelativeLayout>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="8dp"
+              android:text="Apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf ي, ن, م, و. Dibaca melebur ke huruf berikutnya disertai dengungan."
+              android:textColor="#666666"
+              android:textSize="12sp"/>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="6dp"
+              android:text="Contoh: مَنْ يَقُولُ (Man yaqulu) dibaca Mayyaqulu."
+              android:textColor="#FF6D00"
+              android:textStyle="italic"
+              android:textSize="12sp"/>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <!-- Rule 3: Iqlab -->
+      <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          app:cardCornerRadius="12dp"
+          app:cardElevation="1dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+            <View
+                android:id="@+id/color_iqlab"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_centerVertical="true"
+                android:background="#9C27B0"/> <!-- Purple for Iqlab -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/color_iqlab"
+                android:layout_marginStart="8dp"
+                android:text="Iqlab (Mengubah Suara menjadi Mim)"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="14sp"/>
+          </RelativeLayout>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="8dp"
+              android:text="Apabila Nun Sukun (نْ) atau Tanwin bertemu dengan huruf Ba (ب). Bunyi Nun/Tanwin diubah menjadi Mim (م) disertai dengung."
+              android:textColor="#666666"
+              android:textSize="12sp"/>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="6dp"
+              android:text="Contoh: مِنْ بَعْدِ (Min ba'di) dibaca Mimba'di."
+              android:textColor="#FF6D00"
+              android:textStyle="italic"
+              android:textSize="12sp"/>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <!-- Rule 4: Qalqalah -->
+      <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          app:cardCornerRadius="12dp"
+          app:cardElevation="1dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+            <View
+                android:id="@+id/color_qalqalah"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_centerVertical="true"
+                android:background="#E91E63"/> <!-- Pink for Qalqalah -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/color_qalqalah"
+                android:layout_marginStart="8dp"
+                android:text="Qalqalah (Memantul)"
+                android:textColor="#333333"
+                android:textStyle="bold"
+                android:textSize="14sp"/>
+          </RelativeLayout>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="8dp"
+              android:text="Memantulkan bunyi huruf sukun/mati dari huruf Qalqalah: ق, ط, ب, ج, د (Qutbu Jadin)."
+              android:textColor="#666666"
+              android:textSize="12sp"/>
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="6dp"
+              android:text="Contoh: قُلْ هُوَ اللَّهُ أَحَدٌ (Ahad) dibaca Ahadd(a) dengan pantulan."
+              android:textColor="#FF6D00"
+              android:textStyle="italic"
+              android:textSize="12sp"/>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

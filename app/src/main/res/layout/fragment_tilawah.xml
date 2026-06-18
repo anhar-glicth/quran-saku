@@ -3,17 +3,295 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFF8F4">
 
+  <!-- ===== HEADER CARD (Orange, Ayat Hari Ini) ===== -->
+  <androidx.cardview.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      app:cardCornerRadius="16dp"
+      app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <!-- Background Image -->
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_alignTop="@+id/header_content"
+          android:layout_alignBottom="@+id/header_content"
+          android:scaleType="centerCrop"
+          android:src="@drawable/quran_header_bg"/>
+
+      <!-- Decorative background overlay (subtle dark at bottom) -->
+      <View
+          android:layout_width="match_parent"
+          android:background="#1F000000"
+          android:layout_alignBottom="@+id/header_content"
+          android:layout_height="60dp"/>
+
+      <!-- Content -->
+      <LinearLayout
+          android:id="@+id/header_content"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp">
+
+        <!-- Subtitle: Nama Surah -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Al-Qamar (Ayat 17)"
+            android:textColor="#FFFDE7"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif"
+            android:alpha="0.9"/>
+
+        <!-- Teks Arab -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِنْ مُدَّكِرٍ"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:gravity="end"
+            android:fontFamily="serif"
+            android:lineSpacingMultiplier="1.4"/>
+
+        <!-- Terjemahan -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Dan sungguh, telah Kami mudahkan Al-Qur'an untuk pelajaran, maka adakah orang yang mau mengambil pelajaran"
+            android:textColor="#FFFDE7"
+            android:textSize="11sp"
+            android:alpha="0.9"
+            android:lineSpacingMultiplier="1.3"/>
+
+        <!-- Tombol Alhamdulillah -->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginTop="12dp"
+            android:text="🤲  Alhamdulillah"
+            android:textColor="#FF6D00"
+            android:textSize="12sp"
+            android:backgroundTint="#FFFFFF"
+            android:paddingHorizontal="16dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="#FFFFFF"/>
+
+      </LinearLayout>
+    </RelativeLayout>
+  </androidx.cardview.widget.CardView>
+
+  <!-- ===== 4 SHORTCUT ICONS ===== -->
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingHorizontal="8dp"
+      android:paddingBottom="8dp">
+
+    <!-- Tilawah -->
+    <LinearLayout
+        android:id="@+id/btn_shortcut_tilawah"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground">
+      <FrameLayout
+          android:layout_width="52dp"
+          android:layout_height="52dp"
+          android:layout_gravity="center"
+          android:background="@drawable/circle_orange_bg">
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_tilawah"
+            android:tint="#FFFFFF"/>
+      </FrameLayout>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="6dp"
+          android:text="Tilawah"
+          android:textSize="11sp"
+          android:textColor="#333333"
+          android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- Tajwid -->
+    <LinearLayout
+        android:id="@+id/btn_shortcut_tajwid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground">
+      <FrameLayout
+          android:layout_width="52dp"
+          android:layout_height="52dp"
+          android:layout_gravity="center"
+          android:background="@drawable/circle_orange_bg">
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_tajwid"
+            android:tint="#FFFFFF"/>
+      </FrameLayout>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="6dp"
+          android:text="Tajwid"
+          android:textSize="11sp"
+          android:textColor="#333333"
+          android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- Tahfidz -->
+    <LinearLayout
+        android:id="@+id/btn_shortcut_tahfidz"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground">
+      <FrameLayout
+          android:layout_width="52dp"
+          android:layout_height="52dp"
+          android:layout_gravity="center"
+          android:background="@drawable/circle_orange_bg">
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_tahfidz"
+            android:tint="#FFFFFF"/>
+      </FrameLayout>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="6dp"
+          android:text="Tahfidz"
+          android:textSize="11sp"
+          android:textColor="#333333"
+          android:gravity="center"/>
+    </LinearLayout>
+
+    <!-- Strava Quran -->
+    <LinearLayout
+        android:id="@+id/btn_shortcut_strava"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground">
+      <FrameLayout
+          android:layout_width="52dp"
+          android:layout_height="52dp"
+          android:layout_gravity="center"
+          android:background="@drawable/circle_orange_bg">
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_strava_quran"
+            android:tint="#FFFFFF"/>
+      </FrameLayout>
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="6dp"
+          android:text="Strava Quran"
+          android:textSize="10sp"
+          android:textColor="#333333"
+          android:gravity="center"/>
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <!-- ===== SEARCH BAR ===== -->
+  <androidx.cardview.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginHorizontal="12dp"
+      android:layout_marginBottom="8dp"
+      app:cardCornerRadius="24dp"
+      app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="16dp"
+        android:background="#FFFFFF">
+
+      <ImageView
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:src="@android:drawable/ic_menu_search"
+          android:tint="#AAAAAA"/>
+
+      <EditText
+          android:id="@+id/search_quran"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:layout_marginStart="8dp"
+          android:hint="Cari Surah atau Ayat..."
+          android:textSize="14sp"
+          android:textColorHint="#BBBBBB"
+          android:textColor="#222222"
+          android:background="@null"
+          android:imeOptions="actionSearch"
+          android:inputType="text"
+          android:maxLines="1"/>
+
+    </LinearLayout>
+  </androidx.cardview.widget.CardView>
+
+  <!-- ===== TAB INDICATOR (SURAH / JUZ / BOOKMARKS) ===== -->
   <com.quran.labs.androidquran.view.SlidingTabLayout
       android:id="@+id/indicator"
       style="@style/ToolBarArea"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@color/toolbar" />
+      android:background="#FFFFFF"/>
 
+  <!-- ===== VIEW PAGER (list surah / juz / bookmarks) ===== -->
   <com.quran.labs.androidquran.view.QuranViewPager
       android:id="@+id/index_pager"
       android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+      android:layout_height="0dp"
+      android:layout_weight="1"/>
+
 </LinearLayout>

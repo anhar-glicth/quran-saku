@@ -41,6 +41,35 @@ class TilawahFragment : Fragment() {
       0
     }
     pager.currentItem = pageToJumpTo
+
+    // Wire up navigation to separate pages
+    view.findViewById<View>(R.id.btn_shortcut_tilawah).setOnClickListener {
+      parentFragmentManager.beginTransaction()
+          .replace(R.id.fragment_container, TilawahDashboardFragment.newInstance())
+          .addToBackStack(null)
+          .commit()
+    }
+
+    view.findViewById<View>(R.id.btn_shortcut_tajwid).setOnClickListener {
+      parentFragmentManager.beginTransaction()
+          .replace(R.id.fragment_container, TajwidFragment.newInstance())
+          .addToBackStack(null)
+          .commit()
+    }
+
+    view.findViewById<View>(R.id.btn_shortcut_tahfidz).setOnClickListener {
+      parentFragmentManager.beginTransaction()
+          .replace(R.id.fragment_container, TahfidzFragment.newInstance())
+          .addToBackStack(null)
+          .commit()
+    }
+
+    view.findViewById<View>(R.id.btn_shortcut_strava).setOnClickListener {
+      parentFragmentManager.beginTransaction()
+          .replace(R.id.fragment_container, StravaQuranFragment.newInstance())
+          .addToBackStack(null)
+          .commit()
+    }
   }
 
   private inner class PagerAdapter(fm: FragmentManager) :

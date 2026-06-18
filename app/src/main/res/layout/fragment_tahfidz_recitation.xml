@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF8F4"
+    android:clickable="true"
+    android:focusable="true">
+
+  <!-- Header -->
+  <RelativeLayout
+      android:id="@+id/header_layout"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:background="#FFFFFF"
+      android:elevation="2dp"
+      android:paddingHorizontal="16dp">
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/ic_menu_revert"
+        android:rotation="180"
+        android:tint="#FF6D00"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Setoran Hafalan"
+        android:textColor="#FF6D00"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+  </RelativeLayout>
+
+  <!-- Content Container -->
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <!-- PHASE 1: SETUP SCREEN -->
+    <ScrollView
+        android:id="@+id/layout_setup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:visibility="visible">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Hafalan yang Ingin Disetor"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            android:layout_marginBottom="24dp">
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="20dp"
+              android:background="#FFFFFF">
+
+            <!-- Surah Selector Label -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pilih Surah"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                android:textStyle="bold"/>
+
+            <!-- Surah Spinner -->
+            <Spinner
+                android:id="@+id/spin_surah"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:background="@android:drawable/btn_dropdown"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+              <!-- Ayat Mulai -->
+              <LinearLayout
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:orientation="vertical"
+                  android:layout_marginEnd="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ayat Mulai"
+                    android:textColor="#888888"
+                    android:textSize="12sp"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/edit_ayat_start"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:drawable/editbox_background_normal"
+                    android:inputType="number"
+                    android:text="1"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+              </LinearLayout>
+
+              <!-- Ayat Selesai -->
+              <LinearLayout
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:orientation="vertical"
+                  android:layout_marginStart="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ayat Selesai"
+                    android:textColor="#888888"
+                    android:textSize="12sp"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/edit_ayat_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:drawable/editbox_background_normal"
+                    android:inputType="number"
+                    android:text="5"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+              </LinearLayout>
+            </LinearLayout>
+
+          </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btn_start_recitation_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Mulai Setoran"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:backgroundTint="#FF6D00"
+            app:cornerRadius="12dp"
+            style="@style/Widget.MaterialComponents.Button"/>
+
+      </LinearLayout>
+    </ScrollView>
+
+    <!-- PHASE 2: RECITATION WORKSPACE -->
+    <RelativeLayout
+        android:id="@+id/layout_recitation_workspace"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:visibility="gone">
+
+      <!-- Header details -->
+      <TextView
+          android:id="@+id/txt_recitation_header"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Surah Al-Fatihah, Ayat 1-5"
+          android:textColor="#333333"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          android:layout_alignParentTop="true"
+          android:layout_centerHorizontal="true"/>
+
+      <!-- Verses card view -->
+      <androidx.cardview.widget.CardView
+          android:id="@+id/card_verses_board"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/txt_recitation_header"
+          android:layout_marginTop="16dp"
+          android:layout_above="@+id/layout_mic_controls"
+          android:layout_marginBottom="16dp"
+          app:cardCornerRadius="16dp"
+          app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#FFFFFF">
+
+          <!-- Target text board -->
+          <ScrollView
+              android:layout_width="match_parent"
+              android:layout_height="0dp"
+              android:layout_weight="1"
+              android:fillViewport="true">
+            <TextView
+                android:id="@+id/txt_quran_verses_board"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ayat akan muncul di sini saat Anda menekan tombol mikrofon dan mulai membaca."
+                android:textColor="#888888"
+                android:textSize="22sp"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.5"
+                android:fontFamily="serif"/>
+          </ScrollView>
+
+          <!-- Voice Preview Divider -->
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="1dp"
+              android:background="#EEEEEE"
+              android:layout_marginVertical="12dp"/>
+
+          <!-- Realtime Speech Transcribed preview box -->
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Suara Anda:"
+              android:textColor="#FF6D00"
+              android:textSize="11sp"
+              android:textStyle="bold"/>
+
+          <TextView
+              android:id="@+id/txt_voice_preview"
+              android:layout_width="match_parent"
+              android:layout_height="60dp"
+              android:layout_marginTop="4dp"
+              android:text="..."
+              android:textColor="#555555"
+              android:textSize="14sp"
+              android:gravity="center_vertical"
+              android:scrollbars="vertical"/>
+
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <!-- Mic controls and action layout at bottom -->
+      <LinearLayout
+          android:id="@+id/layout_mic_controls"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:gravity="center"
+          android:layout_alignParentBottom="true"
+          android:paddingBottom="12dp">
+
+        <!-- Accuracy result panel -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_result_accuracy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
+            android:visibility="gone">
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:padding="12dp"
+              android:background="#E8F5E9"
+              android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/txt_accuracy_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✅ Sukses"
+                android:textColor="#2E7D32"
+                android:textStyle="bold"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/txt_accuracy_score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Akurasi: 100% (Benar)"
+                android:textColor="#1B5E20"
+                android:textStyle="bold"
+                android:textSize="13sp"/>
+          </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Dynamic guidance text -->
+        <TextView
+            android:id="@+id/txt_recitation_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ketuk mikrofon untuk mulai menyetor hafalan"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:layout_marginBottom="12dp"
+            android:textStyle="bold"/>
+
+        <!-- Circular microphone button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_mic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_btn_speak_now"
+            android:backgroundTint="#FF6D00"
+            app:tint="#FFFFFF"
+            app:fabSize="normal"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="Mulai membaca"/>
+
+      </LinearLayout>
+
+    </RelativeLayout>
+  </FrameLayout>
+</LinearLayout>
