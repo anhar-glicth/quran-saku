@@ -168,15 +168,15 @@ class QuranActivity : AppCompatActivity(),
     // Set up BottomNavigationView
     val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-    // Show Tilawah tab by default (index 2)
+    // Show Home tab by default
     if (savedInstanceState == null) {
-      val defaultItemId = R.id.navigation_tilawah
+      val defaultItemId = R.id.navigation_pendamping_ibadah
       bottomNav.selectedItemId = defaultItemId
-      switchFragment(TilawahFragment(), TAG_TILAWAH)
+      switchFragment(PendampingIbadahFragment(), TAG_PENDAMPING)
     } else {
       // Restore the selected tab state from savedInstanceState
-      val selectedTag = savedInstanceState.getString(KEY_SELECTED_NAV_TAG, TAG_TILAWAH)
-      val selectedId = savedInstanceState.getInt(KEY_SELECTED_NAV_ID, R.id.navigation_tilawah)
+      val selectedTag = savedInstanceState.getString(KEY_SELECTED_NAV_TAG, TAG_PENDAMPING)
+      val selectedId = savedInstanceState.getInt(KEY_SELECTED_NAV_ID, R.id.navigation_pendamping_ibadah)
       bottomNav.selectedItemId = selectedId
       val existingFragment = supportFragmentManager.findFragmentByTag(selectedTag)
       if (existingFragment == null) {
@@ -233,7 +233,7 @@ class QuranActivity : AppCompatActivity(),
       TAG_EVENT      -> EventFragment()
       TAG_TILAWAH    -> TilawahFragment()
       TAG_PROFIL     -> ProfilFragment()
-      else           -> TilawahFragment()
+      else           -> PendampingIbadahFragment()
     }
   }
 
@@ -417,7 +417,7 @@ class QuranActivity : AppCompatActivity(),
       R.id.navigation_event            -> TAG_EVENT
       R.id.navigation_tilawah          -> TAG_TILAWAH
       R.id.navigation_profil           -> TAG_PROFIL
-      else                             -> TAG_TILAWAH
+      else                             -> TAG_PENDAMPING
     }
     outState.putString(KEY_SELECTED_NAV_TAG, tag)
     super.onSaveInstanceState(outState)

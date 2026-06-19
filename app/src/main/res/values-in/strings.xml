@@ -335,7 +335,7 @@
   <string name="about_quran_enc" translatable="false">Ensiklopedia Alquran Alkarim</string>
 
   <!-- navigasi -->
-  <string name="nav_pendamping_ibadah">Pendamping Ibadah</string>
+  <string name="nav_pendamping_ibadah">Home</string>
   <string name="nav_komunitas">Komunitas</string>
   <string name="nav_event">Event</string>
   <string name="nav_tilawah">Tilawah</string>

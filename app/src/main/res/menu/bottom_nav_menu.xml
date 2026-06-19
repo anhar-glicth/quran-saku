@@ -5,17 +5,17 @@
         android:icon="@drawable/ic_pendamping_ibadah"
         android:title="@string/nav_pendamping_ibadah" />
     <item
-        android:id="@+id/navigation_komunitas"
-        android:icon="@drawable/ic_komunitas"
-        android:title="@string/nav_komunitas" />
+        android:id="@+id/navigation_tilawah"
+        android:icon="@drawable/ic_tilawah"
+        android:title="@string/nav_tilawah" />
     <item
         android:id="@+id/navigation_event"
         android:icon="@drawable/ic_event"
         android:title="@string/nav_event" />
     <item
-        android:id="@+id/navigation_tilawah"
-        android:icon="@drawable/ic_tilawah"
-        android:title="@string/nav_tilawah" />
+        android:id="@+id/navigation_komunitas"
+        android:icon="@drawable/ic_komunitas"
+        android:title="@string/nav_komunitas" />
     <item
         android:id="@+id/navigation_profil"
         android:icon="@drawable/ic_profil"

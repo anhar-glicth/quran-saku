@@ -61,15 +61,36 @@
       </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Section Title -->
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Section Title & Location Picker -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Jadwal Sholat Hari Ini"
-        android:textColor="#212121"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+      <TextView
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="Jadwal Sholat Hari Ini"
+          android:textColor="#212121"
+          android:textSize="18sp"
+          android:textStyle="bold" />
+
+      <TextView
+          android:id="@+id/btn_select_city"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="📍 Jakarta"
+          android:textColor="@color/accent_color"
+          android:textSize="14sp"
+          android:textStyle="bold"
+          android:background="?attr/selectableItemBackgroundBorderless"
+          android:padding="8dp"
+          android:clickable="true"
+          android:focusable="true" />
+    </LinearLayout>
 
     <!-- Prayer Times Card -->
     <com.google.android.material.card.MaterialCardView
@@ -100,9 +121,10 @@
               android:textColor="#424242"
               android:textSize="16sp"/>
           <TextView
+              android:id="@+id/tv_subuh"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="04:38"
+              android:text="--:--"
               android:textColor="@color/accent_color"
               android:textSize="16sp"
               android:textStyle="bold"
@@ -121,9 +143,10 @@
               android:textColor="#424242"
               android:textSize="16sp"/>
           <TextView
+              android:id="@+id/tv_dzuhur"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="11:58"
+              android:text="--:--"
               android:textColor="@color/accent_color"
               android:textSize="16sp"
               android:textStyle="bold"
@@ -142,9 +165,10 @@
               android:textColor="#424242"
               android:textSize="16sp"/>
           <TextView
+              android:id="@+id/tv_ashar"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="15:20"
+              android:text="--:--"
               android:textColor="@color/accent_color"
               android:textSize="16sp"
               android:textStyle="bold"
@@ -163,9 +187,10 @@
               android:textColor="#424242"
               android:textSize="16sp"/>
           <TextView
+              android:id="@+id/tv_maghrib"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="18:12"
+              android:text="--:--"
               android:textColor="@color/accent_color"
               android:textSize="16sp"
               android:textStyle="bold"
@@ -183,9 +208,10 @@
               android:textColor="#424242"
               android:textSize="16sp"/>
           <TextView
+              android:id="@+id/tv_isya"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="19:25"
+              android:text="--:--"
               android:textColor="@color/accent_color"
               android:textSize="16sp"
               android:textStyle="bold"
@@ -363,6 +389,71 @@
         </LinearLayout>
       </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
+
+    <!-- Adzan Notification Toggle Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="#FFFFFF"
+        android:layout_marginBottom="16dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#FFEAEAEA">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔔 Notifikasi Adzan"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tv_adhan_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nonaktif — Tap untuk mengaktifkan"
+                android:textColor="#757575"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"/>
+          </LinearLayout>
+
+          <com.google.android.material.switchmaterial.SwitchMaterial
+              android:id="@+id/switch_adhan"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:checked="false"
+              app:trackTint="@color/accent_color"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aktifkan untuk mendapat notifikasi 5 menit sebelum adzan dan suara adzan otomatis saat waktu sholat tiba."
+            android:textColor="#9E9E9E"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"/>
+      </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
   </LinearLayout>
 </ScrollView>

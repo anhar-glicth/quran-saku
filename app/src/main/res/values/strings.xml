@@ -412,7 +412,7 @@
   <string name="notification_channel_audio">Quran Recitation</string>
 
   <!-- navigation -->
-  <string name="nav_pendamping_ibadah">Worship</string>
+  <string name="nav_pendamping_ibadah">Home</string>
   <string name="nav_komunitas">Community</string>
   <string name="nav_event">Events</string>
   <string name="nav_tilawah">Recitation</string>
