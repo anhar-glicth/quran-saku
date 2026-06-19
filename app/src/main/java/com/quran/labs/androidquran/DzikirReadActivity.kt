@@ -1,9 +1,7 @@
 package com.quran.labs.androidquran
 
-import android.content.Context
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -223,14 +221,11 @@ class DzikirReadActivity : AppCompatActivity() {
                     holder.txtCount.text = "${item.currentCount}/${item.targetCount}"
                     updateCounterUI(holder, item)
 
-                    // Vibrate feedback
-                    val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    // Haptic feedback - aman di semua versi Android
                     if (item.currentCount == item.targetCount) {
-                        // Long vibration on completion
-                        vibrator.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE))
+                        holder.itemView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
                     } else {
-                        // Short vibration on tick
-                        vibrator.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
+                        holder.itemView.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
                     }
                 }
             }
