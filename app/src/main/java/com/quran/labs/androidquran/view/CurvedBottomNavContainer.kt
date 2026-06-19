@@ -22,8 +22,7 @@ class CurvedBottomNavContainer @JvmOverloads constructor(
     }
     private val topShadowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = 2f
-        color = Color.parseColor("#22000000")
+        color = Color.parseColor("#1C000000")
     }
 
     // Dimensi notch dalam dp
@@ -35,6 +34,8 @@ class CurvedBottomNavContainer @JvmOverloads constructor(
         setWillNotDraw(false)
         setBackgroundColor(Color.TRANSPARENT)
         setLayerType(LAYER_TYPE_SOFTWARE, null)
+        bgPaint.setShadowLayer(dp(8f), 0f, dp(-3f), Color.parseColor("#1A000000"))
+        topShadowPaint.strokeWidth = dp(1f)
     }
 
     private fun dp(value: Float) = value * resources.displayMetrics.density

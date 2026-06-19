@@ -147,6 +147,13 @@ class QuranActivity : AppCompatActivity(),
     setContentView(R.layout.quran_index)
     isRtl = isRtl()
 
+    val bottomNavContainer = findViewById<View>(R.id.bottom_nav_container)
+    val btnCenterEvent = findViewById<View>(R.id.btn_center_event)
+
+    val btnOriginalMarginBottom = btnCenterEvent?.let {
+      (it.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin
+    } ?: 0
+
     val root = findViewById<ViewGroup>(R.id.root)
     ViewCompat.setOnApplyWindowInsetsListener(root) { _, windowInsets ->
       val insets = windowInsets.getInsets(
@@ -157,6 +164,15 @@ class QuranActivity : AppCompatActivity(),
         leftMargin = insets.left
         rightMargin = insets.right
       }
+
+      // Berikan padding bawah ke container agar digambar di belakang navigasi bar sistem (transparan)
+      bottomNavContainer?.setPadding(0, 0, 0, insets.bottom)
+
+      // Geser tombol floating ke atas sejauh insets.bottom agar posisinya tetap sinkron
+      btnCenterEvent?.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+        bottomMargin = btnOriginalMarginBottom + insets.bottom
+      }
+
       windowInsets
     }
 
@@ -167,6 +183,7 @@ class QuranActivity : AppCompatActivity(),
 
     // Set up BottomNavigationView
     val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+    bottomNav.background = null
 
     // Show Home tab by default
     if (savedInstanceState == null) {
