@@ -51,7 +51,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-      <!-- Statistics Card -->
+      <!-- Statistics Card (dinamis) -->
       <androidx.cardview.widget.CardView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -72,9 +72,10 @@
               android:orientation="vertical"
               android:gravity="center">
             <TextView
+                android:id="@+id/tv_total_setor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4"
+                android:text="0"
                 android:textColor="#FF6D00"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
@@ -82,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Target Hafalan"
+                android:text="Total Setoran"
                 android:textColor="#666666"
                 android:textSize="11sp"/>
           </LinearLayout>
@@ -100,9 +101,10 @@
               android:orientation="vertical"
               android:gravity="center">
             <TextView
+                android:id="@+id/tv_total_lulus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2"
+                android:text="0"
                 android:textColor="#4CAF50"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
@@ -110,135 +112,105 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Selesai (100%)"
+                android:text="Lulus"
                 android:textColor="#666666"
                 android:textSize="11sp"/>
           </LinearLayout>
+
+          <View
+              android:layout_width="1dp"
+              android:layout_height="40dp"
+              android:background="#DDDDDD"
+              android:layout_gravity="center_vertical"/>
+
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical"
+              android:gravity="center">
+            <TextView
+                android:id="@+id/tv_rata_akurasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:textColor="#2196F3"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Rata Akurasi"
+                android:textColor="#666666"
+                android:textSize="11sp"/>
+          </LinearLayout>
+
         </LinearLayout>
       </androidx.cardview.widget.CardView>
 
-      <!-- Target List Header -->
+      <!-- Riwayat Header -->
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Hafalan Saya"
+          android:text="Riwayat Setoran"
           android:textColor="#333333"
           android:textSize="16sp"
           android:textStyle="bold"
           android:layout_marginBottom="12dp"/>
 
-      <!-- Target Item 1 (Juz 30) -->
-      <androidx.cardview.widget.CardView
+      <!-- Empty State -->
+      <LinearLayout
+          android:id="@+id/layout_empty"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="12dp"
-          app:cardCornerRadius="12dp"
-          app:cardElevation="1dp">
-        <LinearLayout
-            android:layout_width="match_parent"
+          android:orientation="vertical"
+          android:gravity="center"
+          android:padding="32dp"
+          android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-          <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Juz 30 (Juz 'Amma)"
-                android:textColor="#333333"
-                android:textStyle="bold"
-                android:textSize="14sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="75%"
-                android:textColor="#FF6D00"
-                android:textStyle="bold"
-                android:textSize="14sp"/>
-          </RelativeLayout>
-          <ProgressBar
-              style="?android:attr/progressBarStyleHorizontal"
-              android:layout_width="match_parent"
-              android:layout_height="6dp"
-              android:layout_marginTop="8dp"
-              android:progress="75"
-              android:progressTint="#FF6D00"
-              android:progressBackgroundTint="#EEEEEE"/>
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="8dp"
-              android:text="Terakhir dihafal: An-Naba Ayat 1-40"
-              android:textColor="#888888"
-              android:textSize="11sp"/>
-        </LinearLayout>
-      </androidx.cardview.widget.CardView>
+            android:text="📖"
+            android:textSize="48sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Belum ada riwayat setoran"
+            android:textColor="#888888"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mulai setor hafalan pertama Anda!"
+            android:textColor="#BBBBBB"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"/>
+      </LinearLayout>
 
-      <!-- Target Item 2 (Al-Mulk) -->
-      <androidx.cardview.widget.CardView
+      <!-- History Container (diisi secara programatik) -->
+      <LinearLayout
+          android:id="@+id/history_container"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="12dp"
-          app:cardCornerRadius="12dp"
-          app:cardElevation="1dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-          <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Surah Al-Mulk"
-                android:textColor="#333333"
-                android:textStyle="bold"
-                android:textSize="14sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:text="Lengkap"
-                android:textColor="#4CAF50"
-                android:textStyle="bold"
-                android:textSize="12sp"/>
-          </RelativeLayout>
-          <ProgressBar
-              style="?android:attr/progressBarStyleHorizontal"
-              android:layout_width="match_parent"
-              android:layout_height="6dp"
-              android:layout_marginTop="8dp"
-              android:progress="100"
-              android:progressTint="#4CAF50"
-              android:progressBackgroundTint="#EEEEEE"/>
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="8dp"
-              android:text="Alhamdulillah, 30 ayat telah selesai dihafal."
-              android:textColor="#888888"
-              android:textSize="11sp"/>
-        </LinearLayout>
-      </androidx.cardview.widget.CardView>
+          android:orientation="vertical"/>
 
-      <!-- Add Target Button -->
-      <Button
+      <!-- Tombol Setor Hafalan Baru -->
+      <com.google.android.material.button.MaterialButton
           android:id="@+id/btn_add_target"
           android:layout_width="match_parent"
-          android:layout_height="48dp"
-          android:layout_marginTop="8dp"
-          android:text="+ Tambah Target Hafalan Baru"
+          android:layout_height="52dp"
+          android:layout_marginTop="16dp"
+          android:text="+ Setor Hafalan Baru"
           android:textColor="#FFFFFF"
           android:textSize="14sp"
           android:textStyle="bold"
-          android:backgroundTint="#FF6D00"
-          app:cornerRadius="8dp"
+          app:backgroundTint="#FF6D00"
+          app:cornerRadius="12dp"
           style="@style/Widget.MaterialComponents.Button"/>
 
     </LinearLayout>
   </ScrollView>
+
 </RelativeLayout>

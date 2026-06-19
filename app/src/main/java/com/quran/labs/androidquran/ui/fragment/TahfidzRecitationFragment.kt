@@ -28,6 +28,7 @@ import com.quran.labs.androidquran.R
 import com.quran.labs.androidquran.data.QuranDisplayData
 import com.quran.labs.androidquran.model.translation.ArabicDatabaseUtils
 import com.quran.labs.androidquran.ui.helpers.JumpDestination
+import com.quran.labs.androidquran.util.HafalanStorageUtils
 import dev.zacsweers.metro.Inject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
@@ -189,10 +190,26 @@ class TahfidzRecitationFragment : Fragment() {
     arabicDatabaseUtils.getVerses(startAyah, endAyah)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ verses ->
-          val combinedText = verses.joinToString(" ") { it.text }
-          targetVersesText = combinedText
-          txtQuranVersesBoard.text = combinedText
-          txtQuranVersesBoard.setTextColor(Color.parseColor("#888888"))
+          // Gabungkan teks dengan nomor ayat (angka Arab)
+          val arabicNums = listOf("١","٢","٣","٤","٥","٦","٧","٨","٩","١٠",
+              "١١","١٢","١٣","١٤","١٥","١٦","١٧","١٨","١٩","٢٠",
+              "٢١","٢٢","٢٣","٢٤","٢٥","٢٦","٢٧","٢٨","٢٩","٣٠")
+          val boardText = StringBuilder()
+          val pureText = StringBuilder()
+          verses.forEachIndexed { index, verse ->
+            val ayahNum = selectedStartAyat + index
+            val numLabel = if (ayahNum <= arabicNums.size) arabicNums[ayahNum - 1] else "($ayahNum)"
+            boardText.append(verse.text)
+            boardText.append(" \u06DD$numLabel ")
+            if (index < verses.size - 1) boardText.append("\n")
+            pureText.append(verse.text)
+            if (index < verses.size - 1) pureText.append(" ")
+          }
+          targetVersesText = pureText.toString()
+          txtQuranVersesBoard.text = boardText.toString()
+          txtQuranVersesBoard.setTextColor(Color.parseColor("#444444"))
+          txtQuranVersesBoard.textSize = 20f
+          txtQuranVersesBoard.textAlignment = android.view.View.TEXT_ALIGNMENT_TEXT_END
         }, { error ->
           txtQuranVersesBoard.text = "Gagal memuat ayat Al-Qur'an."
         })
@@ -238,12 +255,50 @@ class TahfidzRecitationFragment : Fragment() {
   }
 
   private fun stripHarakat(text: String): String {
-    val diacriticsRegex = ("[\u064B-\u065F\u0670\u06D6-\u06ED]").toRegex()
+    // Hapus semua harakat termasuk Arabic Extended-A (U+08D3-U+08FF) yang dipakai di database Quran
+    val diacriticsRegex = ("[\u064B-\u065F\u0610-\u061A\u0670\u06D6-\u06ED\u08D3-\u08FF]").toRegex()
     var clean = text.replace(diacriticsRegex, "")
+    // Normalisasi berbagai bentuk huruf
     clean = clean.replace("[إأآٱ]".toRegex(), "ا")
     clean = clean.replace("ى".toRegex(), "ي")
     clean = clean.replace("ة".toRegex(), "ه")
+    clean = clean.replace("[ؤئ]".toRegex(), "ء")
+    // Hapus tatweel (ـ) dan angka Arab dan simbol akhir ayat
+    clean = clean.replace("ـ".toRegex(), "")
+    clean = clean.replace("[٠-٩\u06DD\u06DE]".toRegex(), "")
+    // Hapus spasi berlebih
+    clean = clean.replace("\\s+".toRegex(), " ").trim()
     return clean
+  }
+
+  // Hitung jarak edit (Levenshtein) antara 2 kata
+  private fun editDistance(a: String, b: String): Int {
+    val m = a.length
+    val n = b.length
+    if (m == 0) return n
+    if (n == 0) return m
+    val dp = Array(m + 1) { IntArray(n + 1) }
+    for (i in 0..m) dp[i][0] = i
+    for (j in 0..n) dp[0][j] = j
+    for (i in 1..m) {
+      for (j in 1..n) {
+        dp[i][j] = if (a[i - 1] == b[j - 1]) dp[i - 1][j - 1]
+                   else 1 + minOf(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
+      }
+    }
+    return dp[m][n]
+  }
+
+  // Cek apakah dua kata dianggap cocok (fuzzy: toleransi 1-2 karakter berbeda)
+  private fun wordsMatch(a: String, b: String): Boolean {
+    if (a == b) return true
+    if (a.isEmpty() || b.isEmpty()) return false
+    val maxDist = when {
+      a.length <= 3 -> 1   // kata pendek: toleransi 1 huruf
+      a.length <= 6 -> 2   // kata sedang: toleransi 2 huruf
+      else          -> 3   // kata panjang: toleransi 3 huruf
+    }
+    return editDistance(a, b) <= maxDist
   }
 
   private fun processRecitationCheck(spokenText: String) {
@@ -254,15 +309,24 @@ class TahfidzRecitationFragment : Fragment() {
 
     val targetWords = targetVersesText.split("\\s+".toRegex()).filter { it.isNotEmpty() }
     val cleanTargetWords = cleanTargetText.split("\\s+".toRegex()).filter { it.isNotEmpty() }
-    val spokenWords = cleanSpokenText.split("\\s+".toRegex()).filter { it.isNotEmpty() }
+    // Coba cocokkan dengan dan tanpa harakat dari hasil speech recognizer
+    val spokenVariants = listOf(
+      cleanSpokenText,
+      stripHarakat(spokenText.replace("ال", ""))
+    )
+    val spokenWords = spokenVariants
+      .flatMap { it.split("\\s+".toRegex()) }
+      .filter { it.isNotEmpty() }
+      .distinct()
 
     val n = cleanTargetWords.size
     val m = spokenWords.size
 
+    // Gunakan fuzzy matching (wordsMatch) bukan strict equality
     val dp = Array(n + 1) { IntArray(m + 1) }
     for (i in 1..n) {
       for (j in 1..m) {
-        if (cleanTargetWords[i - 1] == spokenWords[j - 1]) {
+        if (wordsMatch(cleanTargetWords[i - 1], spokenWords[j - 1])) {
           dp[i][j] = dp[i - 1][j - 1] + 1
         } else {
           dp[i][j] = maxOf(dp[i - 1][j], dp[i][j - 1])
@@ -274,7 +338,7 @@ class TahfidzRecitationFragment : Fragment() {
     var i = n
     var j = m
     while (i > 0 && j > 0) {
-      if (cleanTargetWords[i - 1] == spokenWords[j - 1]) {
+      if (wordsMatch(cleanTargetWords[i - 1], spokenWords[j - 1])) {
         matchedTargetIndices.add(i - 1)
         i--
         j--
@@ -307,6 +371,22 @@ class TahfidzRecitationFragment : Fragment() {
     txtQuranVersesBoard.text = builder
 
     val accuracy = if (n > 0) (matchedTargetIndices.size.toFloat() / n.toFloat() * 100).toInt() else 0
+
+    // Simpan riwayat setoran ke storage
+    val suraName = quranDisplayData.getSuraName(requireContext(), selectedSura, false, true)
+    HafalanStorageUtils.saveRecord(
+      requireContext(),
+      HafalanStorageUtils.HafalanRecord(
+        surahName  = suraName,
+        surahNum   = selectedSura,
+        startAyah  = selectedStartAyat,
+        endAyah    = selectedEndAyat,
+        accuracy   = accuracy,
+        timestamp  = System.currentTimeMillis(),
+        status     = if (accuracy >= 80) "LULUS" else "TIDAK_LULUS"
+      )
+    )
+
     cardResultAccuracy.visibility = View.VISIBLE
     if (accuracy >= 80) {
       cardResultAccuracy.setCardBackgroundColor(Color.parseColor("#E8F5E9"))

@@ -8,6 +8,38 @@
       android:title="@string/app_name"/>
 
   <PreferenceCategory
+      android:title="@string/about_developer_category"
+      app:iconSpaceReserved="false">
+
+    <Preference
+        android:summary="@string/about_organization_summary"
+        android:title="@string/about_organization"
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="true">
+      <intent
+          android:action="android.intent.action.VIEW"
+          android:data="@string/about_organization_url"/>
+    </Preference>
+
+    <Preference
+        android:summary="@string/about_partner_summary"
+        android:title="@string/about_partner"
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="true">
+      <intent
+          android:action="android.intent.action.VIEW"
+          android:data="@string/about_partner_url"/>
+    </Preference>
+
+    <Preference
+        android:summary="@string/about_developer_summary"
+        android:title="@string/about_developer"
+        app:iconSpaceReserved="false"
+        app:singleLineTitle="true"/>
+
+  </PreferenceCategory>
+
+  <PreferenceCategory
       android:key="aboutDataSources"
       android:title="@string/about_data_sources"
       app:iconSpaceReserved="false">
@@ -103,130 +135,5 @@
     </Preference>
   </PreferenceCategory>
 
-  <PreferenceCategory
-      android:title="@string/about_open_source"
-      app:iconSpaceReserved="false">
 
-    <Preference
-        android:summary="@string/about_androidx_url"
-        android:title="@string/about_androidx"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_androidx_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_kotlin_url"
-        android:title="@string/about_kotlin"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_kotlin_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_dagger2_url"
-        android:title="@string/about_dagger2"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_dagger2_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_okhttp_url"
-        android:title="@string/about_okhttp"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_okhttp_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_rxjava_url"
-        android:title="@string/about_rxjava"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_rxjava_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_rxandroid_url"
-        android:title="@string/about_rxandroid"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_rxandroid_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_moshi_url"
-        android:title="@string/about_moshi"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_moshi_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_sliding_panel_url"
-        android:title="@string/about_sliding_panel"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_sliding_panel_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_timber_url"
-        android:title="@string/about_timber"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_timber_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_material_components_url"
-        android:title="@string/about_material_components"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_material_components_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_dnsjava_url"
-        android:title="@string/about_dnsjava"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_dnsjava_url"/>
-    </Preference>
-
-    <Preference
-        android:summary="@string/about_numberPicker_url"
-        android:title="@string/about_numberPicker"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_numberPicker_url"/>
-    </Preference>
-
-  </PreferenceCategory>
-
-  <PreferenceCategory
-      android:title="@string/about_others"
-      app:iconSpaceReserved="false">
-    <Preference
-        android:summary="@string/about_contributors_summary"
-        android:title="@string/about_contributors"
-        app:iconSpaceReserved="false">
-      <intent
-          android:action="android.intent.action.VIEW"
-          android:data="@string/about_contributors_url"/>
-    </Preference>
-  </PreferenceCategory>
 </PreferenceScreen>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Quran</string>
+  <string name="app_name">Quran Saku</string>
   <string name="downloadPrompt">Agar Quran Android bisa berjalan lancar,
         kita perlu mengunduh beberapa berkas. Jika anda tidak melakukannya sekarang, aplikasi ini
         mungkin tidak akan bekerja dengan handal dan akan memerlukan sambungan Internet untuk membaca.
@@ -36,7 +36,16 @@
   <string name="gotoPage">Pergi ke halaman</string>
 
   <!-- about -->
-  <string name="about_description">Quran untuk Android adalah sebuah aplikasi Quran gratis. Mohon ingat dan sisipkan para kontributor dalam doa-doa anda.</string>
+  <string name="about_description">Quran Saku adalah aplikasi Al-Quran gratis yang dikembangkan oleh Amal Abadi Palestina (dikenal sebagai adtin), bekerja sama dengan Velora.id. Semoga aplikasi ini menjadi amal jariyah bagi semua yang terlibat. Jangan lupa sertakan para pengembang dalam doa Anda.</string>
+  <string name="about_developer_category">Tentang Pengembang</string>
+  <string name="about_organization">Amal Abadi Palestina (adtin)</string>
+  <string name="about_organization_summary">Organisasi pengelola dan pemilik aplikasi Quran Saku</string>
+  <string name="about_organization_url" translatable="false">https://adtin.id</string>
+  <string name="about_partner">Velora.id</string>
+  <string name="about_partner_summary">Mitra pengembang dalam pembuatan aplikasi Quran Saku</string>
+  <string name="about_partner_url" translatable="false">https://velora.id</string>
+  <string name="about_developer">Muhammad Anhar Solihin</string>
+  <string name="about_developer_summary">Fullstack Developer — bertanggung jawab atas seluruh pengembangan teknis aplikasi</string>
   <string name="about_data_sources">Sumber Data</string>
   <string name="about_images">Gambar</string>
   <string name="about_madani_images">Gambar-gambar halaman Quran dibuat berdasarkan jenis huruf dari Kompleks Percetakan Quran Raja Fahd</string>
