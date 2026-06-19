@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+  <!-- Top Toolbar -->
   <LinearLayout
       android:id="@+id/toolbar_area"
       android:layout_width="match_parent"
@@ -24,34 +25,44 @@
         app:titleTextAppearance="@style/ToolbarTitleText" />
   </LinearLayout>
 
-  <com.google.android.material.bottomnavigation.BottomNavigationView
-      android:id="@+id/bottom_navigation"
+  <!-- Bottom Navigation dengan lekukan curved di tengah atas -->
+  <com.quran.labs.androidquran.view.CurvedBottomNavContainer
+      android:id="@+id/bottom_nav_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
-      android:background="@color/surface"
-      app:menu="@menu/bottom_nav_menu"
-      app:itemIconTint="@color/bottom_nav_color"
-      app:itemTextColor="@color/bottom_nav_color"
-      app:labelVisibilityMode="labeled" />
+      android:orientation="vertical">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:elevation="0dp" />
+  </com.quran.labs.androidquran.view.CurvedBottomNavContainer>
+
+  <!-- Content Fragment Area -->
   <androidx.fragment.app.FragmentContainerView
       android:id="@+id/fragment_container"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_below="@id/toolbar_area"
-      android:layout_above="@id/bottom_navigation" />
+      android:layout_above="@id/bottom_nav_container" />
 
-  <!-- Floating Center Button for Event -->
+  <!-- Floating Event Button — melayang di atas lekukan nav bar -->
   <com.google.android.material.card.MaterialCardView
       android:id="@+id/btn_center_event"
-      android:layout_width="54dp"
-      android:layout_height="54dp"
+      android:layout_width="62dp"
+      android:layout_height="62dp"
       android:layout_alignParentBottom="true"
       android:layout_centerHorizontal="true"
-      android:layout_marginBottom="16dp"
-      app:cardCornerRadius="16dp"
-      app:cardElevation="6dp"
+      android:layout_marginBottom="30dp"
+      app:cardCornerRadius="18dp"
+      app:cardElevation="10dp"
       app:cardBackgroundColor="@color/accent_color"
       app:strokeWidth="3dp"
       app:strokeColor="#FFFFFF"
@@ -60,10 +71,11 @@
       android:foreground="?attr/selectableItemBackground">
 
     <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_gravity="center"
         android:src="@drawable/ic_event_scan"
         app:tint="#FFFFFF" />
   </com.google.android.material.card.MaterialCardView>
+
 </RelativeLayout>
