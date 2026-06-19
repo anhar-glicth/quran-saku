@@ -41,4 +41,29 @@
       android:layout_height="match_parent"
       android:layout_below="@id/toolbar_area"
       android:layout_above="@id/bottom_navigation" />
+
+  <!-- Floating Center Button for Event -->
+  <com.google.android.material.card.MaterialCardView
+      android:id="@+id/btn_center_event"
+      android:layout_width="54dp"
+      android:layout_height="54dp"
+      android:layout_alignParentBottom="true"
+      android:layout_centerHorizontal="true"
+      android:layout_marginBottom="16dp"
+      app:cardCornerRadius="16dp"
+      app:cardElevation="6dp"
+      app:cardBackgroundColor="@color/accent_color"
+      app:strokeWidth="3dp"
+      app:strokeColor="#FFFFFF"
+      android:clickable="true"
+      android:focusable="true"
+      android:foreground="?attr/selectableItemBackground">
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_event_scan"
+        app:tint="#FFFFFF" />
+  </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>

@@ -195,6 +195,10 @@ class QuranActivity : AppCompatActivity(),
       true
     }
 
+    findViewById<View>(R.id.btn_center_event)?.setOnClickListener {
+      bottomNav.selectedItemId = R.id.navigation_event
+    }
+
     if (savedInstanceState != null) {
       showedTranslationUpgradeDialog = savedInstanceState.getBoolean(
           SI_SHOWED_UPGRADE_DIALOG, false

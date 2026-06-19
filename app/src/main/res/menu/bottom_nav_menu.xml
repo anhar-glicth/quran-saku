@@ -10,7 +10,7 @@
         android:title="@string/nav_tilawah" />
     <item
         android:id="@+id/navigation_event"
-        android:icon="@drawable/ic_event"
+        android:icon="@android:color/transparent"
         android:title="@string/nav_event" />
     <item
         android:id="@+id/navigation_komunitas"
