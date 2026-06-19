@@ -51,6 +51,7 @@ import com.quran.labs.androidquran.ui.fragment.PendampingIbadahFragment
 import com.quran.labs.androidquran.ui.fragment.ProfilFragment
 import com.quran.labs.androidquran.ui.fragment.TagBookmarkDialog
 import com.quran.labs.androidquran.ui.fragment.TagBookmarkDialog.OnBookmarkTagsUpdateListener
+import com.quran.labs.androidquran.ui.fragment.EventFragment
 import com.quran.labs.androidquran.ui.fragment.TilawahFragment
 import com.quran.labs.androidquran.ui.helpers.JumpDestination
 import com.quran.labs.androidquran.util.AudioUtils
@@ -187,6 +188,7 @@ class QuranActivity : AppCompatActivity(),
       when (item.itemId) {
         R.id.navigation_pendamping_ibadah -> switchFragment(PendampingIbadahFragment(), TAG_PENDAMPING)
         R.id.navigation_komunitas        -> switchFragment(KomunitasFragment(), TAG_KOMUNITAS)
+        R.id.navigation_event            -> switchFragment(EventFragment(), TAG_EVENT)
         R.id.navigation_tilawah          -> switchFragment(TilawahFragment(), TAG_TILAWAH)
         R.id.navigation_profil           -> switchFragment(ProfilFragment(), TAG_PROFIL)
       }
@@ -228,6 +230,7 @@ class QuranActivity : AppCompatActivity(),
     return when (tag) {
       TAG_PENDAMPING -> PendampingIbadahFragment()
       TAG_KOMUNITAS  -> KomunitasFragment()
+      TAG_EVENT      -> EventFragment()
       TAG_TILAWAH    -> TilawahFragment()
       TAG_PROFIL     -> ProfilFragment()
       else           -> TilawahFragment()
@@ -411,6 +414,7 @@ class QuranActivity : AppCompatActivity(),
     val tag = when (bottomNav.selectedItemId) {
       R.id.navigation_pendamping_ibadah -> TAG_PENDAMPING
       R.id.navigation_komunitas        -> TAG_KOMUNITAS
+      R.id.navigation_event            -> TAG_EVENT
       R.id.navigation_tilawah          -> TAG_TILAWAH
       R.id.navigation_profil           -> TAG_PROFIL
       else                             -> TAG_TILAWAH
@@ -537,6 +541,7 @@ class QuranActivity : AppCompatActivity(),
     private const val KEY_SELECTED_NAV_TAG = "selected_nav_tag"
     private const val TAG_PENDAMPING = "tab_pendamping"
     private const val TAG_KOMUNITAS = "tab_komunitas"
+    private const val TAG_EVENT = "tab_event"
     const val TAG_TILAWAH = "tab_tilawah"
     private const val TAG_PROFIL = "tab_profil"
     private var updatedTranslations = false

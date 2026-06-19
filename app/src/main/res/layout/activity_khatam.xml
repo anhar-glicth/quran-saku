@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF9F9F9">
+
+  <!-- Toolbar -->
+  <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="#FFFFFF"
+      app:title="Khatam Tracker"
+      app:titleTextColor="@color/accent_color"
+      app:navigationIcon="?attr/homeAsUpIndicator"
+      app:navigationContentDescription="Back"
+      app:elevation="2dp" />
+
+  <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <!-- Current Progress Summary Card -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="16dp"
+          app:cardCornerRadius="16dp"
+          app:cardElevation="2dp"
+          app:strokeWidth="0dp"
+          app:cardBackgroundColor="@color/accent_color">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Kemajuan Khatam Al-Quran"
+              android:textColor="#FFFFFF"
+              android:textSize="14sp"
+              android:alpha="0.9" />
+
+          <TextView
+              android:id="@+id/txt_khatam_percentage"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="0%"
+              android:textColor="#FFFFFF"
+              android:textSize="36sp"
+              android:textStyle="bold"
+              android:layout_marginTop="4dp" />
+
+          <com.google.android.material.progressindicator.LinearProgressIndicator
+              android:id="@+id/progress_khatam"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:progress="0"
+              android:layout_marginTop="16dp"
+              android:layout_marginBottom="16dp"
+              app:trackColor="#4DFFFFFF"
+              app:indicatorColor="#FFFFFF"
+              app:trackThickness="6dp"
+              app:trackCornerRadius="3dp" />
+
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_khatam_pages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Halaman: 0 / 604"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/txt_khatam_target"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Target: 30 Hari"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:layout_alignParentEnd="true" />
+          </RelativeLayout>
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- Tracker Configuration / Update Card -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="16dp"
+          app:cardCornerRadius="16dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Perbarui Kemajuan Harian"
+              android:textColor="#212121"
+              android:textSize="15sp"
+              android:textStyle="bold"
+              android:layout_marginBottom="16dp" />
+
+          <!-- Page Input Field -->
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Halaman Terakhir Dibaca (1 - 604)"
+              android:textColor="#666666"
+              android:textSize="12sp"
+              android:layout_marginBottom="6dp" />
+
+          <EditText
+              android:id="@+id/edt_current_page"
+              android:layout_width="match_parent"
+              android:layout_height="48dp"
+              android:background="@drawable/bg_search_bar"
+              android:hint="Masukkan halaman (misal: 15)"
+              android:inputType="number"
+              android:paddingHorizontal="12dp"
+              android:textSize="14sp"
+              android:textColor="#212121"
+              android:layout_marginBottom="16dp" />
+
+          <!-- Target Days Field -->
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Durasi Target Khatam (Hari)"
+              android:textColor="#666666"
+              android:textSize="12sp"
+              android:layout_marginBottom="6dp" />
+
+          <EditText
+              android:id="@+id/edt_target_days"
+              android:layout_width="match_parent"
+              android:layout_height="48dp"
+              android:background="@drawable/bg_search_bar"
+              android:hint="Masukkan jumlah hari (misal: 30)"
+              android:inputType="number"
+              android:paddingHorizontal="12dp"
+              android:textSize="14sp"
+              android:textColor="#212121"
+              android:layout_marginBottom="24dp" />
+
+          <!-- Save Button -->
+          <LinearLayout
+              android:id="@+id/btn_save_khatam"
+              android:layout_width="match_parent"
+              android:layout_height="48dp"
+              android:background="@drawable/bg_card_doa"
+              android:clickable="true"
+              android:focusable="true"
+              android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Simpan Kemajuan"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+          </LinearLayout>
+
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- Stat Info Card -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:cardCornerRadius="16dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Statistik Target Pembacaan"
+              android:textColor="#212121"
+              android:textSize="15sp"
+              android:textStyle="bold"
+              android:layout_marginBottom="12dp" />
+
+          <TextView
+              android:id="@+id/txt_khatam_speed"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Kecepatan target Anda: 20 halaman per hari."
+              android:textColor="#666666"
+              android:textSize="13sp" />
+
+          <TextView
+              android:id="@+id/txt_khatam_advice"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Khatam Al-Quran secara konsisten membawa limpahan rahmat dan ketenangan hati."
+              android:textColor="#888888"
+              android:textSize="11sp"
+              android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+  </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

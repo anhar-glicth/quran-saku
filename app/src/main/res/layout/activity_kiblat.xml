@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF9F9F9">
+
+  <!-- Toolbar -->
+  <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="#FFFFFF"
+      app:title="Arah Kiblat"
+      app:titleTextColor="@color/accent_color"
+      app:navigationIcon="?attr/homeAsUpIndicator"
+      app:navigationContentDescription="Back"
+      app:elevation="2dp" />
+
+  <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp">
+
+      <TextView
+          android:id="@+id/title_kiblat_info"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Posisikan HP Anda mendatar untuk akurasi terbaik."
+          android:textColor="#666666"
+          android:textSize="14sp"
+          android:gravity="center"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent" />
+
+      <!-- Compass Container -->
+      <RelativeLayout
+          android:id="@+id/compass_view"
+          android:layout_width="260dp"
+          android:layout_height="260dp"
+          android:layout_marginTop="32dp"
+          android:elevation="4dp"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/title_kiblat_info">
+
+        <!-- Compass dial face -->
+        <ImageView
+            android:id="@+id/compass_face"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_compassface"
+            android:scaleType="fitCenter" />
+
+        <!-- North Needle -->
+        <ImageView
+            android:id="@+id/compass_north"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_compass_north"
+            android:scaleType="fitCenter" />
+
+        <!-- Kaaba Arrow -->
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_compass_arrow"
+            android:scaleType="fitCenter" />
+
+      </RelativeLayout>
+
+      <!-- Degrees and Directions -->
+      <TextView
+          android:id="@+id/qiblaDirection"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="32dp"
+          android:textColor="#212121"
+          android:textSize="22sp"
+          android:textStyle="bold"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/compass_view"
+          tools:text="Kiblat: 295°" />
+
+      <TextView
+          android:id="@+id/sotwText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:textColor="#888888"
+          android:textSize="16sp"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/qiblaDirection"
+          tools:text="Arah: 180°" />
+
+      <TextView
+          android:id="@+id/sensor_status"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:textColor="@color/accent_color"
+          android:textSize="12sp"
+          android:textStyle="bold"
+          android:text="Mendeteksi Sensor..."
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/sotwText" />
+
+      <!-- Qibla Finder Card -->
+      <com.google.android.material.card.MaterialCardView
+          android:id="@+id/qiblafinder"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="32dp"
+          app:cardCornerRadius="12dp"
+          app:cardElevation="2dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:layout_constraintLeft_toLeftOf="parent"
+          app:layout_constraintRight_toRightOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/sensor_status"
+          android:clickable="true"
+          android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="220dp"
+            android:layout_height="64dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="8dp">
+
+          <ImageView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:src="@drawable/ic_qiblafinder"
+              android:scaleType="fitCenter" />
+
+        </LinearLayout>
+
+      </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

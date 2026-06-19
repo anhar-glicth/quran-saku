@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/root"
+    android:orientation="vertical"
+    android:background="#FFF9F9F9">
+
+  <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="@color/toolbar"
+      android:theme="@style/ToolbarStyle"
+      app:titleTextAppearance="@style/ToolbarTitleText" />
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:clipToPadding="false">
+
+      <!-- Card Doa 1 -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="16dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Doa Sebelum Belajar"
+              android:textColor="@color/accent_color"
+              android:textSize="14sp"
+              android:textStyle="bold" />
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="رَبِّ زِدْنِي عِلْمًا وَارْزُقْنِي فَهْمًا"
+              android:textColor="#212121"
+              android:textSize="22sp"
+              android:gravity="end"
+              android:textStyle="bold"
+              android:layout_marginTop="16dp"
+              android:layout_marginBottom="12dp" />
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="&quot;Ya Allah, tambahkanlah kepadaku ilmu dan berikanlah aku pemahaman yang baik.&quot;"
+              android:textColor="#666666"
+              android:textSize="13sp"
+              android:lineSpacingMultiplier="1.2" />
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- Card Doa 2 -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="16dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Doa Kedua Orang Tua"
+              android:textColor="@color/accent_color"
+              android:textSize="14sp"
+              android:textStyle="bold" />
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="رَبِّ اغْفِرْ لِي وَلِوَALIDEYYَ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا"
+              android:textColor="#212121"
+              android:textSize="22sp"
+              android:gravity="end"
+              android:textStyle="bold"
+              android:layout_marginTop="16dp"
+              android:layout_marginBottom="12dp" />
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="&quot;Tuhanku, ampunilah dosaku dan dosa kedua orang tuaku, dan sayangilah keduanya sebagaimana mereka mendidikku sewaktu kecil.&quot;"
+              android:textColor="#666666"
+              android:textSize="13sp"
+              android:lineSpacingMultiplier="1.2" />
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- Card Doa 3 -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="16dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Doa Sapujagat"
+              android:textColor="@color/accent_color"
+              android:textSize="14sp"
+              android:textStyle="bold" />
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ"
+              android:textColor="#212121"
+              android:textSize="22sp"
+              android:gravity="end"
+              android:textStyle="bold"
+              android:layout_marginTop="16dp"
+              android:layout_marginBottom="12dp" />
+
+          <TextView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="&quot;Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan lindungilah kami dari azab neraka.&quot;"
+              android:textColor="#666666"
+              android:textSize="13sp"
+              android:lineSpacingMultiplier="1.2" />
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF9F9F9">
+
+  <!-- Toolbar -->
+  <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="#FFFFFF"
+      app:title="Dzikir, Doa &amp; Hadits"
+      app:titleTextColor="@color/accent_color"
+      app:navigationIcon="?attr/homeAsUpIndicator"
+      app:navigationContentDescription="Back"
+      app:elevation="2dp" />
+
+  <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Pilih Kategori Ibadah"
+          android:textColor="#212121"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          android:layout_marginBottom="16dp" />
+
+      <!-- Dzikir Pagi -->
+      <com.google.android.material.card.MaterialCardView
+          android:id="@+id/btn_dzikir_pagi"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF"
+          android:clickable="true"
+          android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="☀️"
+              android:textSize="28sp" />
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical"
+              android:layout_marginStart="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dzikir Pagi"
+                android:textColor="#212121"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dibaca setelah shubuh hingga syuruq"
+                android:textColor="#888888"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+          </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="›"
+              android:textColor="@color/accent_color"
+              android:textSize="24sp"
+              android:textStyle="bold"/>
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- Dzikir Sore -->
+      <com.google.android.material.card.MaterialCardView
+          android:id="@+id/btn_dzikir_sore"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF"
+          android:clickable="true"
+          android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="🌙"
+              android:textSize="28sp" />
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical"
+              android:layout_marginStart="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dzikir Sore"
+                android:textColor="#212121"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dibaca setelah ashar hingga maghrib"
+                android:textColor="#888888"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+          </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="›"
+              android:textColor="@color/accent_color"
+              android:textSize="24sp"
+              android:textStyle="bold"/>
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- Dzikir Setelah Shalat -->
+      <com.google.android.material.card.MaterialCardView
+          android:id="@+id/btn_dzikir_shalat"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF"
+          android:clickable="true"
+          android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="🤲"
+              android:textSize="28sp" />
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical"
+              android:layout_marginStart="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dzikir Setelah Shalat"
+                android:textColor="#212121"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wirid rutin sesudah shalat fardhu"
+                android:textColor="#888888"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+          </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="›"
+              android:textColor="@color/accent_color"
+              android:textSize="24sp"
+              android:textStyle="bold"/>
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- Doa Al-Qur'an -->
+      <com.google.android.material.card.MaterialCardView
+          android:id="@+id/btn_doa_quran"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF"
+          android:clickable="true"
+          android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="📖"
+              android:textSize="28sp" />
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical"
+              android:layout_marginStart="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Doa di dalam Al-Qur'an"
+                android:textColor="#212121"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kumpulan doa para nabi dari kitab suci"
+                android:textColor="#888888"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+          </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="›"
+              android:textColor="@color/accent_color"
+              android:textSize="24sp"
+              android:textStyle="bold"/>
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- Hadits Arba'in -->
+      <com.google.android.material.card.MaterialCardView
+          android:id="@+id/btn_hadits_arbain"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="24dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF"
+          android:clickable="true"
+          android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="📜"
+              android:textSize="28sp" />
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical"
+              android:layout_marginStart="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hadits Arba'in Nawawi"
+                android:textColor="#212121"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="42 hadits pokok landasan agama Islam"
+                android:textColor="#888888"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+          </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="›"
+              android:textColor="@color/accent_color"
+              android:textSize="24sp"
+              android:textStyle="bold"/>
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+  </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

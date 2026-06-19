@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+  <!-- Toolbar -->
+  <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="#FFFFFF"
+      app:title="Tulis Catatan"
+      app:titleTextColor="@color/accent_color"
+      app:navigationIcon="?attr/homeAsUpIndicator"
+      app:navigationContentDescription="Back"
+      app:elevation="2dp" />
+
+  <!-- Title Input -->
+  <EditText
+      android:id="@+id/edt_note_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Judul Catatan..."
+      android:textSize="18sp"
+      android:textStyle="bold"
+      android:textColor="#212121"
+      android:background="@null"
+      android:padding="16dp"
+      android:singleLine="true" />
+
+  <!-- Divider -->
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="#FFEAEAEA"
+      android:layout_marginLeft="16dp"
+      android:layout_marginRight="16dp" />
+
+  <!-- Content Input -->
+  <EditText
+      android:id="@+id/edt_note_content"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:hint="Tulis doa, refleksi, rencana ibadah atau catatan harian Anda di sini..."
+      android:textSize="15sp"
+      android:textColor="#424242"
+      android:background="@null"
+      android:padding="16dp"
+      android:gravity="top"
+      android:inputType="textMultiLine" />
+
+  <!-- Bottom Actions -->
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:padding="16dp"
+      android:background="#FFF9F9F9">
+
+    <!-- Delete Button -->
+    <LinearLayout
+        android:id="@+id/btn_delete_note"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_chip_unselected"
+        android:backgroundTint="#FFEEF0"
+        android:gravity="center"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Hapus"
+          android:textColor="#D32F2F"
+          android:textStyle="bold"
+          android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Save Button -->
+    <LinearLayout
+        android:id="@+id/btn_save_note"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_card_doa"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true">
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Simpan Catatan"
+          android:textColor="#FFFFFF"
+          android:textStyle="bold"
+          android:textSize="14sp" />
+    </LinearLayout>
+
+  </LinearLayout>
+
+</LinearLayout>
