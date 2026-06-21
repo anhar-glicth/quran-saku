@@ -34,6 +34,13 @@ class AdhanService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // Handle tombol "Hentikan Adzan" dari notifikasi
+        if (intent?.action == "STOP_ADHAN") {
+            Log.d(TAG, "Stop adhan requested by user")
+            stopSelf()
+            return START_NOT_STICKY
+        }
+
         val prayerName = intent?.getStringExtra(AdhanScheduler.EXTRA_PRAYER_NAME) ?: "Sholat"
 
         Log.d(TAG, "Starting AdhanService for: $prayerName")

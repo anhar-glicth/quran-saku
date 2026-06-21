@@ -50,6 +50,65 @@ object AdhanScheduler {
         scheduleWithCoordinates(context, lat, lng, tz)
     }
 
+    /**
+     * Menjadwalkan adzan untuk hari berikutnya.
+     * Dipanggil setelah alarm Isya selesai, agar adzan terus berjalan setiap hari
+     * tanpa perlu membuka aplikasi (kecuali HP di-restart, BootReceiver yang handle).
+     */
+    fun scheduleForNextDay(context: Context) {
+        val prefs = context.getSharedPreferences("adhan_prefs", Context.MODE_PRIVATE)
+        if (!prefs.getBoolean("adhan_enabled", false)) {
+            Log.d(TAG, "Adhan disabled, skipping next day schedule")
+            return
+        }
+
+        val cityName = prefs.getString("city_name", "Jakarta") ?: "Jakarta"
+        val lat = prefs.getFloat("lat", -6.2088f).toDouble()
+        val lng = prefs.getFloat("lng", 106.8456f).toDouble()
+        val tz = if (cityName == "GPS") {
+            (java.util.TimeZone.getDefault().rawOffset / 3600000.0)
+        } else {
+            prefs.getFloat("timezone", 7.0f).toDouble()
+        }
+
+        Log.d(TAG, "Scheduling adhan for tomorrow")
+
+        // Hitung untuk tanggal besok
+        val tomorrow = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_MONTH, 1)
+        }
+        val calculator = PrayerTimeCalculator(lat, lng, tz)
+        val prayerTimes = calculator.calculate(tomorrow)
+
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val now = System.currentTimeMillis()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Log.w(TAG, "Cannot schedule exact alarms for next day")
+                return
+            }
+        }
+
+        prayerTimes.getSholatTimes().forEach { (name, calendar) ->
+            val baseCode = PRAYER_CODES[name] ?: return@forEach
+            val prayerTimeMs = calendar.timeInMillis
+
+            // Alarm 5 menit sebelum (reminder)
+            val reminderTimeMs = prayerTimeMs - (5 * 60 * 1000)
+            if (reminderTimeMs > now) {
+                scheduleAlarm(context, alarmManager, name, reminderTimeMs, TYPE_REMINDER, baseCode + 1)
+                Log.d(TAG, "Scheduled tomorrow REMINDER for $name at ${calendar.time}")
+            }
+
+            // Alarm tepat waktu adzan
+            if (prayerTimeMs > now) {
+                scheduleAlarm(context, alarmManager, name, prayerTimeMs, TYPE_ADHAN, baseCode + 2)
+                Log.d(TAG, "Scheduled tomorrow ADHAN for $name at ${calendar.time}")
+            }
+        }
+    }
+
     fun scheduleWithCoordinates(context: Context, lat: Double, lng: Double, timezoneOffset: Double = 7.0) {
         val calculator = PrayerTimeCalculator(lat, lng, timezoneOffset)
         val prayerTimes = calculator.calculate()
@@ -181,8 +240,12 @@ object AdhanScheduler {
             } else {
                 scheduleForToday(context)
             }
+            // Jadwalkan WorkManager sebagai lapisan keamanan backup
+            AdhanWorker.schedule(context)
         } else {
             cancelAll(context)
+            // Batalkan juga WorkManager
+            AdhanWorker.cancel(context)
         }
     }
 

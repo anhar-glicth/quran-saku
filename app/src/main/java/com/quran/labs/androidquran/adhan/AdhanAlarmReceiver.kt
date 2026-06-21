@@ -37,9 +37,10 @@ class AdhanAlarmReceiver : BroadcastReceiver() {
             AdhanScheduler.TYPE_ADHAN -> startAdhanService(context, prayerName)
         }
 
-        // Jika ini adalah alarm Isya (sholat terakhir), jadwalkan untuk hari berikutnya
+        // Setelah alarm Isya (sholat terakhir), jadwalkan alarm untuk keesokan harinya
+        // Ini memastikan adzan terus berjalan setiap hari tanpa perlu membuka aplikasi
         if (type == AdhanScheduler.TYPE_ADHAN && prayerName == "Isya") {
-            AdhanScheduler.scheduleForToday(context)
+            AdhanScheduler.scheduleForNextDay(context)
         }
     }
 

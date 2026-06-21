@@ -14,6 +14,8 @@ import com.quran.mobile.di.QuranApplicationComponentProvider
 import dev.zacsweers.metro.HasMemberInjections
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.createGraphFactory
+import com.quran.labs.androidquran.adhan.AdhanScheduler
+import com.quran.labs.androidquran.adhan.AdhanWorker
 import timber.log.Timber
 
 @HasMemberInjections
@@ -35,6 +37,13 @@ open class QuranApplication : Application(), QuranApplicationComponentProvider {
     applicationComponent.inject(this)
     initializeWorkManager()
     bookmarksWidgetSubscriber.subscribeBookmarksWidgetIfNecessary()
+
+    // Jika adzan pernah diaktifkan, jadwalkan ulang saat aplikasi dibuka
+    // Ini menangani kasus update aplikasi atau battery drain yang membersihkan AlarmManager
+    if (AdhanScheduler.isEnabled(this)) {
+      AdhanScheduler.scheduleForToday(this)
+      AdhanWorker.schedule(this)
+    }
 
     // theme setup
     val theme = quranSettings.currentTheme()
