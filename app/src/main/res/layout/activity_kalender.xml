@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFDFBF8">
+
+  <!-- Toolbar -->
+  <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="?attr/actionBarSize"
+      android:background="#FFFFFF"
+      app:title="Kalender Ibadah &amp; Puasa"
+      app:titleTextColor="@color/accent_color"
+      app:navigationIcon="?attr/homeAsUpIndicator"
+      app:navigationContentDescription="Back"
+      app:elevation="2dp" />
+
+  <!-- Main Scrollable Area -->
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+    <!-- Month Navigation Header -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="0dp"
+        android:layout_marginBottom="16dp">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:gravity="center_vertical"
+          android:padding="12dp"
+          android:background="#FFFFFF">
+
+        <!-- Previous Button -->
+        <ImageButton
+            android:id="@+id/btn_prev_month"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/arrow_down"
+            android:rotation="90"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/accent_color" />
+
+        <!-- Month Title -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+          <TextView
+              android:id="@+id/tv_month_title"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Juni 2026"
+              android:textColor="#212121"
+              android:textSize="18sp"
+              android:textStyle="bold" />
+
+          <TextView
+              android:id="@+id/tv_hijri_range"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Dzulhijjah 1447 H - Muharram 1448 H"
+              android:textColor="#757575"
+              android:textSize="12sp"
+              android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Next Button -->
+        <ImageButton
+            android:id="@+id/btn_next_month"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/arrow_up"
+            android:rotation="90"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/accent_color" />
+
+      </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Calendar Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="1dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#FFEAEAEA"
+        android:layout_marginBottom="16dp">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="12dp"
+          android:background="#FFFFFF">
+
+        <!-- Weekdays Header Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+          <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Min" android:textColor="#D32F2F" android:textSize="12sp" android:textStyle="bold" android:gravity="center"/>
+          <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Sen" android:textColor="#757575" android:textSize="12sp" android:textStyle="bold" android:gravity="center"/>
+          <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Sel" android:textColor="#757575" android:textSize="12sp" android:textStyle="bold" android:gravity="center"/>
+          <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Rab" android:textColor="#757575" android:textSize="12sp" android:textStyle="bold" android:gravity="center"/>
+          <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Kam" android:textColor="#757575" android:textSize="12sp" android:textStyle="bold" android:gravity="center"/>
+          <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Jum" android:textColor="#1B5E20" android:textSize="12sp" android:textStyle="bold" android:gravity="center"/>
+          <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Sab" android:textColor="#757575" android:textSize="12sp" android:textStyle="bold" android:gravity="center"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#FFEAEAEA"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Days Grid RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_calendar_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false" />
+
+      </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Details View Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_day_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="0dp"
+        android:layout_marginTop="8dp">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="16dp"
+          android:background="#FFF5ECE5"> <!-- Warm detail background color -->
+
+        <TextView
+            android:id="@+id/tv_detail_date_gregorian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Senin, 22 Juni 2026"
+            android:textColor="#212121"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_detail_date_hijri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7 Dzulhijjah 1447 H"
+            android:textColor="#8D4F00"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginTop="2dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#408D4F00"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Fasting badge -->
+        <LinearLayout
+            android:id="@+id/layout_fasting_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#FFFF6D00"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_marginBottom="8dp">
+
+          <TextView
+              android:id="@+id/tv_detail_fasting_badge"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Puasa Sunnah"
+              android:textColor="#FFFFFF"
+              android:textSize="10sp"
+              android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Fasting explanation title -->
+        <TextView
+            android:id="@+id/tv_detail_fasting_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Puasa Sunnah Senin-Kamis"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Fasting description -->
+        <TextView
+            android:id="@+id/tv_detail_fasting_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Puasa sunnah Senin dan Kamis adalah amalan rutin mingguan yang sangat dianjurkan (Sunnah Muakkad) oleh Rasulullah SAW."
+            android:textColor="#555555"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp" />
+
+      </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+  </LinearLayout>
+</LinearLayout>

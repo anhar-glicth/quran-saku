@@ -444,7 +444,7 @@ class QuranActivity : AppCompatActivity(),
     super.onSaveInstanceState(outState)
   }
 
-  private fun jumpToLastPage() {
+  fun jumpToLastPage() {
     lifecycleScope.launch {
       val recentPage = latestPage()
       jumpTo(

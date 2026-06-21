@@ -1,459 +1,782 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF9F9F9">
+    android:background="#FFFDFBF8">
 
-  <LinearLayout
+  <ScrollView
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:padding="16dp">
+      android:layout_height="match_parent"
+      android:scrollbars="none">
 
-    <!-- Header Card -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="2dp"
-        app:cardBackgroundColor="@color/accent_color"
-        android:layout_marginBottom="16dp"
-        app:strokeWidth="0dp">
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:padding="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="18 Juni 2026 / 3 Dzulhijjah 1447 H"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:alpha="0.9" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selamat Beribadah, Anhar"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginTop="4dp" />
-
-        <View
-            android:layout_width="50dp"
-            android:layout_height="2dp"
-            android:background="#FFFFFF"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text='&quot;Maka ingatlah kepada-Ku, Aku pun akan ingat kepadamu.&quot; (QS. Al-Baqarah: 152)'
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="italic" />
-      </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Section Title & Location Picker -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="8dp">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-      <TextView
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:text="Jadwal Sholat Hari Ini"
-          android:textColor="#212121"
-          android:textSize="18sp"
-          android:textStyle="bold" />
-
-      <TextView
-          android:id="@+id/btn_select_city"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="📍 Jakarta"
-          android:textColor="@color/accent_color"
-          android:textSize="14sp"
-          android:textStyle="bold"
-          android:background="?attr/selectableItemBackgroundBorderless"
-          android:padding="8dp"
-          android:clickable="true"
-          android:focusable="true" />
-    </LinearLayout>
-
-    <!-- Prayer Times Card -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="1dp"
-        app:cardBackgroundColor="#FFFFFF"
-        android:layout_marginBottom="20dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="#FFEAEAEA">
-
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:padding="16dp">
-
-        <!-- Shubuh -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Subuh"
-              android:textColor="#424242"
-              android:textSize="16sp"/>
-          <TextView
-              android:id="@+id/tv_subuh"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="--:--"
-              android:textColor="@color/accent_color"
-              android:textSize="16sp"
-              android:textStyle="bold"
-              android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
-
-        <!-- Dzuhur -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Dzuhur"
-              android:textColor="#424242"
-              android:textSize="16sp"/>
-          <TextView
-              android:id="@+id/tv_dzuhur"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="--:--"
-              android:textColor="@color/accent_color"
-              android:textSize="16sp"
-              android:textStyle="bold"
-              android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
-
-        <!-- Ashar -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Ashar"
-              android:textColor="#424242"
-              android:textSize="16sp"/>
-          <TextView
-              android:id="@+id/tv_ashar"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="--:--"
-              android:textColor="@color/accent_color"
-              android:textSize="16sp"
-              android:textStyle="bold"
-              android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
-
-        <!-- Maghrib -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp">
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Maghrib"
-              android:textColor="#424242"
-              android:textSize="16sp"/>
-          <TextView
-              android:id="@+id/tv_maghrib"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="--:--"
-              android:textColor="@color/accent_color"
-              android:textSize="16sp"
-              android:textStyle="bold"
-              android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
-
-        <!-- Isya -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Isya"
-              android:textColor="#424242"
-              android:textSize="16sp"/>
-          <TextView
-              android:id="@+id/tv_isya"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="--:--"
-              android:textColor="@color/accent_color"
-              android:textSize="16sp"
-              android:textStyle="bold"
-              android:layout_alignParentEnd="true"/>
-        </RelativeLayout>
-      </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <!-- Tools Grid Title -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fitur Tambahan"
-        android:textColor="#212121"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="12dp" />
-
-    <!-- Row 1 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="12dp">
-
-      <!-- Dzikir Card -->
+      <!-- Top Verse Card -->
       <com.google.android.material.card.MaterialCardView
-          android:id="@+id/card_dzikir"
-          android:layout_width="0dp"
+          android:id="@+id/card_verse_banner"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_weight="1"
-          app:cardCornerRadius="12dp"
-          app:cardElevation="1dp"
-          app:cardBackgroundColor="#FFFFFF"
-          android:layout_marginEnd="6dp"
-          app:strokeWidth="1dp"
-          app:strokeColor="#FFEAEAEA"
-          android:clickable="true"
-          android:focusable="true">
-        <LinearLayout
+          app:cardCornerRadius="16dp"
+          app:cardElevation="2dp"
+          android:layout_marginBottom="20dp"
+          app:strokeWidth="0dp">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center">
+            android:background="@drawable/bg_home_verse_gradient"
+            android:padding="20dp">
+
           <TextView
+              android:id="@+id/tv_verse_title"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="📿"
-              android:textSize="28sp"
-              android:layout_marginBottom="6dp"/>
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Dzikir Harian"
-              android:textColor="#212121"
+              android:text="Al-Qamar (Ayat 17)"
+              android:textColor="#FFFFFF"
               android:textSize="13sp"
-              android:textStyle="bold" />
-        </LinearLayout>
+              android:textStyle="bold"
+              android:alpha="0.9"
+              android:visibility="invisible" />
+
+          <TextView
+              android:id="@+id/tv_verse_arabic"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/tv_verse_title"
+              android:layout_marginTop="16dp"
+              android:layout_marginBottom="12dp"
+              android:text="وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِنْ مُدَّكِرٍ"
+              android:textColor="#FFFFFF"
+              android:textSize="22sp"
+              android:textStyle="bold"
+              android:gravity="end" />
+
+          <TextView
+              android:id="@+id/tv_verse_translation"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/tv_verse_arabic"
+              android:layout_marginBottom="16dp"
+              android:text="Dan sungguh, telah Kami mudahkan Al-Qur'an untuk pelajaran, maka adakah orang yang mau mengambil pelajaran"
+              android:textColor="#FFFFFF"
+              android:textSize="13sp"
+              android:textStyle="italic"
+              android:alpha="0.95" />
+
+          <com.google.android.material.card.MaterialCardView
+              android:id="@+id/btn_alhamdulillah"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@id/tv_verse_translation"
+              app:cardCornerRadius="12dp"
+              app:cardBackgroundColor="#8D4F00"
+              app:strokeWidth="0dp"
+              android:clickable="true"
+              android:focusable="true"
+              android:foreground="?attr/selectableItemBackground">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:gravity="center">
+
+              <ImageView
+                  android:layout_width="16dp"
+                  android:layout_height="16dp"
+                  android:src="@drawable/ic_heart_outline"
+                  app:tint="#FFFFFF" />
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Alhamdulillah"
+                  android:textColor="#FFFFFF"
+                  android:textSize="12sp"
+                  android:textStyle="bold"
+                  android:layout_marginStart="6dp" />
+            </LinearLayout>
+          </com.google.android.material.card.MaterialCardView>
+
+        </RelativeLayout>
       </com.google.android.material.card.MaterialCardView>
 
-      <!-- Kiblat Card -->
-      <com.google.android.material.card.MaterialCardView
-          android:id="@+id/card_kiblat"
-          android:layout_width="0dp"
+      <!-- Main Features Grid -->
+      <!-- Row 1 -->
+      <LinearLayout
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_weight="1"
-          app:cardCornerRadius="12dp"
-          app:cardElevation="1dp"
-          app:cardBackgroundColor="#FFFFFF"
-          android:layout_marginStart="6dp"
-          app:strokeWidth="1dp"
-          app:strokeColor="#FFEAEAEA"
-          android:clickable="true"
-          android:focusable="true">
+          android:orientation="horizontal"
+          android:layout_marginBottom="16dp">
+
+        <!-- Quran -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/card_quran"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              app:cardCornerRadius="28dp"
+              app:cardBackgroundColor="#FFFF6D00"
+              app:cardElevation="2dp"
+              app:strokeWidth="0dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_quran_book"
+                app:tint="#FFFFFF" />
+          </com.google.android.material.card.MaterialCardView>
+
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="🧭"
-              android:textSize="28sp"
-              android:layout_marginBottom="6dp"/>
+              android:text="Quran"
+              android:textColor="#212121"
+              android:textSize="11sp"
+              android:textStyle="bold"
+              android:layout_marginTop="8dp"
+              android:gravity="center" />
+        </LinearLayout>
+
+        <!-- Dzikir -->
+        <LinearLayout
+            android:id="@+id/card_dzikir"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              app:cardCornerRadius="28dp"
+              app:cardBackgroundColor="#FFFF6D00"
+              app:cardElevation="2dp"
+              app:strokeWidth="0dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_hands_pray"
+                app:tint="#FFFFFF" />
+          </com.google.android.material.card.MaterialCardView>
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Dzikir"
+              android:textColor="#212121"
+              android:textSize="11sp"
+              android:textStyle="bold"
+              android:layout_marginTop="8dp"
+              android:gravity="center" />
+        </LinearLayout>
+
+        <!-- Arah Kiblat -->
+        <LinearLayout
+            android:id="@+id/card_kiblat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              app:cardCornerRadius="28dp"
+              app:cardBackgroundColor="#FFFF6D00"
+              app:cardElevation="2dp"
+              app:strokeWidth="0dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_kiblat_grid"
+                app:tint="#FFFFFF" />
+          </com.google.android.material.card.MaterialCardView>
+
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Arah Kiblat"
               android:textColor="#212121"
-              android:textSize="13sp"
-              android:textStyle="bold" />
+              android:textSize="11sp"
+              android:textStyle="bold"
+              android:layout_marginTop="8dp"
+              android:gravity="center" />
         </LinearLayout>
-      </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
 
-    <!-- Row 2 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
-
-      <!-- Khatam Card -->
-      <com.google.android.material.card.MaterialCardView
-          android:id="@+id/card_khatam"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          app:cardCornerRadius="12dp"
-          app:cardElevation="1dp"
-          app:cardBackgroundColor="#FFFFFF"
-          android:layout_marginEnd="6dp"
-          app:strokeWidth="1dp"
-          app:strokeColor="#FFEAEAEA"
-          android:clickable="true"
-          android:focusable="true">
+        <!-- Khatam Tracker -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/card_khatam"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center">
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="📖"
-              android:textSize="28sp"
-              android:layout_marginBottom="6dp"/>
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              app:cardCornerRadius="28dp"
+              app:cardBackgroundColor="#FFFF6D00"
+              app:cardElevation="2dp"
+              app:strokeWidth="0dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_medal"
+                app:tint="#FFFFFF" />
+          </com.google.android.material.card.MaterialCardView>
+
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Khatam Tracker"
               android:textColor="#212121"
-              android:textSize="13sp"
-              android:textStyle="bold" />
+              android:textSize="11sp"
+              android:textStyle="bold"
+              android:layout_marginTop="8dp"
+              android:gravity="center" />
         </LinearLayout>
-      </com.google.android.material.card.MaterialCardView>
+      </LinearLayout>
 
-      <!-- Catatan Card -->
-      <com.google.android.material.card.MaterialCardView
-          android:id="@+id/card_catatan"
-          android:layout_width="0dp"
+      <!-- Row 2 -->
+      <LinearLayout
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_weight="1"
-          app:cardCornerRadius="12dp"
-          app:cardElevation="1dp"
-          app:cardBackgroundColor="#FFFFFF"
-          android:layout_marginStart="6dp"
-          app:strokeWidth="1dp"
-          app:strokeColor="#FFEAEAEA"
-          android:clickable="true"
-          android:focusable="true">
+          android:orientation="horizontal"
+          android:layout_marginBottom="24dp">
+
+        <!-- Zakat -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/card_zakat"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              app:cardCornerRadius="28dp"
+              app:cardBackgroundColor="#FFFF6D00"
+              app:cardElevation="2dp"
+              app:strokeWidth="0dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_zakat"
+                app:tint="#FFFFFF" />
+          </com.google.android.material.card.MaterialCardView>
+
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="📝"
-              android:textSize="28sp"
-              android:layout_marginBottom="6dp"/>
+              android:text="Zakat"
+              android:textColor="#212121"
+              android:textSize="11sp"
+              android:textStyle="bold"
+              android:layout_marginTop="8dp"
+              android:gravity="center" />
+        </LinearLayout>
+
+        <!-- Catatan Ibadah -->
+        <LinearLayout
+            android:id="@+id/card_catatan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              app:cardCornerRadius="28dp"
+              app:cardBackgroundColor="#FFFF6D00"
+              app:cardElevation="2dp"
+              app:strokeWidth="0dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_notes"
+                app:tint="#FFFFFF" />
+          </com.google.android.material.card.MaterialCardView>
+
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Catatan Ibadah"
               android:textColor="#212121"
-              android:textSize="13sp"
-              android:textStyle="bold" />
+              android:textSize="11sp"
+              android:textStyle="bold"
+              android:layout_marginTop="8dp"
+              android:gravity="center" />
         </LinearLayout>
-      </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
 
-    <!-- Adzan Notification Toggle Card -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="2dp"
-        app:cardBackgroundColor="#FFFFFF"
-        android:layout_marginBottom="16dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="#FFEAEAEA">
+        <!-- Kalender -->
+        <LinearLayout
+            android:id="@+id/card_kalender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
 
-      <LinearLayout
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              app:cardCornerRadius="28dp"
+              app:cardBackgroundColor="#FFFF6D00"
+              app:cardElevation="2dp"
+              app:strokeWidth="0dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_event"
+                app:tint="#FFFFFF" />
+          </com.google.android.material.card.MaterialCardView>
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Kalender"
+              android:textColor="#212121"
+              android:textSize="11sp"
+              android:textStyle="bold"
+              android:layout_marginTop="8dp"
+              android:gravity="center" />
+        </LinearLayout>
+
+        <!-- Pejuang Kebaikan -->
+        <LinearLayout
+            android:id="@+id/card_pejuang_kebaikan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              app:cardCornerRadius="28dp"
+              app:cardBackgroundColor="#FFFF6D00"
+              app:cardElevation="2dp"
+              app:strokeWidth="0dp">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_strava_quran"
+                app:tint="#FFFFFF" />
+          </com.google.android.material.card.MaterialCardView>
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Pejuang Kebaikan"
+              android:textColor="#212121"
+              android:textSize="11sp"
+              android:textStyle="bold"
+              android:layout_marginTop="8dp"
+              android:gravity="center" />
+        </LinearLayout>
+      </LinearLayout>
+
+      <!-- Campaigns Banners (Horizontal Scroll View) -->
+      <HorizontalScrollView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          android:padding="16dp">
+          android:scrollbars="none"
+          android:layout_marginBottom="24dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="180dp"
+              android:layout_height="100dp"
+              android:layout_marginEnd="12dp"
+              app:cardCornerRadius="12dp"
+              app:cardElevation="2dp"
+              app:strokeWidth="0dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_donasi_maluku"
+                android:scaleType="centerCrop" />
+          </com.google.android.material.card.MaterialCardView>
+
+          <com.google.android.material.card.MaterialCardView
+              android:layout_width="180dp"
+              android:layout_height="100dp"
+              android:layout_marginEnd="12dp"
+              app:cardCornerRadius="12dp"
+              app:cardElevation="2dp"
+              app:strokeWidth="0dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_wakaf_braille"
+                android:scaleType="centerCrop" />
+          </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+      </HorizontalScrollView>
+
+      <!-- Prayer Times Card (Horizontal layout) -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:cardCornerRadius="16dp"
+          app:cardElevation="1dp"
+          app:cardBackgroundColor="#FFFFFF"
+          android:layout_marginBottom="24dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-          <LinearLayout
-              android:layout_width="0dp"
+          <!-- Header -->
+          <RelativeLayout
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:orientation="vertical">
+              android:layout_marginBottom="16dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🔔 Notifikasi Adzan"
-                android:textColor="#212121"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+              <ImageView
+                  android:layout_width="18dp"
+                  android:layout_height="18dp"
+                  android:src="@drawable/ic_time"
+                  app:tint="@color/accent_color" />
+
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Prayer Times"
+                  android:textColor="#212121"
+                  android:textSize="15sp"
+                  android:textStyle="bold"
+                  android:layout_marginStart="6dp" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_adhan_status"
+                android:id="@+id/btn_select_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nonaktif — Tap untuk mengaktifkan"
+                android:layout_alignParentEnd="true"
+                android:text="📍 Jakarta"
                 android:textColor="#757575"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp"/>
-          </LinearLayout>
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="4dp"
+                android:clickable="true"
+                android:focusable="true" />
+          </RelativeLayout>
 
-          <com.google.android.material.switchmaterial.SwitchMaterial
-              android:id="@+id/switch_adhan"
+          <!-- Times list (Horizontal) -->
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:gravity="center_vertical">
+
+            <!-- Subuh -->
+            <LinearLayout
+                android:id="@+id/col_subuh"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp">
+
+              <TextView
+                  android:id="@+id/label_subuh"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="FAJR"
+                  android:textColor="#757575"
+                  android:textSize="11sp"
+                  android:textStyle="bold" />
+
+              <TextView
+                  android:id="@+id/tv_subuh"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="04:12"
+                  android:textColor="#212121"
+                  android:textSize="14sp"
+                  android:textStyle="bold"
+                  android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Dzuhur -->
+            <LinearLayout
+                android:id="@+id/col_dzuhur"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp">
+
+              <TextView
+                  android:id="@+id/label_dzuhur"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="DHUHR"
+                  android:textColor="#757575"
+                  android:textSize="11sp"
+                  android:textStyle="bold" />
+
+              <TextView
+                  android:id="@+id/tv_dzuhur"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="13:05"
+                  android:textColor="#212121"
+                  android:textSize="14sp"
+                  android:textStyle="bold"
+                  android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Ashar -->
+            <LinearLayout
+                android:id="@+id/col_ashar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp">
+
+              <TextView
+                  android:id="@+id/label_ashar"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="ASR"
+                  android:textColor="#757575"
+                  android:textSize="11sp"
+                  android:textStyle="bold" />
+
+              <TextView
+                  android:id="@+id/tv_ashar"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="16:54"
+                  android:textColor="#212121"
+                  android:textSize="14sp"
+                  android:textStyle="bold"
+                  android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Maghrib -->
+            <LinearLayout
+                android:id="@+id/col_maghrib"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp">
+
+              <TextView
+                  android:id="@+id/label_maghrib"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="MAGHRIB"
+                  android:textColor="#757575"
+                  android:textSize="11sp"
+                  android:textStyle="bold" />
+
+              <TextView
+                  android:id="@+id/tv_maghrib"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="20:22"
+                  android:textColor="#212121"
+                  android:textSize="14sp"
+                  android:textStyle="bold"
+                  android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <!-- Isya -->
+            <LinearLayout
+                android:id="@+id/col_isya"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp">
+
+              <TextView
+                  android:id="@+id/label_isya"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="ISHA"
+                  android:textColor="#757575"
+                  android:textSize="11sp"
+                  android:textStyle="bold" />
+
+              <TextView
+                  android:id="@+id/tv_isya"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="21:45"
+                  android:textColor="#212121"
+                  android:textSize="14sp"
+                  android:textStyle="bold"
+                  android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+          </LinearLayout>
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- Bottom Quote Card -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:cardCornerRadius="16dp"
+          app:cardElevation="0dp"
+          app:cardBackgroundColor="#FFF5ECE5"
+          app:strokeWidth="0dp"
+          android:layout_marginBottom="60dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:gravity="center">
+
+          <ImageView
+              android:layout_width="28dp"
+              android:layout_height="28dp"
+              android:src="@drawable/ic_lightbulb"
+              app:tint="#8D4F00"
+              android:layout_marginBottom="12dp" />
+
+          <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:checked="false"
-              app:trackTint="@color/accent_color"/>
+              android:text="&quot;Maka bacalah apa yang mudah bagimu dari Al-Qur'an.&quot;"
+              android:textColor="#553311"
+              android:textSize="14sp"
+              android:gravity="center"
+              android:layout_marginBottom="8dp" />
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="(QS. Al-Muzzammil: 20)"
+              android:textColor="#8D4F00"
+              android:textSize="12sp"
+              android:textStyle="bold"
+              android:gravity="center" />
         </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aktifkan untuk mendapat notifikasi 5 menit sebelum adzan dan suara adzan otomatis saat waktu sholat tiba."
-            android:textColor="#9E9E9E"
-            android:textSize="12sp"
-            android:layout_marginTop="8dp"/>
-      </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+      <!-- Hidden views for legacy functionality/compilation -->
+      <com.google.android.material.switchmaterial.SwitchMaterial
+          android:id="@+id/switch_adhan"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone" />
+      <TextView
+          android:id="@+id/tv_adhan_status"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone" />
 
-  </LinearLayout>
-</ScrollView>
+    </LinearLayout>
+  </ScrollView>
+
+  <!-- Floating Action Button -->
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fab_last_page"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentBottom="true"
+      android:layout_margin="16dp"
+      app:srcCompat="@drawable/ic_quran_book"
+      app:tint="#FFFFFF"
+      app:backgroundTint="#8D4F00"
+      app:elevation="6dp" />
+
+</RelativeLayout>

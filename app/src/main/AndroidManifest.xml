@@ -123,6 +123,10 @@
         android:name=".CatatanWriteActivity"
         android:theme="@style/QuranToolBarDayNight"
         android:exported="false"/>
+    <activity
+        android:name=".KalenderActivity"
+        android:theme="@style/QuranToolBarDayNight"
+        android:exported="false"/>
 
     <!-- Adzan components -->
     <receiver

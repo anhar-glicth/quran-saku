@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:layout_margin="1dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackgroundBorderless">
+
+  <!-- Background Highlight Container -->
+  <View
+      android:id="@+id/view_day_background"
+      android:layout_width="44dp"
+      android:layout_height="44dp"
+      android:layout_gravity="center" />
+
+  <!-- Selection Ring Container -->
+  <View
+      android:id="@+id/view_day_selection"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:layout_gravity="center" />
+
+  <!-- Day numbers -->
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:gravity="center">
+
+    <!-- Gregorian Day -->
+    <TextView
+        android:id="@+id/tv_gregorian_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="22"
+        android:textColor="#212121"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <!-- Hijri Day -->
+    <TextView
+        android:id="@+id/tv_hijri_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7"
+        android:textColor="#757575"
+        android:textSize="9sp" />
+
+  </LinearLayout>
+</FrameLayout>

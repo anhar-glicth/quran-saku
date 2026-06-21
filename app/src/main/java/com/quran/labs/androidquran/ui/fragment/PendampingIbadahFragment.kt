@@ -21,6 +21,9 @@ import com.quran.labs.androidquran.CatatanActivity
 import com.quran.labs.androidquran.DzikirActivity
 import com.quran.labs.androidquran.KhatamActivity
 import com.quran.labs.androidquran.KiblatActivity
+import com.quran.labs.androidquran.PejuangQuranActivity
+import com.quran.labs.androidquran.KalenderActivity
+import com.quran.labs.androidquran.ui.QuranActivity
 import com.quran.labs.androidquran.R
 import androidx.appcompat.app.AlertDialog
 import com.quran.labs.androidquran.adhan.AdhanScheduler
@@ -46,6 +49,10 @@ class PendampingIbadahFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // --- Navigasi ---
+        view.findViewById<View>(R.id.card_quran)?.setOnClickListener {
+            val bottomNav = activity?.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)
+            bottomNav?.selectedItemId = R.id.navigation_tilawah
+        }
         view.findViewById<View>(R.id.card_dzikir)?.setOnClickListener {
             startActivity(Intent(activity, DzikirActivity::class.java))
         }
@@ -55,8 +62,23 @@ class PendampingIbadahFragment : Fragment() {
         view.findViewById<View>(R.id.card_khatam)?.setOnClickListener {
             startActivity(Intent(activity, KhatamActivity::class.java))
         }
+        view.findViewById<View>(R.id.card_zakat)?.setOnClickListener {
+            Toast.makeText(context, "Fitur Zakat sedang dikembangkan", Toast.LENGTH_SHORT).show()
+        }
         view.findViewById<View>(R.id.card_catatan)?.setOnClickListener {
             startActivity(Intent(activity, CatatanActivity::class.java))
+        }
+        view.findViewById<View>(R.id.card_kalender)?.setOnClickListener {
+            startActivity(Intent(activity, KalenderActivity::class.java))
+        }
+        view.findViewById<View>(R.id.card_pejuang_kebaikan)?.setOnClickListener {
+            startActivity(Intent(activity, PejuangQuranActivity::class.java))
+        }
+        view.findViewById<View>(R.id.btn_alhamdulillah)?.setOnClickListener {
+            Toast.makeText(context, "Alhamdulillah! Semoga Allah meridhoi amalan kita.", Toast.LENGTH_SHORT).show()
+        }
+        view.findViewById<View>(R.id.fab_last_page)?.setOnClickListener {
+            (activity as? QuranActivity)?.jumpToLastPage()
         }
 
         // --- Tampilkan waktu sholat ---
@@ -123,8 +145,56 @@ class PendampingIbadahFragment : Fragment() {
             view.findViewById<TextView>(R.id.tv_ashar)?.text = timeFormat.format(times.asr.time)
             view.findViewById<TextView>(R.id.tv_maghrib)?.text = timeFormat.format(times.maghrib.time)
             view.findViewById<TextView>(R.id.tv_isya)?.text = timeFormat.format(times.isha.time)
+
+            highlightActivePrayer(view, times)
         } catch (e: Exception) {
             // Jika gagal, tampilkan -- sebagai fallback
+        }
+    }
+
+    private fun highlightActivePrayer(view: View, times: PrayerTimeCalculator.PrayerTimes) {
+        val now = Calendar.getInstance()
+        fun getMinutesSinceMidnight(cal: Calendar): Int {
+            return cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE)
+        }
+
+        val nowMin = getMinutesSinceMidnight(now)
+        val subuhMin = getMinutesSinceMidnight(times.fajr)
+        val dzuhurMin = getMinutesSinceMidnight(times.dhuhr)
+        val asharMin = getMinutesSinceMidnight(times.asr)
+        val maghribMin = getMinutesSinceMidnight(times.maghrib)
+        val isyaMin = getMinutesSinceMidnight(times.isha)
+
+        val activeColId = when {
+            nowMin in subuhMin until dzuhurMin -> R.id.col_subuh
+            nowMin in dzuhurMin until asharMin -> R.id.col_dzuhur
+            nowMin in asharMin until maghribMin -> R.id.col_ashar
+            nowMin in maghribMin until isyaMin -> R.id.col_maghrib
+            else -> R.id.col_isya
+        }
+
+        val columns = listOf(
+            Triple(R.id.col_subuh, R.id.label_subuh, R.id.tv_subuh),
+            Triple(R.id.col_dzuhur, R.id.label_dzuhur, R.id.tv_dzuhur),
+            Triple(R.id.col_ashar, R.id.label_ashar, R.id.tv_ashar),
+            Triple(R.id.col_maghrib, R.id.label_maghrib, R.id.tv_maghrib),
+            Triple(R.id.col_isya, R.id.label_isya, R.id.tv_isya)
+        )
+
+        for ((colId, labelId, tvId) in columns) {
+            val col = view.findViewById<View>(colId)
+            val label = view.findViewById<TextView>(labelId)
+            val tv = view.findViewById<TextView>(tvId)
+
+            if (colId == activeColId) {
+                col?.setBackgroundResource(R.drawable.bg_active_prayer_time)
+                label?.setTextColor(0xFFFFFFFF.toInt())
+                tv?.setTextColor(0xFFFFFFFF.toInt())
+            } else {
+                col?.setBackgroundResource(0)
+                label?.setTextColor(0xFF757575.toInt())
+                tv?.setTextColor(0xFF212121.toInt())
+            }
         }
     }
 
