@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_auth">
+
+    <!-- ViewPager2 -->
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <!-- Navigation Bar (bottom) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="28dp"
+        android:paddingEnd="28dp"
+        android:paddingBottom="12dp">
+
+        <!-- Skip button -->
+        <TextView
+            android:id="@+id/btnSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lewati"
+            android:textColor="@color/text_muted"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <!-- Spacer -->
+        <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
+
+        <!-- Dots TabLayout -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabDots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tabBackground="@drawable/selector_dot"
+            app:tabGravity="center"
+            app:tabIndicatorHeight="0dp"
+            app:tabPaddingStart="4dp"
+            app:tabPaddingEnd="4dp"
+            android:layout_marginEnd="16dp"/>
+
+        <!-- Spacer -->
+        <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1"/>
+
+        <!-- Next / Start button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Lanjut"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/primary_orange"
+            app:cornerRadius="24dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            app:elevation="4dp"/>
+
+    </LinearLayout>
+
+</FrameLayout>

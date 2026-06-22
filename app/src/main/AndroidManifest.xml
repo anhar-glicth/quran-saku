@@ -56,16 +56,36 @@
       tools:replace="android:fullBackupContent,android:dataExtractionRules"
       tools:targetApi="tiramisu">
 
+    <!-- ── AUTH ACTIVITIES ─────────────────────── -->
     <activity
-        android:name=".QuranDataActivity"
-        android:configChanges="keyboardHidden|orientation|screenSize"
-        android:theme="@style/QuranToolBarDayNight"
+        android:name=".auth.LoginActivity"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:windowSoftInputMode="adjustResize"
         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
         <category android:name="android.intent.category.LAUNCHER"/>
         <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
       </intent-filter>
+    </activity>
+
+    <activity
+        android:name=".auth.RegisterActivity"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:windowSoftInputMode="adjustResize"
+        android:exported="false"/>
+
+    <activity
+        android:name=".auth.OnboardingActivity"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:exported="false"/>
+
+    <!-- ── MAIN APP ─────────────────────────────── -->
+    <activity
+        android:name=".QuranDataActivity"
+        android:configChanges="keyboardHidden|orientation|screenSize"
+        android:theme="@style/QuranToolBarDayNight"
+        android:exported="false">
       <meta-data android:name="android.app.shortcuts"
                  android:resource="@xml/shortcuts" />
     </activity>

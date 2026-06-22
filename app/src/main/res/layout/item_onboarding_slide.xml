@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <!-- Illustration (top 60%) -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:background="@drawable/bg_onboarding_gradient">
+
+        <ImageView
+            android:id="@+id/ivIllustration"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:contentDescription="Onboarding illustration"/>
+    </FrameLayout>
+
+    <!-- Text content (bottom 40%) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:gravity="center_horizontal|top"
+        android:padding="32dp"
+        android:background="@color/bg_auth">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_orange"
+            android:gravity="center"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/text_muted"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:maxWidth="280dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

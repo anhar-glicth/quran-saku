@@ -35,6 +35,7 @@ android {
   }
 
   buildFeatures.resValues = true
+  buildFeatures.viewBinding = true
 
   androidResources {
     // Indonesian is still in instead of id due to https://issuetracker.google.com/issues/36911507
@@ -212,6 +213,7 @@ dependencies {
   implementation(libs.androidx.work.runtime.ktx)
 
   implementation(libs.okhttp)
+  implementation(libs.okhttp.logging)
 
   implementation(libs.moshi)
   ksp(libs.moshi.codegen)

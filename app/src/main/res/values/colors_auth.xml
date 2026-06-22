@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Auth Colors -->
+    <color name="primary_orange">#FF9800</color>
+    <color name="primary_orange_dark">#F57C00</color>
+    <color name="primary_orange_light">#FFF3E0</color>
+    <color name="bg_auth">#FFF8E1</color>
+    <color name="text_dark">#2D3748</color>
+    <color name="text_muted">#718096</color>
+    <color name="border_color">#E2E8F0</color>
+    <color name="input_stroke">#FF9800</color>
+    <color name="onboarding_dot_active">#FF9800</color>
+    <color name="onboarding_dot_inactive">#D7B880</color>
+</resources>
