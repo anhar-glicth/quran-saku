@@ -59,7 +59,7 @@
     <!-- ── AUTH ACTIVITIES ─────────────────────── -->
     <activity
         android:name=".auth.LoginActivity"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:theme="@style/QuranAuthTheme"
         android:windowSoftInputMode="adjustResize"
         android:exported="true">
       <intent-filter>
@@ -71,13 +71,13 @@
 
     <activity
         android:name=".auth.RegisterActivity"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:theme="@style/QuranAuthTheme"
         android:windowSoftInputMode="adjustResize"
         android:exported="false"/>
 
     <activity
         android:name=".auth.OnboardingActivity"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        android:theme="@style/QuranAuthTheme"
         android:exported="false"/>
 
     <!-- ── MAIN APP ─────────────────────────────── -->

@@ -42,4 +42,11 @@
   </style>
 
     <style name="QuranDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Bridge" />
+
+  <style name="QuranAuthTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+    <item name="android:windowBackground">@color/bg_auth</item>
+    <item name="colorPrimary">@color/primary_orange</item>
+    <item name="colorPrimaryDark">@color/primary_orange_dark</item>
+    <item name="colorAccent">@color/primary_orange</item>
+  </style>
 </resources>
