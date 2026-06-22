@@ -43,10 +43,15 @@
 
     <style name="QuranDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Bridge" />
 
-  <style name="QuranAuthTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+  <style name="QuranAuthTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
     <item name="android:windowBackground">@color/bg_auth</item>
     <item name="colorPrimary">@color/primary_orange</item>
     <item name="colorPrimaryDark">@color/primary_orange_dark</item>
     <item name="colorAccent">@color/primary_orange</item>
+    <item name="android:statusBarColor">@color/bg_auth</item>
+    <item name="android:navigationBarColor">@color/bg_auth</item>
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="android:windowLightStatusBar">true</item>
+    <item name="android:windowLightNavigationBar">true</item>
   </style>
 </resources>
