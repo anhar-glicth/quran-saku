@@ -241,19 +241,22 @@ class TajwidDetailFragment : Fragment() {
     return when (category) {
       "nun_sukun" -> CategoryData(
           title = "Nun Sukun & Tanwin",
-          subtitle = "Kuasai empat hukum utama yang mengatur pelafalan Nun mati (Sukun) atau Tanwin ketika bertemu dengan huruf-huruf Hijaiyah tertentu.",
+          subtitle = "Kuasai lima hukum utama yang mengatur pelafalan Nun mati (Sukun) atau Tanwin ketika bertemu dengan huruf-huruf Hijaiyah.",
           characters = "نْ  ً  ٍ  ٌ",
           charactersLabel = "Bentuk Nun Sukun & Tanwin",
           rules = listOf(
-              TajwidRule("1. Izhar Halqi", "Jelas", "#FFEBE0", "#D86D38", "Pelafalan yang jelas dan tegas tanpa dengung.", "ء ه ع ح غ kh", "*Bacalah bunyi Nun/Tanwin secara jelas tanpa dengungan (ghunnah).*"),
-              TajwidRule("2. Idgham", "Melebur", "#E3F2FD", "#1E88E5", "Meleburkan bunyi ke huruf berikutnya.", "ي ن م و ل ر", "*Bunyi Nun/Tanwin dimasukkan ke huruf berikutnya. Terbagi menjadi Bighunnah (dengan dengung) dan Bilaghunnah (tanpa dengung).*"),
-              TajwidRule("3. Iqlab", "Mengubah", "#F3E5F5", "#8E24AA", "Mengubah bunyi menjadi Mim.", "ب", "*Bunyi Nun/Tanwin diubah menjadi bunyi Mim (م) disertai dengan dengungan samar.*"),
-              TajwidRule("4. Ikhfa Haqiqi", "Samar", "#E8F5E9", "#2E7D32", "Menyamarkan bunyi bacaan.", "ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك", "*Samarkan bunyi Nun dan tahan dengungan selama 2 harakat.*", "15 Huruf Lainnya")
+              TajwidRule("1. Izhar Halqi", "Jelas", "#FFEBE0", "#D86D38", "Pelafalan yang jelas dan tegas tanpa dengung.", "ء ه ع ح غ خ", "*Bacalah bunyi Nun/Tanwin secara jelas tanpa dengungan (ghunnah).*"),
+              TajwidRule("2. Idgham Bighunnah", "Melebur + Dengung", "#E3F2FD", "#1E88E5", "Meleburkan bunyi disertai dengan dengung.", "ي ن م w", "*Masukkan bunyi Nun/Tanwin ke huruf berikutnya disertai dengungan selama 2 harakat.*"),
+              TajwidRule("3. Idgham Bilaghunnah", "Melebur Tanpa Dengung", "#E0F7FA", "#00838F", "Meleburkan bunyi tanpa adanya dengung.", "ل ر", "*Masukkan bunyi Nun/Tanwin langsung ke huruf berikutnya tanpa dengungan.*"),
+              TajwidRule("4. Iqlab", "Mengubah", "#F3E5F5", "#8E24AA", "Mengubah bunyi Nun/Tanwin menjadi Mim.", "ب", "*Bunyi Nun/Tanwin diubah menjadi bunyi Mim (م) disertai dengan dengungan samar.*"),
+              TajwidRule("5. Ikhfa Haqiqi", "Samar", "#E8F5E9", "#2E7D32", "Menyamarkan bunyi bacaan.", "ت ث ج d ذ ز س š ص ض ط ظ ف ق ك", "*Samarkan bunyi Nun/Tanwin dan tahan dengungan selama 2 harakat.*")
           ),
           examples = listOf(
-              TajwidExample("Contoh: Izhar", "Pelafalan Jelas", "مَنْ آمَنَ", "Man Aamana"),
+              TajwidExample("Contoh: Izhar Halqi", "Pelafalan Jelas", "مَنْ آمَنَ", "Man Aamana"),
               TajwidExample("Contoh: Idgham Bighunnah", "Melebur dengan Dengung", "مَنْ يَقُولُ", "May Yaqulu"),
-              TajwidExample("Contoh: Iqlab", "Mengubah ke 'Mim'", "مِنْ بَعْدِ", "Mim Ba'di")
+              TajwidExample("Contoh: Idgham Bilaghunnah", "Melebur tanpa Dengung", "مِنْ لَدُنْهُ", "Mil Ladunhu"),
+              TajwidExample("Contoh: Iqlab", "Mengubah ke 'Mim'", "مِنْ بَعْدِ", "Mim Ba'di"),
+              TajwidExample("Contoh: Ikhfa Haqiqi", "Samar", "مِنْ قَبْلِ", "Min Qabli")
           ),
           quiz = TajwidQuiz(
               question = "Hukum tajwid apakah jika Nun Sukun atau Tanwin bertemu dengan huruf Ba (ب)?",
@@ -290,8 +293,8 @@ class TajwidDetailFragment : Fragment() {
           characters = "الـ",
           charactersLabel = "Bentuk Alif Lam Tarikh",
           rules = listOf(
-              TajwidRule("1. Alif Lam Qamariyah", "Jelas / Sukun", "#FFEBE0", "#D86D38", "Alif Lam dibaca jelas.", "ء ب ج ح خ ع غ ف ق ك م w h y", "*Alif Lam dibaca dengan jelas (sukunnya terdengar nyata) sebelum huruf Qamariyah.*"),
-              TajwidRule("2. Alif Lam Syamsiyah", "Melebur / Tasydid", "#E3F2FD", "#1E88E5", "Alif Lam tidak dibaca melainkan melebur.", "ت ث د ذ ر ز س ش ص ض ط ظ ل ن", "*Suara Alif Lam dileburkan langsung masuk ke huruf berikutnya yang bertasydid.*")
+              TajwidRule("1. Alif Lam Qamariyah", "Jelas / Sukun", "#FFEBE0", "#D86D38", "Alif Lam dibaca jelas.", "ء ب ج ح خ ع غ ف ق ك م و ه ي", "*Alif Lam dibaca dengan jelas (sukunnya terdengar nyata) sebelum huruf Qamariyah.*"),
+              TajwidRule("2. Alif Lam Syamsiyah", "Melebur / Tasydid", "#E3F2FD", "#1E88E5", "Alif Lam tidak dibaca melainkan melebur.", "ت ث د ذ ر z س ش ص ض ط ظ ل ن", "*Suara Alif Lam dileburkan langsung masuk ke huruf berikutnya yang bertasydid.*")
           ),
           examples = listOf(
               TajwidExample("Contoh: Al-Qamariyah", "Dibaca Jelas", "الْحَمْدُ", "Al-Hamdu"),
@@ -310,15 +313,20 @@ class TajwidDetailFragment : Fragment() {
           characters = "ا  و  ي",
           charactersLabel = "Huruf Mad (Alif, Wawu, Ya)",
           rules = listOf(
-              TajwidRule("1. Mad Asli / Thabi'i", "Pokok", "#FFEBE0", "#D86D38", "Mad dasar 2 harakat.", "Alif, Wawu, Ya (dengan harakat sesuai)", "*Memanjangkan bacaan sebanyak 2 harakat secara alami tanpa adanya hamzah atau sukun.*"),
+              TajwidRule("1. Mad Asli / Thabi'i", "Pokok", "#FFEBE0", "#D86D38", "Mad dasar 2 harakat.", "Alif, Wawu, Ya (dengan harakat sesuai)", "*Memanjangkan bacaan sebanyak 2 harakat secara alami tanpa hamzah atau sukun.*"),
               TajwidRule("2. Mad Wajib Muttasil", "Wajib", "#E3F2FD", "#1E88E5", "Bertemu Hamzah dalam satu kata.", "Mad Asli + Hamzah (1 kata)", "*Wajib dibaca panjang 4 sampai 5 harakat.*"),
               TajwidRule("3. Mad Jaiz Munfasil", "Jaiz", "#F3E5F5", "#8E24AA", "Bertemu Hamzah di lain kata.", "Mad Asli + Hamzah (beda kata)", "*Boleh dibaca panjang 2, 4, atau 5 harakat.*"),
-              TajwidRule("4. Mad Arid Lissukun", "Waqaf", "#E8F5E9", "#2E7D32", "Mad di akhir ayat sebelum waqaf.", "Mad Asli + Huruf mati karena Waqaf", "*Dibaca panjang 2, 4, atau 6 harakat di akhir kata yang dihentikan.*")
+              TajwidRule("4. Mad Arid Lissukun", "Waqaf", "#E8F5E9", "#2E7D32", "Mad di akhir ayat sebelum waqaf.", "Mad Asli + Huruf mati karena Waqaf", "*Dibaca panjang 2, 4, atau 6 harakat di akhir kata yang dihentikan.*"),
+              TajwidRule("5. Mad Badal", "Pengganti", "#E0F7FA", "#00838F", "Hamzah mendahului huruf mad.", "ء + Huruf Mad", "*Dibaca sepanjang 2 harakat sebagai pengganti Hamzah.*"),
+              TajwidRule("6. Mad Iwad", "Penggantian Tanwin", "#FFF9C4", "#F57F17", "Tanwin Fathah dibaca waqaf di akhir kata.", "ً (di akhir ayat)", "*Tanwin diganti menjadi alif panjang dan dibaca 2 harakat.*"),
+              TajwidRule("7. Mad Layyin", "Lunak", "#E0F2F1", "#004D40", "Fathah bertemu Wawu/Ya sukun sebelum huruf hidup waqaf.", "w / y didahului Fathah", "*Boleh dibaca sepanjang 2, 4, atau 6 harakat.*"),
+              TajwidRule("8. Mad Lazim Kilmi", "Pasti/Lazim", "#FCE4EC", "#880E4F", "Mad Asli bertemu huruf bertasydid dalam 1 kata.", "Mad Asli + Tasydid", "*Wajib dibaca sepanjang 6 harakat.*")
           ),
           examples = listOf(
               TajwidExample("Contoh: Mad Thabi'i", "Mad Dasar", "قَالَ", "Qaala"),
               TajwidExample("Contoh: Mad Wajib", "Mad Wajib Muttasil", "جَاءَ", "Jaa'a"),
-              TajwidExample("Contoh: Mad Jaiz", "Mad Jaiz Munfasil", "بِمَا أُنْزِلَ", "Bimaa unzila")
+              TajwidExample("Contoh: Mad Jaiz", "Mad Jaiz Munfasil", "بِمَا أُنْزِلَ", "Bimaa unzila"),
+              TajwidExample("Contoh: Mad Iwad", "Penggantian Tanwin", "عَلِيمًا (waqaf)", "Alīmā")
           ),
           quiz = TajwidQuiz(
               question = "Berapa harakatkah panjang bacaan Mad Wajib Muttasil?",
@@ -327,14 +335,108 @@ class TajwidDetailFragment : Fragment() {
               explanation = "Mad Wajib Muttasil wajib dibaca panjang sepanjang 4 sampai 5 harakat ketika bersambung dengan hamzah dalam satu kata."
           )
       )
+      "idgham_qalqalah" -> CategoryData(
+          title = "Idgham & Qalqalah",
+          subtitle = "Teknik meleburkan suara ke huruf sejenis serta memantulkan bunyi huruf-huruf tertentu saat sukun.",
+          characters = "ق ط ب ج د",
+          charactersLabel = "Huruf Qalqalah (Baju Di Toko)",
+          rules = listOf(
+              TajwidRule("1. Qalqalah Sugra", "Pantulan Kecil", "#FFEBE0", "#D86D38", "Pantulan di tengah kata.", "ق ط ب ج د (sukun asli)", "*Pantulan suara yang tipis/ringan karena huruf berada di tengah kata.*"),
+              TajwidRule("2. Qalqalah Kubra", "Pantulan Besar", "#E3F2FD", "#1E88E5", "Pantulan di akhir kata (waqaf).", "ق ط ب ج د (dihentikan)", "*Pantulan suara yang kuat dan tebal karena huruf berada di akhir kata.*"),
+              TajwidRule("3. Qalqalah Akbar", "Pantulan Terkuat", "#E8F5E9", "#2E7D32", "Pantulan huruf bertasydid saat waqaf.", "ق ط ب ج د (tasydid + waqaf)", "*Pantulan sangat kuat dan ditahan sejenak sebelum dipantulkan.*"),
+              TajwidRule("4. Idgham Mutamatsilain", "Melebur Sama", "#F3E5F5", "#8E24AA", "Pertemuan dua huruf yang sama persis.", "Huruf sama (sukun + harakat)", "*Memasukkan huruf pertama yang sukun ke huruf kedua.*"),
+              TajwidRule("5. Idgham Mutajanisain", "Melebur Sejenis", "#E0F7FA", "#00838F", "Pertemuan huruf yang sama makhraj beda sifat.", "ت-d-ط / ذ-ظ-ث / ب-م", "*Huruf pertama dileburkan sepenuhnya ke huruf kedua.*"),
+              TajwidRule("6. Idgham Mutaqaribain", "Melebur Berdekatan", "#FFF9C4", "#F57F17", "Pertemuan huruf yang hampir sama makhraj & sifat.", "ق-ك / ل-ر", "*Dileburkan langsung ke huruf berikutnya.*")
+          ),
+          examples = listOf(
+              TajwidExample("Contoh: Sugra", "Pantulan Kecil (Sugra)", "يَقْطَعُونَ", "Yaqtha'uuna"),
+              TajwidExample("Contoh: Kubra", "Pantulan Besar (Kubra)", "عَذَابٌ شَدِيدٌ", "Syadiid (diwaqafkan)"),
+              TajwidExample("Contoh: Akbar", "Pantulan Sangat Kuat", "تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ", "Watabb (diwaqafkan)"),
+              TajwidExample("Contoh: Mutamatsilain", "Melebur Sama", "اذْهَبْ بِكِتَابِي", "Idzhab bikitaabi")
+          ),
+          quiz = TajwidQuiz(
+              question = "Hukum apakah yang memantulkan bunyi huruf tajwid di tengah-tengah kata?",
+              options = listOf("Qalqalah Sugra", "Qalqalah Kubra", "Idgham Mutamatsilain"),
+              correctIndex = 0,
+              explanation = "Qalqalah Sugra terjadi apabila huruf qalqalah mati asli berada di tengah kata dan dipantulkan secara ringan."
+          )
+      )
+      "ghunnah" -> CategoryData(
+          title = "Ghunnah Musyaddadah",
+          subtitle = "Hukum membaca huruf Nun dan Mim bertasydid dengan cara mendengung panjang di hidung.",
+          characters = "نّ  مّ",
+          charactersLabel = "Huruf Ghunnah",
+          rules = listOf(
+              TajwidRule("1. Nun Tasydid", "Dengung Nun", "#FFEBE0", "#D86D38", "Mendengungkan suara Nun bertasydid.", "نّ", "*Tahan bunyi dengungan di pangkal hidung selama 2-3 harakat.*"),
+              TajwidRule("2. Mim Tasydid", "Dengung Mim", "#E3F2FD", "#1E88E5", "Mendengungkan suara Mim bertasydid.", "مّ", "*Tahan bunyi dengungan dengan bibir tertutup selama 2-3 harakat.*")
+          ),
+          examples = listOf(
+              TajwidExample("Contoh: Nun Tasydid", "Dengung Nun", "إِنَّ مَعَ الْعُسْرِ", "Inna ma'al 'usri"),
+              TajwidExample("Contoh: Mim Tasydid", "Dengung Mim", "ثُمَّ كَلَّا", "Tsumma kallaa")
+          ),
+          quiz = TajwidQuiz(
+              question = "Berapa harakatkah kita harus menahan dengungan Ghunnah Musyaddadah?",
+              options = listOf("1 harakat", "2 sampai 3 harakat", "5 harakat"),
+              correctIndex = 1,
+              explanation = "Ghunnah Musyaddadah dibaca dengan menahan dengung di pangkal hidung sepanjang 2 sampai 3 harakat."
+          )
+      )
+      "ra_lam" -> CategoryData(
+          title = "Hukum Ra & Lam",
+          subtitle = "Aturan menebalkan (Tafkhim) atau menipiskan (Tarqiq) pelafalan huruf Ra dan huruf Lam pada lafal Jalalah (Allah).",
+          characters = "ر  ل",
+          charactersLabel = "Huruf Ra & Lam",
+          rules = listOf(
+              TajwidRule("1. Ra Tafkhim", "Ra Tebal", "#FFEBE0", "#D86D38", "Membaca Ra dengan tebal/gemuk.", "ر (Fathah/Dhammah, atau sukun didahului fathah/dhammah)", "*Ujung lidah dinaikkan ke langit-langit mulut agar suaranya terdengar tebal.*"),
+              TajwidRule("2. Ra Tarqiq", "Ra Tipis", "#E3F2FD", "#1E88E5", "Membaca Ra dengan tipis/pipih.", "ر (Kasrah, atau sukun didahului kasrah)", "*Pelafalan tipis di mana posisi lidah tetap di bawah.*"),
+              TajwidRule("3. Lam Jalalah Tafkhim", "Lam Tebal", "#F3E5F5", "#8E24AA", "Membaca lafal Allah secara tebal.", "اللّٰه didahului Fathah/Dhammah", "*Suara Lam dibaca tebal (cth: 'Awwalullah' / 'Rasulullah').*"),
+              TajwidRule("4. Lam Jalalah Tarqiq", "Lam Tipis", "#E8F5E9", "#2E7D32", "Membaca lafal Allah secara tipis.", "اللّٰه didahului Kasrah", "*Suara Lam dibaca tipis (cth: 'Billahi' / 'Bismillahi').*")
+          ),
+          examples = listOf(
+              TajwidExample("Contoh: Ra Tafkhim", "Tebal", "رَبَّنَا", "Rabbanaa"),
+              TajwidExample("Contoh: Ra Tarqiq", "Tipis", "رِجَالٌ", "Rijaalun"),
+              TajwidExample("Contoh: Lam Tafkhim", "Lafal Allah Tebal", "عَبْدُ اللَّهِ", "Abdu-llah"),
+              TajwidExample("Contoh: Lam Tarqiq", "Lafal Allah Tipis", "بِسْمِ اللَّهِ", "Bismi-llah")
+          ),
+          quiz = TajwidQuiz(
+              question = "Bagaimanakah cara membaca lafal Allah (Jalalah) jika didahului huruf berharakat Fathah?",
+              options = listOf("Tafkhim (Tebal)", "Tarqiq (Tipis)", "Tawasuth (Sedang)"),
+              correctIndex = 0,
+              explanation = "Jika lafal Allah didahului oleh huruf berharakat Fathah atau Dhammah, maka ia wajib dibaca tebal (Tafkhim)."
+          )
+      )
+      "waqaf_ibtida" -> CategoryData(
+          title = "Tanda Waqaf & Ibtida",
+          subtitle = "Pedoman rambu-rambu berhenti (Waqaf) dan memulai kembali (Ibtida') dalam melantunkan bacaan Al-Qur'an.",
+          characters = "م  ج  قلى  صلى  لا",
+          charactersLabel = "Simbol Tanda Waqaf",
+          rules = listOf(
+              TajwidRule("1. Waqaf Lazim (م)", "Wajib Berhenti", "#FFEBE0", "#D86D38", "Harus berhenti di tanda ini.", "م", "*Wajib berhenti demi menjaga kesempurnaan arti ayat.*"),
+              TajwidRule("2. Waqaf Jaiz (ج)", "Boleh Berhenti", "#E3F2FD", "#1E88E5", "Boleh berhenti atau melanjutkan.", "ج", "*Memiliki kedudukan hukum yang setara antara berhenti atau lanjut.*"),
+              TajwidRule("3. Al-Waqfu Ula (قلى)", "Lebih Baik Berhenti", "#F3E5F5", "#8E24AA", "Berhenti lebih utama.", "قلى", "*Diutamakan untuk menghentikan bacaan.*"),
+              TajwidRule("4. Al-Washlu Ula (صلى)", "Lebih Baik Lanjut", "#E8F5E9", "#2E7D32", "Melanjutkan lebih utama.", "صلى", "*Diutamakan untuk meneruskan bacaan tanpa berhenti.*"),
+              TajwidRule("5. Laa Taqif (لا)", "Jangan Berhenti", "#FCE4EC", "#C2185B", "Tidak boleh berhenti di sini.", "لا", "*Dilarang berhenti kecuali di akhir ayat.*"),
+              TajwidRule("6. Waqaf Mu'anaqah (؂)", "Berhenti di Salah Satu", "#E0F7FA", "#00838F", "Berhenti di salah satu titik tiga.", "◌؂◌   ◌؂◌", "*Berhenti di salah satu tanda titik tiga, tidak boleh di kedua-duanya.*")
+          ),
+          examples = listOf(
+              TajwidExample("Contoh: Waqaf Lazim", "Wajib Berhenti", "فَلَا يَحْزُنْكَ قَوْلُهُمْ ۘ (berhenti)", "Qouluhum (stop)"),
+              TajwidExample("Contoh: Waqaf Jaiz", "Boleh Berhenti/Lanjut", "أَنْ لَا تَعْبُdُوا إِلَّا اللَّهَ ۖ (berhenti/lanjut)", "Illa-llah")
+          ),
+          quiz = TajwidQuiz(
+              question = "Tanda waqaf apakah yang melarang pembaca Al-Qur'an untuk menghentikan bacaan di tengah ayat?",
+              options = listOf("Waqaf Lazim (م)", "Laa Taqif (لا)", "Al-Waqfu Ula (قلى)"),
+              correctIndex = 1,
+              explanation = "Tanda Waqaf Laa Taqif (لا) berarti 'tidak boleh berhenti' di tengah-tengah ayat."
+          )
+      )
       else -> CategoryData(
           title = "Idgham & Qalqalah",
           subtitle = "Teknik meleburkan suara ke huruf berikutnya serta memantulkan bunyi huruf-huruf tertentu saat sukun.",
           characters = "ق ط ب ج د",
           charactersLabel = "Huruf Qalqalah (Baju Di Toko)",
           rules = listOf(
-              TajwidRule("1. Qalqalah Sugra", "Pantulan Kecil", "#FFEBE0", "#D86D38", "Pantulan di tengah kata.", "ق ط ب ج د (sukun asli)", "*Pantulan suara yang tipis/ringan karena huruf berada di tengah-tengah kata.*"),
-              TajwidRule("2. Qalqalah Kubra", "Pantulan Besar", "#E3F2FD", "#1E88E5", "Pantulan di akhir kata (waqaf).", "ق ط ب ج د (dihentikan)", "*Pantulan suara yang kuat dan tebal karena huruf berada di akhir kata yang dibaca sukun.*"),
+              TajwidRule("1. Qalqalah Sugra", "Pantulan Kecil", "#FFEBE0", "#D86D38", "Pantulan di tengah kata.", "ق ط ب ج d (sukun asli)", "*Pantulan suara yang tipis/ringan karena huruf berada di tengah-tengah kata.*"),
+              TajwidRule("2. Qalqalah Kubra", "Pantulan Besar", "#E3F2FD", "#1E88E5", "Pantulan di akhir kata (waqaf).", "ق ط ب ج d (dihentikan)", "*Pantulan suara yang kuat dan tebal karena huruf berada di akhir kata yang dibaca sukun.*"),
               TajwidRule("3. Idgham Mutamatsilain", "Melebur Sama", "#F3E5F5", "#8E24AA", "Pertemuan dua huruf sejenis.", "Pertemuan dua huruf sama (mati & hidup)", "*Memasukkan huruf pertama yang mati ke huruf kedua yang sejenis.*")
           ),
           examples = listOf(

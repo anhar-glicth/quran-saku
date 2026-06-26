@@ -46,6 +46,18 @@ class TajwidFragment : Fragment() {
     view.findViewById<View>(R.id.card_idgham_qalqalah).setOnClickListener {
       openDetailFragment("idgham_qalqalah")
     }
+
+    view.findViewById<View>(R.id.card_ghunnah).setOnClickListener {
+      openDetailFragment("ghunnah")
+    }
+
+    view.findViewById<View>(R.id.card_ra_lam).setOnClickListener {
+      openDetailFragment("ra_lam")
+    }
+
+    view.findViewById<View>(R.id.card_waqaf_ibtida).setOnClickListener {
+      openDetailFragment("waqaf_ibtida")
+    }
   }
 
   private fun openDetailFragment(category: String) {

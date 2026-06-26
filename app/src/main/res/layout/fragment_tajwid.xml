@@ -343,51 +343,213 @@
         </androidx.cardview.widget.CardView>
       </LinearLayout>
 
-      <!-- Idgham & Qalqalah (Full Width) -->
-      <androidx.cardview.widget.CardView
-          android:id="@+id/card_idgham_qalqalah"
+      <!-- Grid Column 3: Idgham & Qalqalah & Ghunnah Musyaddadah -->
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="24dp"
-          app:cardCornerRadius="14dp"
-          app:cardElevation="1dp"
-          app:cardBackgroundColor="#FFFFFF"
-          android:clickable="true"
-          android:focusable="true"
-          android:foreground="?attr/selectableItemBackground">
-        <LinearLayout
-            android:layout_width="match_parent"
+          android:orientation="horizontal"
+          android:layout_marginBottom="12dp">
+
+        <!-- Idgham & Qalqalah -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_idgham_qalqalah"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-          <FrameLayout
-              android:layout_width="40dp"
-              android:layout_height="40dp"
-              android:background="@drawable/circle_peach_bg"
-              android:layout_marginBottom="12dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_tajwid_idgham_qalqalah"
-                android:tint="#D86D38"/>
-          </FrameLayout>
-          <TextView
-              android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+          <LinearLayout
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="Idgham &amp; Qalqalah"
-              android:textColor="#3D2513"
-              android:textSize="14sp"
-              android:textStyle="bold"/>
-          <TextView
-              android:layout_width="wrap_content"
+              android:orientation="vertical"
+              android:padding="16dp">
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_peach_bg"
+                android:layout_marginBottom="12dp">
+              <ImageView
+                  android:layout_width="20dp"
+                  android:layout_height="20dp"
+                  android:layout_gravity="center"
+                  android:src="@drawable/ic_tajwid_idgham_qalqalah"
+                  android:tint="#D86D38"/>
+            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Idgham &amp;\nQalqalah"
+                android:textColor="#3D2513"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:lineSpacingMultiplier="1.1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Teknik melebur dan memantulkan bunyi."
+                android:textColor="#8D7A6E"
+                android:textSize="11sp"/>
+          </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Ghunnah Musyaddadah -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_ghunnah"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+          <LinearLayout
+              android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="6dp"
-              android:text="Teknik meleburkan dan memantulkan bunyi huruf tertentu."
-              android:textColor="#8D7A6E"
-              android:textSize="11sp"/>
-        </LinearLayout>
-      </androidx.cardview.widget.CardView>
+              android:orientation="vertical"
+              android:padding="16dp">
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_peach_bg"
+                android:layout_marginBottom="12dp">
+              <ImageView
+                  android:layout_width="20dp"
+                  android:layout_height="20dp"
+                  android:layout_gravity="center"
+                  android:src="@drawable/ic_tajwid"
+                  android:tint="#D86D38"/>
+            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ghunnah\nMusyaddadah"
+                android:textColor="#3D2513"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:lineSpacingMultiplier="1.1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Dengung pada Nun/Mim bertasydid."
+                android:textColor="#8D7A6E"
+                android:textSize="11sp"/>
+          </LinearLayout>
+        </androidx.cardview.widget.CardView>
+      </LinearLayout>
+
+      <!-- Grid Column 4: Hukum Ra & Lam & Tanda Waqaf -->
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:layout_marginBottom="24dp">
+
+        <!-- Hukum Ra & Lam -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_ra_lam"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="6dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="16dp">
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_peach_bg"
+                android:layout_marginBottom="12dp">
+              <ImageView
+                  android:layout_width="20dp"
+                  android:layout_height="20dp"
+                  android:layout_gravity="center"
+                  android:src="@drawable/ic_quran_book"
+                  android:tint="#D86D38"/>
+            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hukum Ra &amp;\nLam"
+                android:textColor="#3D2513"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:lineSpacingMultiplier="1.1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Tafkhim &amp; Tarqiq pelafalan."
+                android:textColor="#8D7A6E"
+                android:textSize="11sp"/>
+          </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Tanda Waqaf & Ibtida -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_waqaf_ibtida"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="6dp"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="16dp">
+            <FrameLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_peach_bg"
+                android:layout_marginBottom="12dp">
+              <ImageView
+                  android:layout_width="20dp"
+                  android:layout_height="20dp"
+                  android:layout_gravity="center"
+                  android:src="@drawable/ic_lightbulb"
+                  android:tint="#D86D38"/>
+            </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tanda Waqaf &amp;\nIbtida"
+                android:textColor="#3D2513"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:lineSpacingMultiplier="1.1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Panduan tempat berhenti &amp; mulai."
+                android:textColor="#8D7A6E"
+                android:textSize="11sp"/>
+          </LinearLayout>
+        </androidx.cardview.widget.CardView>
+      </LinearLayout>
 
       <!-- Tips Belajar Card -->
       <androidx.cardview.widget.CardView
