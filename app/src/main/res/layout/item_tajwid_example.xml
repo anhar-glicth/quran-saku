@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="1dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="16dp"
+      android:gravity="center">
+
+    <TextView
+        android:id="@+id/txt_example_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Contoh: Izhar"
+        android:textColor="#D86D38"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="2dp"/>
+
+    <TextView
+        android:id="@+id/txt_example_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pelafalan Jelas"
+        android:textColor="#3D2513"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"/>
+
+    <TextView
+        android:id="@+id/txt_example_arabic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="مَنْ آمَنَ"
+        android:textColor="#3D2513"
+        android:textSize="26sp"
+        android:fontFamily="serif"
+        android:layout_marginBottom="6dp"/>
+
+    <TextView
+        android:id="@+id/txt_example_translit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Man Aamana"
+        android:textColor="#8D7A6E"
+        android:textSize="12sp"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btn_listen"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:backgroundTint="#FF6D00"
+        android:text="Dengarkan"
+        android:textColor="#FFFFFF"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:paddingHorizontal="16dp"
+        android:icon="@android:drawable/ic_media_play"
+        android:iconTint="#FFFFFF"
+        android:iconSize="12dp"
+        style="@style/Widget.MaterialComponents.Button"
+        app:cornerRadius="16dp"/>
+
+  </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFF9F6"
+    android:clickable="true"
+    android:focusable="true">
+
+  <!-- Custom Toolbar Header -->
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:background="#FFF9F6"
+      android:paddingHorizontal="16dp">
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/ic_menu_revert"
+        android:rotation="180"
+        android:tint="#8D5C2C"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Al-Qalam"
+        android:textColor="#8D5C2C"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+      <ImageView
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:layout_marginEnd="12dp"
+          android:src="@android:drawable/ic_menu_search"
+          android:tint="#8D5C2C"/>
+
+      <ImageView
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:src="@android:drawable/btn_star_big_off"
+          android:tint="#8D5C2C"/>
+    </LinearLayout>
+  </RelativeLayout>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+      <!-- Category Category Label & Title -->
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="HUKUM TAJWID"
+          android:textColor="#8D5C2C"
+          android:textSize="11sp"
+          android:textStyle="bold"
+          android:letterSpacing="0.1"/>
+
+      <TextView
+          android:id="@+id/txt_detail_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
+          android:text="Nun Sukun &amp; Tanwin"
+          android:textColor="#3D2513"
+          android:textSize="24sp"
+          android:textStyle="bold"/>
+
+      <TextView
+          android:id="@+id/txt_detail_subtitle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:layout_marginBottom="16dp"
+          android:text="Kuasai empat hukum utama yang mengatur pelafalan Nun mati (Sukun) atau Tanwin ketika bertemu dengan huruf-huruf Hijaiyah tertentu."
+          android:textColor="#7D6655"
+          android:textSize="14sp"
+          android:lineSpacingMultiplier="1.3"/>
+
+      <!-- Characters Form Card -->
+      <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="24dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="0dp"
+          app:cardBackgroundColor="#FFF2EB">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:gravity="center">
+
+          <TextView
+              android:id="@+id/txt_detail_characters"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="نْ  ً  ٍ  ٌ"
+              android:textColor="#8D5C2C"
+              android:textSize="36sp"
+              android:fontFamily="serif"
+              android:layout_marginBottom="8dp"/>
+
+          <TextView
+              android:id="@+id/txt_detail_characters_label"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Bentuk Nun Sukun &amp; Tanwin"
+              android:textColor="#8D7A6E"
+              android:textSize="12sp"/>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+      <!-- Rules Container -->
+      <LinearLayout
+          android:id="@+id/container_rules"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_marginBottom="16dp"/>
+
+      <!-- Live Application Title -->
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:gravity="center_vertical"
+          android:layout_marginTop="8dp"
+          android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_quran_book"
+            android:tint="#8D5C2C"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Penerapan Langsung"
+            android:textColor="#3D2513"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+      </LinearLayout>
+
+      <!-- Examples Container -->
+      <LinearLayout
+          android:id="@+id/container_examples"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_marginBottom="24dp"/>
+
+      <!-- Quiz Banner Card -->
+      <androidx.cardview.widget.CardView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="24dp"
+          app:cardCornerRadius="16dp"
+          app:cardElevation="3dp"
+          app:cardBackgroundColor="#6A401C">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center">
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Siap untuk Kuis?"
+              android:textColor="#FFFFFF"
+              android:textSize="18sp"
+              android:textStyle="bold"
+              android:layout_marginBottom="6dp"/>
+
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="Uji pemahaman Anda dan temukan hukum tajwid dalam ayat-ayat acak."
+              android:textColor="#FFEBE0"
+              android:textSize="12sp"
+              android:gravity="center"
+              android:alpha="0.9"
+              android:layout_marginBottom="16dp"
+              android:lineSpacingMultiplier="1.2"/>
+
+          <Button
+              android:id="@+id/btn_start_quiz"
+              android:layout_width="wrap_content"
+              android:layout_height="38dp"
+              android:backgroundTint="#FFFFFF"
+              android:text="Mulai Kuis"
+              android:textColor="#6A401C"
+              android:textSize="12sp"
+              android:textStyle="bold"
+              android:paddingHorizontal="24dp"
+              style="@style/Widget.MaterialComponents.Button"
+              app:cornerRadius="19dp"/>
+        </LinearLayout>
+      </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>

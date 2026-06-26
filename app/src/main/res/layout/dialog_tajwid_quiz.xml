@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:background="#FFF9F6">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/quiz_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kuis Nun Sukun &amp; Tanwin"
+        android:textColor="#8D5C2C"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Question -->
+    <TextView
+        android:id="@+id/quiz_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pertanyaan kuis akan muncul di sini?"
+        android:textColor="#3D2513"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:lineSpacingMultiplier="1.2"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- RadioGroup for options -->
+    <RadioGroup
+        android:id="@+id/quiz_options_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+
+      <RadioButton
+          android:id="@+id/option_0"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Pilihan 1"
+          android:textColor="#5D4037"
+          android:textSize="14sp"
+          android:paddingVertical="8dp"
+          android:buttonTint="#FF6D00"/>
+
+      <RadioButton
+          android:id="@+id/option_1"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Pilihan 2"
+          android:textColor="#5D4037"
+          android:textSize="14sp"
+          android:paddingVertical="8dp"
+          android:buttonTint="#FF6D00"/>
+
+      <RadioButton
+          android:id="@+id/option_2"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Pilihan 3"
+          android:textColor="#5D4037"
+          android:textSize="14sp"
+          android:paddingVertical="8dp"
+          android:buttonTint="#FF6D00"/>
+
+      <RadioButton
+          android:id="@+id/option_3"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Pilihan 4"
+          android:textColor="#5D4037"
+          android:textSize="14sp"
+          android:paddingVertical="8dp"
+          android:buttonTint="#FF6D00"/>
+    </RadioGroup>
+
+    <!-- Feedback / Explanation card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/quiz_feedback_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        android:visibility="gone">
+      <LinearLayout
+          android:id="@+id/quiz_feedback_layout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:padding="14dp">
+
+        <TextView
+            android:id="@+id/quiz_feedback_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Benar / Salah"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp"/>
+
+        <TextView
+            android:id="@+id/quiz_feedback_explanation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Penjelasan jawaban kuis."
+            android:textColor="#5D4037"
+            android:textSize="12sp"
+            android:lineSpacingMultiplier="1.2"/>
+      </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+      <Button
+          android:id="@+id/btn_quiz_cancel"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Batal"
+          android:textColor="#8D7A6E"
+          style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+      <Button
+          android:id="@+id/btn_quiz_submit"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:text="Kirim"
+          android:textColor="#FFFFFF"
+          android:backgroundTint="#FF6D00"
+          style="@style/Widget.MaterialComponents.Button"/>
+    </LinearLayout>
+
+  </LinearLayout>
+</ScrollView>
