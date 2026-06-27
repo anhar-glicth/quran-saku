@@ -63,7 +63,10 @@ class PendampingIbadahFragment : Fragment() {
             startActivity(Intent(activity, KhatamActivity::class.java))
         }
         view.findViewById<View>(R.id.card_zakat)?.setOnClickListener {
-            Toast.makeText(context, "Fitur Zakat sedang dikembangkan", Toast.LENGTH_SHORT).show()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ZakatFragment.newInstance())
+                .addToBackStack(null)
+                .commit()
         }
         view.findViewById<View>(R.id.card_catatan)?.setOnClickListener {
             startActivity(Intent(activity, CatatanActivity::class.java))
