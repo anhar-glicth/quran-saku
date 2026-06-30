@@ -14,7 +14,7 @@ object AuthClient {
     // ── GANTI dengan IP komputer kamu di jaringan WiFi ──
     // Jika tes di emulator gunakan: http://10.0.2.2/quran_android/web/
     // Jika tes di HP nyata gunakan: http://192.168.x.x/quran_android/web/
-    const val BASE_URL = "http://192.168.1.28/quran_android/web/"
+    const val BASE_URL = "http://172.21.93.124/quran_android/web/"
 
     private val moshi: Moshi = Moshi.Builder()
         .build()

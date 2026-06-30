@@ -45,7 +45,78 @@ class DzikirReadActivity : AppCompatActivity() {
     private fun loadData(category: String) {
         itemList.clear()
         try {
-            if (category == "hadits") {
+            if (category == "pagi" || category == "sore") {
+                val jsonString = loadJSONFromAsset("json/prayer/matsuratData.json")
+                if (jsonString != null) {
+                    val jsonArray = JSONArray(jsonString)
+                    for (i in 0 until jsonArray.length()) {
+                        val obj = jsonArray.getJSONObject(i)
+                        val prayerId = obj.optString("prayer_id")
+
+                        if (prayerId == category) {
+                            val textArray = obj.getJSONArray("text")
+                            var arabic = ""
+                            var translation = ""
+                            for (j in 0 until textArray.length()) {
+                                val textObj = textArray.getJSONObject(j)
+                                val lang = textObj.optString("language")
+                                if (lang == "arabic") {
+                                    arabic = textObj.optString("text")
+                                } else if (lang == "bahasa") {
+                                    translation = textObj.optString("text")
+                                }
+                            }
+
+                            val sourceArray = obj.optJSONArray("source")
+                            var source = ""
+                            if (sourceArray != null && sourceArray.length() > 0) {
+                                for (j in 0 until sourceArray.length()) {
+                                    val srcObj = sourceArray.getJSONObject(j)
+                                    if (srcObj.optString("language") == "bahasa") {
+                                        source = srcObj.optString("text")
+                                    }
+                                }
+                            }
+
+                            val notesArray = obj.optJSONArray("notes")
+                            var notes = ""
+                            if (notesArray != null && notesArray.length() > 0) {
+                                for (j in 0 until notesArray.length()) {
+                                    val noteObj = notesArray.getJSONObject(j)
+                                    if (noteObj.optString("language") == "bahasa") {
+                                        notes = noteObj.optString("text")
+                                    }
+                                }
+                            }
+
+                            var targetCount = 1
+                            if (notes.contains("100x")) {
+                                targetCount = 100
+                            } else if (notes.contains("33x")) {
+                                targetCount = 33
+                            } else if (notes.contains("10x")) {
+                                targetCount = 10
+                            } else if (notes.contains("7x")) {
+                                targetCount = 7
+                            } else if (notes.contains("3x")) {
+                                targetCount = 3
+                            } else if (notes.contains("4x")) {
+                                targetCount = 4
+                            }
+
+                            itemList.add(
+                                DzikirItem(
+                                    arabic = arabic,
+                                    translation = translation,
+                                    notes = if (notes.isEmpty()) "Baca 1x" else notes,
+                                    source = if (source.isEmpty()) "Al-Matsurat (Imam Hasan Al-Banna)" else source,
+                                    targetCount = targetCount
+                                )
+                            )
+                        }
+                    }
+                }
+            } else if (category == "hadits") {
                 val jsonString = loadJSONFromAsset("json/hadith/nawawi40.json")
                 if (jsonString != null) {
                     val jsonArray = JSONArray(jsonString)
@@ -87,8 +158,6 @@ class DzikirReadActivity : AppCompatActivity() {
                         val prayerId = obj.optString("prayer_id")
 
                         val matchesCategory = when (category) {
-                            "pagi" -> prayerId == "28"
-                            "sore" -> prayerId == "5"
                             "shalat" -> prayerId == "29"
                             "quran" -> bookId == "0" || bookId == "2"
                             else -> false
