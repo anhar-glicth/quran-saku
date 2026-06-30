@@ -18,6 +18,8 @@ import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -668,6 +670,29 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
             val page = quranInfo.getPageFromPosition(position, isDualPageVisible)
             stravaPagesReadThisSession.add(page)
             trySend(page)
+            
+            // Post Reading Relay to Grup Ngaji if opened from group detail
+            val groupId = intent.getIntExtra("grup_ngaji_id", 0)
+            if (groupId > 0) {
+              val sessionManager = com.quran.labs.androidquran.auth.SessionManager(this@PagerActivity)
+              if (sessionManager.isLoggedIn()) {
+                val userId = sessionManager.getUserId()
+                val surahNumber = quranInfo.getSuraNumberFromPage(page)
+                val surahName = quranDisplayData.getSuraNameFromPage(this@PagerActivity, page, false)
+                val ayahNumber = 1 // Default start ayah of page
+                
+                scope.launch {
+                  try {
+                    com.quran.labs.androidquran.auth.AuthClient.apiService.updateGroupPage(
+                      userId = userId,
+                      pageNumber = page
+                    )
+                  } catch (e: Exception) {
+                    e.printStackTrace()
+                  }
+                }
+              }
+            }
           }
         }
       viewPager.addOnPageChangeListener(pageChangedListener)
@@ -676,6 +701,7 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
       .onStart { emit(currentPage) }
       .buffer(onBufferOverflow = BufferOverflow.DROP_OLDEST)
       .shareIn(scope, SharingStarted.Eagerly, 1)
+
 
   private fun initAyahActionPanel() {
     slidingPanel = findViewById(R.id.sliding_panel)
@@ -1974,6 +2000,24 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
         .putLong("strava_duration_$todayStr", currentDuration + durationSec)
         .putInt("strava_pages_$todayStr", currentPages + pagesCount)
         .apply()
+
+    // Update group reading progress if active
+    val sessionManager = com.quran.labs.androidquran.auth.SessionManager(this)
+    if (sessionManager.isLoggedIn()) {
+        val groupStatus = prefs.getString("group_member_status", "none")
+        if (groupStatus == "active") {
+            val userId = sessionManager.getUserId()
+            val pageNum = currentPage
+            // Use custom coroutine launch on lifecycleScope
+            lifecycleScope.launch {
+                try {
+                    com.quran.labs.androidquran.auth.AuthClient.apiService.updateGroupPage(userId = userId, pageNumber = pageNum)
+                } catch (e: Exception) {
+                    // Ignore network exceptions on background pause
+                }
+            }
+        }
+    }
   }
 
   companion object {

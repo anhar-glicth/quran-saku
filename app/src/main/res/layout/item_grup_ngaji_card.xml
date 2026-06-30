@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="1dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#FFEAEAEA"
+    app:cardBackgroundColor="#FFFFFF">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+      <!-- Foto Profil / Initials Circle -->
+      <FrameLayout
+          android:id="@+id/lay_group_avatar"
+          android:layout_width="36dp"
+          android:layout_height="36dp"
+          android:background="@drawable/bg_circle_solid"
+          android:backgroundTint="#EBF5FB"
+          android:layout_centerVertical="true">
+        <TextView
+            android:id="@+id/txt_group_initials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="G"
+            android:textColor="#2980B9"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+      </FrameLayout>
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_toEndOf="@id/lay_group_avatar"
+          android:layout_marginStart="10dp"
+          android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/txt_group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Grup"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/txt_group_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID: XXXXXXXX"
+            android:textColor="#888888"
+            android:textSize="10sp"
+            android:typeface="monospace"/>
+      </LinearLayout>
+
+      <TextView
+          android:id="@+id/txt_group_progress_pct"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="0% Selesai"
+          android:textColor="@color/accent_color"
+          android:textSize="12sp"
+          android:textStyle="bold"
+          android:layout_alignParentEnd="true"
+          android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <!-- Progress bar khatam -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="0"
+        app:trackColor="#FFE0E0E0"
+        app:indicatorColor="@color/accent_color"
+        app:trackThickness="6dp"
+        app:trackCornerRadius="3dp"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Last Read Relay Info -->
+    <LinearLayout
+        android:id="@+id/lay_last_read_relay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#FFF9F9F9"
+        android:padding="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone">
+
+      <TextView
+          android:id="@+id/txt_last_read_relay_desc"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="Terakhir dibaca oleh -: Surah - ayat -"
+          android:textColor="#555555"
+          android:textSize="11sp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <TextView
+          android:id="@+id/txt_group_desc"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="1 Anggota Aktif • Target Khatam: 1x"
+          android:textColor="#888888"
+          android:textSize="11sp"
+          android:layout_centerVertical="true"/>
+
+      <TextView
+          android:id="@+id/txt_member_status_badge"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Menunggu Acc"
+          android:textColor="#E65100"
+          android:textSize="10sp"
+          android:textStyle="bold"
+          android:background="@drawable/bg_chip_accent"
+          android:backgroundTint="#FFF3E0"
+          android:paddingHorizontal="8dp"
+          android:paddingVertical="2dp"
+          android:layout_alignParentEnd="true"
+          android:layout_centerVertical="true"
+          android:visibility="gone"/>
+    </RelativeLayout>
+  </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -229,6 +229,74 @@
             android:textSize="12sp"
             android:layout_marginTop="4dp" />
 
+        <!-- Divider Event (Tampil jika ada event) -->
+        <View
+            android:id="@+id/view_event_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#408D4F00"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone" />
+
+        <!-- Event detail container -->
+        <LinearLayout
+            android:id="@+id/layout_event_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📅 Kegiatan Masjid / Kajian:"
+                android:textColor="#FF6D00"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:id="@+id/tv_detail_event_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kajian Akbar Menyambut Ramadhan"
+                android:textColor="#212121"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_detail_event_speaker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pembicara: Ustadz Adi Hidayat"
+                android:textColor="#555555"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tv_detail_event_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Waktu: 09:00 WIB • Lokasi: Zoom"
+                android:textColor="#666666"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Admin Action Button -->
+        <Button
+            android:id="@+id/btn_manage_date_event"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_segmented_selected"
+            android:text="+ Tambah / Edit Kegiatan"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
       </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

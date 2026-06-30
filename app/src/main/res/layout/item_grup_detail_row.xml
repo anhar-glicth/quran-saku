@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+  <!-- Anggota Row -->
+  <RelativeLayout
+      android:id="@+id/lay_member_row"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone">
+
+    <TextView
+        android:id="@+id/txt_member_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nama Anggota"
+        android:textColor="#212121"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txt_member_role"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_member_name"
+        android:layout_marginTop="2dp"
+        android:text="Role: Member"
+        android:textColor="#888888"
+        android:textSize="11sp"/>
+
+    <TextView
+        android:id="@+id/txt_member_joined"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:text="Bergabung: -"
+        android:textColor="#AAAAAA"
+        android:textSize="11sp"/>
+  </RelativeLayout>
+
+  <!-- Relay Row -->
+  <RelativeLayout
+      android:id="@+id/lay_relay_row"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:visibility="gone">
+
+    <TextView
+        android:id="@+id/txt_relay_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Name"
+        android:textColor="#212121"
+        android:textSize="13sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txt_relay_surah"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_relay_user"
+        android:layout_marginTop="2dp"
+        android:text="Membaca Surah - ayat -"
+        android:textColor="@color/accent_color"
+        android:textSize="12sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txt_relay_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:text="Waktu"
+        android:textColor="#AAAAAA"
+        android:textSize="11sp"/>
+  </RelativeLayout>
+
+  <!-- Divider -->
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_marginTop="10dp"
+      android:background="#FFEAEAEA"/>
+
+</LinearLayout>

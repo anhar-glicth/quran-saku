@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFDFBF8">
+    android:background="@color/surface">
 
   <ScrollView
       android:layout_width="match_parent"
@@ -149,7 +149,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Quran"
-              android:textColor="#212121"
+              android:textColor="@color/title_color"
               android:textSize="11sp"
               android:textStyle="bold"
               android:layout_marginTop="8dp"
@@ -187,7 +187,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Dzikir"
-              android:textColor="#212121"
+              android:textColor="@color/title_color"
               android:textSize="11sp"
               android:textStyle="bold"
               android:layout_marginTop="8dp"
@@ -225,7 +225,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Arah Kiblat"
-              android:textColor="#212121"
+              android:textColor="@color/title_color"
               android:textSize="11sp"
               android:textStyle="bold"
               android:layout_marginTop="8dp"
@@ -263,7 +263,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Khatam Tracker"
-              android:textColor="#212121"
+              android:textColor="@color/title_color"
               android:textSize="11sp"
               android:textStyle="bold"
               android:layout_marginTop="8dp"
@@ -309,7 +309,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Zakat"
-              android:textColor="#212121"
+              android:textColor="@color/title_color"
               android:textSize="11sp"
               android:textStyle="bold"
               android:layout_marginTop="8dp"
@@ -347,7 +347,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Catatan Ibadah"
-              android:textColor="#212121"
+              android:textColor="@color/title_color"
               android:textSize="11sp"
               android:textStyle="bold"
               android:layout_marginTop="8dp"
@@ -385,7 +385,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Kalender"
-              android:textColor="#212121"
+              android:textColor="@color/title_color"
               android:textSize="11sp"
               android:textStyle="bold"
               android:layout_marginTop="8dp"
@@ -423,7 +423,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Pejuang Kebaikan"
-              android:textColor="#212121"
+              android:textColor="@color/title_color"
               android:textSize="11sp"
               android:textStyle="bold"
               android:layout_marginTop="8dp"
@@ -482,7 +482,7 @@
           android:layout_height="wrap_content"
           app:cardCornerRadius="16dp"
           app:cardElevation="1dp"
-          app:cardBackgroundColor="#FFFFFF"
+          app:cardBackgroundColor="@color/secondary_dark_background"
           android:layout_marginBottom="24dp"
           app:strokeWidth="1dp"
           app:strokeColor="#FFEAEAEA">
@@ -515,7 +515,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="Prayer Times"
-                  android:textColor="#212121"
+                  android:textColor="@color/title_color"
                   android:textSize="15sp"
                   android:textStyle="bold"
                   android:layout_marginStart="6dp" />
@@ -527,7 +527,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:text="📍 Jakarta"
-                android:textColor="#757575"
+                android:textColor="@color/text_hint_color"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -560,7 +560,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="FAJR"
-                  android:textColor="#757575"
+                  android:textColor="@color/text_hint_color"
                   android:textSize="11sp"
                   android:textStyle="bold" />
 
@@ -569,7 +569,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="04:12"
-                  android:textColor="#212121"
+                  android:textColor="@color/title_color"
                   android:textSize="14sp"
                   android:textStyle="bold"
                   android:layout_marginTop="4dp" />
@@ -592,7 +592,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="DHUHR"
-                  android:textColor="#757575"
+                  android:textColor="@color/text_hint_color"
                   android:textSize="11sp"
                   android:textStyle="bold" />
 
@@ -601,7 +601,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="13:05"
-                  android:textColor="#212121"
+                  android:textColor="@color/title_color"
                   android:textSize="14sp"
                   android:textStyle="bold"
                   android:layout_marginTop="4dp" />
@@ -624,7 +624,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="ASR"
-                  android:textColor="#757575"
+                  android:textColor="@color/text_hint_color"
                   android:textSize="11sp"
                   android:textStyle="bold" />
 
@@ -633,7 +633,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="16:54"
-                  android:textColor="#212121"
+                  android:textColor="@color/title_color"
                   android:textSize="14sp"
                   android:textStyle="bold"
                   android:layout_marginTop="4dp" />
@@ -656,7 +656,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="MAGHRIB"
-                  android:textColor="#757575"
+                  android:textColor="@color/text_hint_color"
                   android:textSize="11sp"
                   android:textStyle="bold" />
 
@@ -665,7 +665,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="20:22"
-                  android:textColor="#212121"
+                  android:textColor="@color/title_color"
                   android:textSize="14sp"
                   android:textStyle="bold"
                   android:layout_marginTop="4dp" />
@@ -688,7 +688,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="ISHA"
-                  android:textColor="#757575"
+                  android:textColor="@color/text_hint_color"
                   android:textSize="11sp"
                   android:textStyle="bold" />
 
@@ -697,7 +697,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="21:45"
-                  android:textColor="#212121"
+                  android:textColor="@color/title_color"
                   android:textSize="14sp"
                   android:textStyle="bold"
                   android:layout_marginTop="4dp" />
@@ -713,7 +713,7 @@
           android:layout_height="wrap_content"
           app:cardCornerRadius="16dp"
           app:cardElevation="0dp"
-          app:cardBackgroundColor="#FFF5ECE5"
+          app:cardBackgroundColor="@color/secondary_dark_background"
           app:strokeWidth="0dp"
           android:layout_marginBottom="60dp">
 
@@ -728,14 +728,14 @@
               android:layout_width="28dp"
               android:layout_height="28dp"
               android:src="@drawable/ic_lightbulb"
-              app:tint="#8D4F00"
+              app:tint="@color/accent_color"
               android:layout_marginBottom="12dp" />
 
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="&quot;Maka bacalah apa yang mudah bagimu dari Al-Qur'an.&quot;"
-              android:textColor="#553311"
+              android:textColor="@color/title_color"
               android:textSize="14sp"
               android:gravity="center"
               android:layout_marginBottom="8dp" />
@@ -744,7 +744,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="(QS. Al-Muzzammil: 20)"
-              android:textColor="#8D4F00"
+              android:textColor="@color/accent_color"
               android:textSize="12sp"
               android:textStyle="bold"
               android:gravity="center" />

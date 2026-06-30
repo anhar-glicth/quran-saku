@@ -108,6 +108,10 @@
         android:theme="@style/QuranToolBarDayNight"
         android:exported="false"/>
     <activity
+        android:name=".DoaDetailActivity"
+        android:theme="@style/QuranToolBarDayNight"
+        android:exported="false"/>
+    <activity
         android:name=".RankActivity"
         android:theme="@style/QuranToolBarDayNight"
         android:exported="false"/>
@@ -115,6 +119,11 @@
         android:name=".GrupNgajiActivity"
         android:theme="@style/QuranToolBarDayNight"
         android:exported="false"/>
+    <activity
+        android:name=".GrupDetailActivity"
+        android:theme="@style/QuranToolBarDayNight"
+        android:exported="false"/>
+
     <activity
         android:name=".PejuangQuranActivity"
         android:theme="@style/QuranToolBarDayNight"

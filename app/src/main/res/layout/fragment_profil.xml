@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF9F2E8"
+    android:background="@color/surface"
     android:fillViewport="true">
 
   <LinearLayout
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Konfigurasi"
-        android:textColor="#1A1A1A"
+        android:textColor="@color/title_color"
         android:textSize="24sp"
         android:textStyle="bold"
         android:fontFamily="sans-serif-medium"
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Personalisasi pengalaman spiritual Anda"
-        android:textColor="#888888"
+        android:textColor="@color/text_hint_color"
         android:textSize="13sp"
         android:layout_marginBottom="20dp"/>
 
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
         app:cardElevation="2dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="@color/secondary_dark_background"
         android:layout_marginBottom="14dp"
         app:strokeWidth="0dp">
 
@@ -86,7 +86,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Nama User"
-              android:textColor="#1A1A1A"
+              android:textColor="@color/title_color"
               android:textSize="15sp"
               android:textStyle="bold"/>
 
@@ -100,14 +100,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User"
-                android:textColor="#888888"
+                android:textColor="@color/text_hint_color"
                 android:textSize="12sp"/>
             <TextView
                 android:id="@+id/tv_user_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" • user@quransaku.com"
-                android:textColor="#888888"
+                android:textColor="@color/text_hint_color"
                 android:textSize="12sp"/>
           </LinearLayout>
 
@@ -159,7 +159,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
         app:cardElevation="2dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="@color/secondary_dark_background"
         android:layout_marginBottom="14dp"
         app:strokeWidth="0dp">
 
@@ -185,7 +185,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="  Setting"
-              android:textColor="#1A1A1A"
+              android:textColor="@color/title_color"
               android:textSize="16sp"
               android:textStyle="bold"/>
         </LinearLayout>
@@ -204,13 +204,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mode Gelap"
-                android:textColor="#1A1A1A"
+                android:textColor="@color/title_color"
                 android:textSize="14sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Otomatis berdasarkan sistem"
-                android:textColor="#AAAAAA"
+                android:text="Ubah ke tampilan gelap"
+                android:textColor="@color/text_hint_color"
                 android:textSize="12sp"
                 android:layout_marginTop="2dp"/>
           </LinearLayout>
@@ -246,13 +246,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Notifikasi Adzan"
-                android:textColor="#1A1A1A"
+                android:textColor="@color/title_color"
                 android:textSize="14sp"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Aktif untuk 5 waktu shalat"
-                android:textColor="#AAAAAA"
+                android:textColor="@color/text_hint_color"
                 android:textSize="12sp"
                 android:layout_marginTop="2dp"/>
           </LinearLayout>
@@ -286,7 +286,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Bahasa Aplikasi"
-              android:textColor="#1A1A1A"
+              android:textColor="@color/title_color"
               android:textSize="14sp"
               android:layout_centerVertical="true"/>
           <LinearLayout
@@ -320,7 +320,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
         app:cardElevation="2dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="@color/secondary_dark_background"
         android:layout_marginBottom="14dp"
         app:strokeWidth="0dp">
 
@@ -346,7 +346,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="  Customer Service"
-              android:textColor="#1A1A1A"
+              android:textColor="@color/title_color"
               android:textSize="16sp"
               android:textStyle="bold"/>
         </LinearLayout>
@@ -355,7 +355,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Butuh bantuan atau ingin memberikan saran? Tim kami siap membantu Anda 24/7."
-            android:textColor="#777777"
+            android:textColor="@color/text_hint_color"
             android:textSize="13sp"
             android:layout_marginBottom="14dp"/>
 
@@ -410,7 +410,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="16dp"
         app:cardElevation="2dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="@color/secondary_dark_background"
         android:layout_marginBottom="16dp"
         app:strokeWidth="0dp">
 
@@ -436,7 +436,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="  Tentang Kami"
-              android:textColor="#1A1A1A"
+              android:textColor="@color/title_color"
               android:textSize="16sp"
               android:textStyle="bold"/>
         </LinearLayout>
@@ -444,8 +444,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quran Saku adalah aplikasi Al-Quran gratis yang dikembangkan oleh Amal Abadi Palestina (adtin), bekerja sama dengan Velora.id untuk mendekatkan umat dengan Al-Qur\'an melalui teknologi modern."
-            android:textColor="#777777"
+            android:text="Quran Saku adalah aplikasi Al-Quran gratis yang dikembangkan oleh Amal Abadi Palestina (adtin), bekerja sama dengan Velora.id untuk mendekatkan umat dengan Al-Qur'an melalui teknologi modern."
+            android:textColor="@color/text_hint_color"
             android:textSize="13sp"
             android:lineSpacingMultiplier="1.4"
             android:layout_marginBottom="16dp"/>
@@ -467,14 +467,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1M+"
-                android:textColor="#1A1A1A"
+                android:textColor="@color/title_color"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="PEMBACA"
-                android:textColor="#AAAAAA"
+                android:textColor="@color/text_hint_color"
                 android:textSize="10sp"
                 android:letterSpacing="0.1"/>
           </LinearLayout>
@@ -495,14 +495,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4.9"
-                android:textColor="#1A1A1A"
+                android:textColor="@color/title_color"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RATING"
-                android:textColor="#AAAAAA"
+                android:textColor="@color/text_hint_color"
                 android:textSize="10sp"
                 android:letterSpacing="0.1"/>
           </LinearLayout>
@@ -523,14 +523,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="v2.4.0"
-                android:textColor="#1A1A1A"
+                android:textColor="@color/title_color"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="VERSI"
-                android:textColor="#AAAAAA"
+                android:textColor="@color/text_hint_color"
                 android:textSize="10sp"
                 android:letterSpacing="0.1"/>
           </LinearLayout>
@@ -560,7 +560,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
         app:cardElevation="1dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="@color/secondary_dark_background"
         android:layout_marginBottom="16dp"
         app:strokeWidth="0dp">
       <LinearLayout
@@ -577,7 +577,7 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="⚙️   Pengaturan Aplikasi"
-              android:textColor="#212121"
+              android:textColor="@color/title_color"
               android:textSize="14sp"/>
           <TextView
               android:layout_width="wrap_content"
@@ -597,7 +597,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="12dp"
         app:cardElevation="1dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="@color/secondary_dark_background"
         android:layout_marginBottom="16dp"
         app:strokeWidth="0dp">
       <LinearLayout
@@ -644,7 +644,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="Kebijakan Privasi"
-          android:textColor="#AAAAAA"
+          android:textColor="@color/text_hint_color"
           android:textSize="11sp"
           android:background="?android:attr/selectableItemBackgroundBorderless"
           android:clickable="true"
@@ -662,7 +662,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="Syarat &amp; Ketentuan"
-          android:textColor="#AAAAAA"
+          android:textColor="@color/text_hint_color"
           android:textSize="11sp"
           android:background="?android:attr/selectableItemBackgroundBorderless"
           android:clickable="true"
@@ -680,7 +680,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="Lisensi Font"
-          android:textColor="#AAAAAA"
+          android:textColor="@color/text_hint_color"
           android:textSize="11sp"
           android:background="?android:attr/selectableItemBackgroundBorderless"
           android:clickable="true"

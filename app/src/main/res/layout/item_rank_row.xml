@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/lay_rank_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="16dp">
+
+        <!-- Posisi Rank (Peringkat) / Medali -->
+        <TextView
+            android:id="@+id/txt_rank_num"
+            android:layout_width="26dp"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textColor="#783A06"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true" />
+
+        <!-- Avatar Bulat Inisial -->
+        <FrameLayout
+            android:id="@+id/lay_rank_avatar"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_toEndOf="@id/txt_rank_num"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_circle_solid"
+            android:backgroundTint="#FDF2E9"
+            android:layout_centerVertical="true">
+            <TextView
+                android:id="@+id/txt_rank_initials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KT"
+                android:textColor="#E28743"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <!-- Informasi Nama & Aktivitas -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@id/lay_rank_avatar"
+            android:layout_toStartOf="@id/lay_rank_score"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/txt_rank_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Pengguna"
+                android:textColor="#212121"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end" />
+
+            <TextView
+                android:id="@+id/txt_rank_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5 hari aktif • 12 hlm"
+                android:textColor="#888888"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <!-- Nilai Skor / Menit -->
+        <LinearLayout
+            android:id="@+id/lay_rank_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="end"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/txt_rank_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="120"
+                android:textColor="#783A06"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MENIT"
+                android:textColor="#888888"
+                android:textSize="8sp"
+                android:textStyle="bold"
+                android:layout_marginTop="1dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFEAEAEA" />
+</LinearLayout>

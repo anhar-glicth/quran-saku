@@ -47,5 +47,15 @@
         android:textColor="#757575"
         android:textSize="9sp" />
 
+    <!-- Event Dot Indicator -->
+    <View
+        android:id="@+id/view_event_dot"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/bg_circle_solid"
+        android:backgroundTint="@color/accent_color"
+        android:visibility="gone" />
+
   </LinearLayout>
 </FrameLayout>

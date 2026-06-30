@@ -13,158 +13,109 @@
       android:layout_height="?attr/actionBarSize"
       android:background="@color/toolbar"
       android:theme="@style/ToolbarStyle"
-      app:titleTextAppearance="@style/ToolbarTitleText" />
+      app:titleTextAppearance="@style/ToolbarTitleText"/>
 
-  <ScrollView
+  <!-- Filter Kategori Tab -->
+  <HorizontalScrollView
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:scrollbars="none">
+      android:layout_height="wrap_content"
+      android:scrollbars="none"
+      android:background="#FFFFFF"
+      android:paddingVertical="12dp"
+      android:paddingStart="16dp"
+      android:paddingEnd="16dp"
+      android:elevation="2dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/tab_container"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:clipToPadding="false">
+        android:orientation="horizontal">
 
-      <!-- Card Doa 1 -->
-      <com.google.android.material.card.MaterialCardView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          app:cardCornerRadius="14dp"
-          app:cardElevation="1dp"
-          app:strokeWidth="1dp"
-          app:strokeColor="#FFEAEAEA"
-          app:cardBackgroundColor="#FFFFFF">
+      <TextView
+          android:id="@+id/tab_semua"
+          android:layout_width="wrap_content"
+          android:layout_height="36dp"
+          android:text="✨ Semua"
+          android:gravity="center"
+          android:paddingHorizontal="16dp"
+          android:textSize="12sp"
+          android:textStyle="bold"
+          android:textColor="#FFFFFF"
+          android:background="@drawable/bg_segmented_selected"
+          android:layout_marginEnd="8dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="18dp">
+      <TextView
+          android:id="@+id/tab_harian"
+          android:layout_width="wrap_content"
+          android:layout_height="36dp"
+          android:text="☀️ Harian"
+          android:gravity="center"
+          android:paddingHorizontal="16dp"
+          android:textSize="12sp"
+          android:textStyle="bold"
+          android:textColor="#666666"
+          android:background="@drawable/bg_segmented_control"
+          android:layout_marginEnd="8dp"/>
 
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Doa Sebelum Belajar"
-              android:textColor="@color/accent_color"
-              android:textSize="14sp"
-              android:textStyle="bold" />
+      <TextView
+          android:id="@+id/tab_pagi"
+          android:layout_width="wrap_content"
+          android:layout_height="36dp"
+          android:text="🌅 Pagi"
+          android:gravity="center"
+          android:paddingHorizontal="16dp"
+          android:textSize="12sp"
+          android:textStyle="bold"
+          android:textColor="#666666"
+          android:background="@drawable/bg_segmented_control"
+          android:layout_marginEnd="8dp"/>
 
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="رَبِّ زِدْنِي عِلْمًا وَارْزُقْنِي فَهْمًا"
-              android:textColor="#212121"
-              android:textSize="22sp"
-              android:gravity="end"
-              android:textStyle="bold"
-              android:layout_marginTop="16dp"
-              android:layout_marginBottom="12dp" />
+      <TextView
+          android:id="@+id/tab_shalat"
+          android:layout_width="wrap_content"
+          android:layout_height="36dp"
+          android:text="🕌 Shalat"
+          android:gravity="center"
+          android:paddingHorizontal="16dp"
+          android:textSize="12sp"
+          android:textStyle="bold"
+          android:textColor="#666666"
+          android:background="@drawable/bg_segmented_control"
+          android:layout_marginEnd="8dp"/>
 
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="&quot;Ya Allah, tambahkanlah kepadaku ilmu dan berikanlah aku pemahaman yang baik.&quot;"
-              android:textColor="#666666"
-              android:textSize="13sp"
-              android:lineSpacingMultiplier="1.2" />
-        </LinearLayout>
-      </com.google.android.material.card.MaterialCardView>
-
-      <!-- Card Doa 2 -->
-      <com.google.android.material.card.MaterialCardView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          app:cardCornerRadius="14dp"
-          app:cardElevation="1dp"
-          app:strokeWidth="1dp"
-          app:strokeColor="#FFEAEAEA"
-          app:cardBackgroundColor="#FFFFFF">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="18dp">
-
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Doa Kedua Orang Tua"
-              android:textColor="@color/accent_color"
-              android:textSize="14sp"
-              android:textStyle="bold" />
-
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="رَبِّ اغْفِرْ لِي وَلِوَALIDEYYَ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا"
-              android:textColor="#212121"
-              android:textSize="22sp"
-              android:gravity="end"
-              android:textStyle="bold"
-              android:layout_marginTop="16dp"
-              android:layout_marginBottom="12dp" />
-
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="&quot;Tuhanku, ampunilah dosaku dan dosa kedua orang tuaku, dan sayangilah keduanya sebagaimana mereka mendidikku sewaktu kecil.&quot;"
-              android:textColor="#666666"
-              android:textSize="13sp"
-              android:lineSpacingMultiplier="1.2" />
-        </LinearLayout>
-      </com.google.android.material.card.MaterialCardView>
-
-      <!-- Card Doa 3 -->
-      <com.google.android.material.card.MaterialCardView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          app:cardCornerRadius="14dp"
-          app:cardElevation="1dp"
-          app:strokeWidth="1dp"
-          app:strokeColor="#FFEAEAEA"
-          app:cardBackgroundColor="#FFFFFF">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="18dp">
-
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Doa Sapujagat"
-              android:textColor="@color/accent_color"
-              android:textSize="14sp"
-              android:textStyle="bold" />
-
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ"
-              android:textColor="#212121"
-              android:textSize="22sp"
-              android:gravity="end"
-              android:textStyle="bold"
-              android:layout_marginTop="16dp"
-              android:layout_marginBottom="12dp" />
-
-          <TextView
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="&quot;Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat, dan lindungilah kami dari azab neraka.&quot;"
-              android:textColor="#666666"
-              android:textSize="13sp"
-              android:lineSpacingMultiplier="1.2" />
-        </LinearLayout>
-      </com.google.android.material.card.MaterialCardView>
+      <TextView
+          android:id="@+id/tab_quran"
+          android:layout_width="wrap_content"
+          android:layout_height="36dp"
+          android:text="📖 Al-Quran"
+          android:gravity="center"
+          android:paddingHorizontal="16dp"
+          android:textSize="12sp"
+          android:textStyle="bold"
+          android:textColor="#666666"
+          android:background="@drawable/bg_segmented_control"
+          android:layout_marginEnd="8dp"/>
 
     </LinearLayout>
-  </ScrollView>
+  </HorizontalScrollView>
+
+  <!-- RecyclerView Doa -->
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rv_doa_harian"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:padding="16dp"
+      android:clipToPadding="false"
+      android:scrollbars="none"/>
+
+  <!-- Loading State -->
+  <ProgressBar
+      android:id="@+id/progress_doa_harian"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:visibility="gone"/>
+
 </LinearLayout>

@@ -1,23 +1,33 @@
 package com.quran.labs.androidquran
 
+import android.app.DatePickerDialog
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.quran.labs.androidquran.adhan.HijriCalendarHelper
+import com.quran.labs.androidquran.auth.AuthClient
+import com.quran.labs.androidquran.auth.SessionManager
+import com.quran.labs.androidquran.model.EventItem
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class KalenderActivity : AppCompatActivity() {
 
+    private lateinit var sessionManager: SessionManager
     private lateinit var tvMonthTitle: TextView
     private lateinit var tvHijriRange: TextView
     private lateinit var rvCalendarGrid: RecyclerView
@@ -30,15 +40,28 @@ class KalenderActivity : AppCompatActivity() {
     private lateinit var tvDetailFastingBadge: TextView
     private lateinit var layoutFastingBadge: View
 
+    // Event views
+    private lateinit var viewEventDivider: View
+    private lateinit var layoutEventDetail: View
+    private lateinit var tvDetailEventTitle: TextView
+    private lateinit var tvDetailEventSpeaker: TextView
+    private lateinit var tvDetailEventInfo: TextView
+    private lateinit var btnManageEvent: Button
+
     private var currentMonthCalendar: Calendar = Calendar.getInstance()
     private var selectedDate: Calendar = Calendar.getInstance()
 
     private val monthFormat = SimpleDateFormat("MMMM yyyy", Locale("id", "ID"))
     private val fullDateFormat = SimpleDateFormat("EEEE, d MMMM yyyy", Locale("id", "ID"))
+    private val dbDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+
+    private val monthEvents = ArrayList<EventItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kalender)
+
+        sessionManager = SessionManager(this)
 
         // Setup Toolbar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -57,6 +80,14 @@ class KalenderActivity : AppCompatActivity() {
         tvDetailFastingDesc = findViewById(R.id.tv_detail_fasting_desc)
         tvDetailFastingBadge = findViewById(R.id.tv_detail_fasting_badge)
         layoutFastingBadge = findViewById(R.id.layout_fasting_badge)
+
+        // Event views bind
+        viewEventDivider = findViewById(R.id.view_event_divider)
+        layoutEventDetail = findViewById(R.id.layout_event_detail)
+        tvDetailEventTitle = findViewById(R.id.tv_detail_event_title)
+        tvDetailEventSpeaker = findViewById(R.id.tv_detail_event_speaker)
+        tvDetailEventInfo = findViewById(R.id.tv_detail_event_info)
+        btnManageEvent = findViewById(R.id.btn_manage_date_event)
 
         // Setup Grid RecyclerView
         rvCalendarGrid.layoutManager = GridLayoutManager(this, 7)
@@ -79,29 +110,50 @@ class KalenderActivity : AppCompatActivity() {
             loadMonthData()
         }
 
+        // Setup Admin controls
+        if (sessionManager.isLoggedIn() && sessionManager.getUserRole() == "admin") {
+            btnManageEvent.visibility = View.VISIBLE
+            btnManageEvent.setOnClickListener {
+                val formattedDate = dbDateFormat.format(selectedDate.time)
+                val existingEvent = monthEvents.find { it.eventDate == formattedDate }
+                showAddEventDialog(existingEvent, formattedDate)
+            }
+        } else {
+            btnManageEvent.visibility = View.GONE
+        }
+
         // Initialize display with current month and selected day (today)
         loadMonthData()
-        
-        // Find and select today's day item to pre-populate details
-        val todayDay = adapter.days.firstOrNull { 
-            it.date != null && isSameDay(it.date, selectedDate)
-        }
-        todayDay?.let { updateDetailCard(it) } ?: run {
-            // Fallback detail card
-            val year = selectedDate.get(Calendar.YEAR)
-            val month = selectedDate.get(Calendar.MONTH)
-            val day = selectedDate.get(Calendar.DAY_OF_MONTH)
-            val dayOfWeek = selectedDate.get(Calendar.DAY_OF_WEEK)
-            val (_, hMonth, hDay) = HijriCalendarHelper.gregorianToHijri(year, month + 1, day)
-            val fastingInfo = HijriCalendarHelper.getFastingInfo(year, month + 1, day, dayOfWeek)
-            updateDetailCardForCustomDate(selectedDate, hDay, hMonth, fastingInfo)
-        }
     }
 
     private fun loadMonthData() {
         // Month Title
         tvMonthTitle.text = monthFormat.format(currentMonthCalendar.time)
 
+        val year = currentMonthCalendar.get(Calendar.YEAR)
+        val month = currentMonthCalendar.get(Calendar.MONTH) + 1 // 1-indexed
+
+        // Fetch monthly events from API
+        lifecycleScope.launch {
+            try {
+                val response = AuthClient.apiService.getMonthlyEvents(year = year, month = month)
+                if (response.isSuccessful) {
+                    val events = response.body()?.data ?: emptyList()
+                    runOnUiThread {
+                        monthEvents.clear()
+                        monthEvents.addAll(events)
+                        renderCalendarGrid()
+                    }
+                } else {
+                    runOnUiThread { renderCalendarGrid() }
+                }
+            } catch (e: Exception) {
+                runOnUiThread { renderCalendarGrid() }
+            }
+        }
+    }
+
+    private fun renderCalendarGrid() {
         // Generate Days
         val days = generateDaysForMonth(currentMonthCalendar)
         adapter.setDaysList(days)
@@ -128,6 +180,20 @@ class KalenderActivity : AppCompatActivity() {
                 "$firstMonthName - $lastMonthName $lYear H"
             }
         }
+
+        // Select selected date details
+        val selectedDay = adapter.days.firstOrNull { 
+            it.date != null && isSameDay(it.date, selectedDate)
+        }
+        selectedDay?.let { updateDetailCard(it) } ?: run {
+            val y = selectedDate.get(Calendar.YEAR)
+            val m = selectedDate.get(Calendar.MONTH)
+            val d = selectedDate.get(Calendar.DAY_OF_MONTH)
+            val dayOfWeek = selectedDate.get(Calendar.DAY_OF_WEEK)
+            val (_, hMonth, hDay) = HijriCalendarHelper.gregorianToHijri(y, m + 1, d)
+            val fastingInfo = HijriCalendarHelper.getFastingInfo(y, m + 1, d, dayOfWeek)
+            updateDetailCardForCustomDate(selectedDate, hDay, hMonth, fastingInfo)
+        }
     }
 
     private fun generateDaysForMonth(calendar: Calendar): List<CalendarDay> {
@@ -141,11 +207,10 @@ class KalenderActivity : AppCompatActivity() {
         val year = cal.get(Calendar.YEAR)
 
         val firstDayOfWeek = cal.get(Calendar.DAY_OF_WEEK)
-        // Sunday = 1, Monday = 2. We want leading empty cells matching (firstDayOfWeek - 1)
         val leadingEmptyCells = firstDayOfWeek - 1
 
         for (i in 0 until leadingEmptyCells) {
-            days.add(CalendarDay(0, null, null, false, false, null))
+            days.add(CalendarDay(0, null, null, false, false, null, false))
         }
 
         val totalDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
@@ -157,13 +222,17 @@ class KalenderActivity : AppCompatActivity() {
             val (_, hMonth, hDay) = HijriCalendarHelper.gregorianToHijri(year, month + 1, day)
             val fastingInfo = HijriCalendarHelper.getFastingInfo(year, month + 1, day, dayOfWeek)
 
+            val formattedDate = dbDateFormat.format(dayCal.time)
+            val hasEvent = monthEvents.any { it.eventDate == formattedDate }
+
             days.add(CalendarDay(
                 dayNumber = day,
                 hijriDayNumber = hDay,
                 date = dayCal,
                 isCurrentMonth = true,
                 isFasting = fastingInfo.isFasting,
-                fastingInfo = fastingInfo
+                fastingInfo = fastingInfo,
+                hasEvent = hasEvent
             ))
         }
 
@@ -196,22 +265,121 @@ class KalenderActivity : AppCompatActivity() {
         tvDetailFastingName.text = fastingInfo.name
         tvDetailFastingDesc.text = fastingInfo.description
 
-        // Customize badge color based on type
+        // Customize fasting badge color
         when (fastingInfo.badge) {
             "Puasa Wajib" -> {
-                layoutFastingBadge.setBackgroundColor(0xFF2E7D32.toInt()) // Green
+                layoutFastingBadge.setBackgroundColor(0xFF2E7D32.toInt())
                 layoutFastingBadge.visibility = View.VISIBLE
             }
             "Puasa Sunnah" -> {
-                layoutFastingBadge.setBackgroundColor(0xFFFF6D00.toInt()) // Orange
+                layoutFastingBadge.setBackgroundColor(0xFFFF6D00.toInt())
                 layoutFastingBadge.visibility = View.VISIBLE
             }
             "Diharamkan" -> {
-                layoutFastingBadge.setBackgroundColor(0xFFD32F2F.toInt()) // Red
+                layoutFastingBadge.setBackgroundColor(0xFFD32F2F.toInt())
                 layoutFastingBadge.visibility = View.VISIBLE
             }
             else -> {
                 layoutFastingBadge.visibility = View.GONE
+            }
+        }
+
+        // Bind event detail if any
+        val formattedDate = dbDateFormat.format(date.time)
+        val event = monthEvents.find { it.eventDate == formattedDate }
+        if (event != null) {
+            viewEventDivider.visibility = View.VISIBLE
+            layoutEventDetail.visibility = View.VISIBLE
+            tvDetailEventTitle.text = event.title
+            tvDetailEventSpeaker.text = "Pembicara: " + event.speaker
+            tvDetailEventInfo.text = "Waktu: ${event.timeRange} • Lokasi: ${event.location}"
+        } else {
+            viewEventDivider.visibility = View.GONE
+            layoutEventDetail.visibility = View.GONE
+        }
+    }
+
+    private fun showAddEventDialog(eventToEdit: EventItem?, preselectedDate: String) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_event, null)
+
+        val etTitle = dialogView.findViewById<EditText>(R.id.et_event_title)
+        val spCategory = dialogView.findViewById<Spinner>(R.id.sp_event_category)
+        val etDesc = dialogView.findViewById<EditText>(R.id.et_event_desc)
+        val etSpeaker = dialogView.findViewById<EditText>(R.id.et_event_speaker)
+        val etDate = dialogView.findViewById<EditText>(R.id.et_event_date)
+        val etTime = dialogView.findViewById<EditText>(R.id.et_event_time)
+        val etLocation = dialogView.findViewById<EditText>(R.id.et_event_location)
+        val cbFeatured = dialogView.findViewById<CheckBox>(R.id.cb_featured)
+
+        // Setup category spinner
+        val categories = listOf("Kajian", "Webinar", "Workshop", "Sosial")
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spCategory.adapter = spinnerAdapter
+
+        etDate.setText(preselectedDate)
+        etDate.isEnabled = false // Lock to the selected calendar date
+
+        // Fill data if editing
+        if (eventToEdit != null) {
+            etTitle.setText(eventToEdit.title)
+            val catIndex = categories.indexOf(eventToEdit.category)
+            if (catIndex >= 0) spCategory.setSelection(catIndex)
+            etDesc.setText(eventToEdit.description)
+            etSpeaker.setText(eventToEdit.speaker)
+            etTime.setText(eventToEdit.timeRange)
+            etLocation.setText(eventToEdit.location)
+            cbFeatured.isChecked = eventToEdit.isFeatured
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle(if (eventToEdit == null) "➕ Tambah Event Kalender" else "✏️ Edit Event")
+            .setView(dialogView)
+            .setPositiveButton("Simpan") { _, _ ->
+                val title = etTitle.text.toString().trim()
+                val cat = spCategory.selectedItem.toString()
+                val desc = etDesc.text.toString().trim()
+                val speaker = etSpeaker.text.toString().trim()
+                val time = etTime.text.toString().trim()
+                val location = etLocation.text.toString().trim()
+                val isFeaturedVal = if (cbFeatured.isChecked) 1 else 0
+
+                if (title.isNotEmpty() && desc.isNotEmpty() && speaker.isNotEmpty()) {
+                    saveCalendarEvent(eventToEdit?.id ?: 0, title, cat, desc, preselectedDate, time, speaker, location, isFeaturedVal)
+                } else {
+                    Toast.makeText(this, "Field penting tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun saveCalendarEvent(
+        id: Int, title: String, cat: String, desc: String, date: String,
+        time: String, speaker: String, location: String, featured: Int
+    ) {
+        val adminUserId = sessionManager.getUserId()
+        lifecycleScope.launch {
+            try {
+                val response = AuthClient.apiService.saveEvent(
+                    userId = adminUserId, id = id, title = title, category = cat,
+                    description = desc, eventDate = date, timeRange = time,
+                    speaker = speaker, location = location, isFeatured = featured
+                )
+                if (response.isSuccessful && response.body()?.success == true) {
+                    runOnUiThread {
+                        Toast.makeText(this@KalenderActivity, "Event berhasil disimpan", Toast.LENGTH_SHORT).show()
+                        loadMonthData()
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@KalenderActivity, "Gagal menyimpan: " + response.body()?.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    Toast.makeText(this@KalenderActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -253,6 +421,7 @@ class KalenderActivity : AppCompatActivity() {
             private val tvHijri: TextView = itemView.findViewById(R.id.tv_hijri_day)
             private val viewBg: View = itemView.findViewById(R.id.view_day_background)
             private val viewSelection: View = itemView.findViewById(R.id.view_day_selection)
+            private val viewDot: View = itemView.findViewById(R.id.view_event_dot)
 
             fun bind(day: CalendarDay, activity: KalenderActivity) {
                 if (day.dayNumber == 0) {
@@ -260,6 +429,7 @@ class KalenderActivity : AppCompatActivity() {
                     tvHijri.text = ""
                     viewBg.setBackgroundResource(0)
                     viewSelection.setBackgroundResource(0)
+                    viewDot.visibility = View.GONE
                     itemView.isClickable = false
                     return
                 }
@@ -291,6 +461,13 @@ class KalenderActivity : AppCompatActivity() {
                     viewSelection.setBackgroundResource(0)
                 }
 
+                // Highlight Event Dot
+                if (day.hasEvent) {
+                    viewDot.visibility = View.VISIBLE
+                } else {
+                    viewDot.visibility = View.GONE
+                }
+
                 itemView.setOnClickListener {
                     onItemClick(day)
                 }
@@ -304,6 +481,7 @@ class KalenderActivity : AppCompatActivity() {
         val date: Calendar?,
         val isCurrentMonth: Boolean,
         val isFasting: Boolean,
-        val fastingInfo: HijriCalendarHelper.FastingInfo?
+        val fastingInfo: HijriCalendarHelper.FastingInfo?,
+        val hasEvent: Boolean
     )
 }

@@ -21,5 +21,7 @@ data class LeaderboardResponse(
     @Json(name = "period")  val period: String,
     @Json(name = "from")    val from: String,
     @Json(name = "to")      val to: String,
-    @Json(name = "data")    val data: List<LeaderboardApiItem>?
+    @Json(name = "data")    val data: List<LeaderboardApiItem>?,
+    @Json(name = "my_rank") val myRank: LeaderboardApiItem?
 )
+
