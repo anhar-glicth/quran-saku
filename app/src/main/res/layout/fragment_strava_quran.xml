@@ -53,59 +53,78 @@
       <!-- Streak & Target Status Card -->
       <androidx.cardview.widget.CardView
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="110dp"
           android:layout_marginBottom="16dp"
           app:cardCornerRadius="16dp"
           app:cardElevation="2dp">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/quran_header_bg"
-            android:padding="16dp">
+            android:layout_height="match_parent">
 
-          <TextView
-              android:id="@+id/lbl_streak"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Konsistensi Tilawah"
-              android:textColor="#FFFDE7"
-              android:textSize="12sp"
-              android:alpha="0.9"/>
+          <!-- Background Image -->
+          <ImageView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:src="@drawable/quran_header_bg"
+              android:scaleType="centerCrop" />
 
-          <TextView
-              android:id="@+id/txt_streak_title"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/lbl_streak"
-              android:layout_marginTop="4dp"
-              android:text="🔥 7 Hari Beruntun!"
-              android:textColor="#FFFFFF"
-              android:textSize="22sp"
-              android:textStyle="bold"/>
+          <!-- Dark Overlay / Scrim -->
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#80000000" />
 
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_below="@id/txt_streak_title"
-              android:text="Target: 15 menit per hari"
-              android:textColor="#FFFDE7"
-              android:textSize="12sp"
-              android:alpha="0.8"/>
+          <!-- Content container -->
+          <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp">
 
-          <Button
-              android:id="@+id/btn_share_streak"
-              android:layout_width="wrap_content"
-              android:layout_height="36dp"
-              android:layout_alignParentEnd="true"
-              android:layout_centerVertical="true"
-              android:text="Bagikan"
-              android:textColor="#FF6D00"
-              android:textSize="12sp"
-              android:backgroundTint="#FFFFFF"
-              android:paddingHorizontal="16dp"
-              style="@style/Widget.MaterialComponents.Button"
-              app:cornerRadius="18dp"/>
+            <TextView
+                android:id="@+id/lbl_streak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Konsistensi Tilawah"
+                android:textColor="#FFFDE7"
+                android:textSize="12sp"
+                android:alpha="0.9"/>
 
+            <TextView
+                android:id="@+id/txt_streak_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lbl_streak"
+                android:layout_marginTop="2dp"
+                android:text="🔥 7 Hari Beruntun!"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_streak_title"
+                android:text="Target: 15 menit per hari"
+                android:textColor="#FFFDE7"
+                android:textSize="12sp"
+                android:alpha="0.8"/>
+
+            <Button
+                android:id="@+id/btn_share_streak"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:text="Bagikan"
+                android:textColor="#FF6D00"
+                android:textSize="11sp"
+                android:backgroundTint="#FFFFFF"
+                android:paddingHorizontal="12dp"
+                style="@style/Widget.MaterialComponents.Button"
+                app:cornerRadius="16dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"/>
+          </RelativeLayout>
         </RelativeLayout>
       </androidx.cardview.widget.CardView>
 
@@ -123,160 +142,275 @@
             android:padding="16dp"
             android:background="#FFFFFF">
 
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Durasi Membaca Minggu Ini"
-              android:textColor="#333333"
-              android:textSize="14sp"
-              android:textStyle="bold"
-              android:layout_marginBottom="12dp"/>
-
-          <!-- Weekly Chart Bars (Simulated using progress bars or small heights) -->
-          <LinearLayout
+          <RelativeLayout
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/tv_chart_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Statistik Mengaji Mingguan"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"/>
+
+            <!-- Toggle Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentEnd="true"
+                android:background="#F5F5F5"
+                android:padding="2dp">
+
+              <TextView
+                  android:id="@+id/btn_mode_duration"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Durasi"
+                  android:textSize="11sp"
+                  android:textStyle="bold"
+                  android:textColor="#FFFFFF"
+                  android:background="#FF6D00"
+                  android:paddingHorizontal="10dp"
+                  android:paddingVertical="4dp"
+                  android:clickable="true"
+                  android:focusable="true"/>
+
+              <TextView
+                  android:id="@+id/btn_mode_pages"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Halaman"
+                  android:textSize="11sp"
+                  android:textStyle="bold"
+                  android:textColor="#666666"
+                  android:background="#00000000"
+                  android:paddingHorizontal="10dp"
+                  android:paddingVertical="4dp"
+                  android:clickable="true"
+                  android:focusable="true"/>
+            </LinearLayout>
+          </RelativeLayout>
+
+          <!-- Weekly Chart Bars (Simulated using dynamic heights) -->
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="140dp"
               android:orientation="horizontal"
               android:gravity="bottom"
-              android:paddingBottom="8dp">
+              android:paddingBottom="4dp">
 
-            <!-- Mon -->
+            <!-- Day 1 -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
-              <View
-                  android:layout_width="12dp"
-                  android:layout_height="60dp"
-                  android:background="#FF6D00"/>
+                android:gravity="bottom|center_horizontal">
               <TextView
+                  android:id="@+id/txt_val_1"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_marginTop="4dp"
-                  android:text="S"
+                  android:text="0m"
                   android:textColor="#666666"
-                  android:textSize="10sp"/>
-            </LinearLayout>
-
-            <!-- Tue -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
+                  android:textSize="9sp"
+                  android:layout_marginBottom="4dp"/>
               <View
-                  android:layout_width="12dp"
-                  android:layout_height="80dp"
-                  android:background="#FF6D00"/>
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="4dp"
-                  android:text="S"
-                  android:textColor="#666666"
-                  android:textSize="10sp"/>
-            </LinearLayout>
-
-            <!-- Wed -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-              <View
-                  android:layout_width="12dp"
-                  android:layout_height="40dp"
-                  android:background="#FF6D00"/>
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="4dp"
-                  android:text="R"
-                  android:textColor="#666666"
-                  android:textSize="10sp"/>
-            </LinearLayout>
-
-            <!-- Thu -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-              <View
-                  android:layout_width="12dp"
-                  android:layout_height="90dp"
-                  android:background="#FF6D00"/>
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="4dp"
-                  android:text="K"
-                  android:textColor="#666666"
-                  android:textSize="10sp"/>
-            </LinearLayout>
-
-            <!-- Fri -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-              <View
-                  android:layout_width="12dp"
-                  android:layout_height="50dp"
+                  android:id="@+id/bar_day_1"
+                  android:layout_width="14dp"
+                  android:layout_height="10dp"
                   android:background="#FF8F00"/>
               <TextView
+                  android:id="@+id/txt_lbl_1"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_marginTop="4dp"
-                  android:text="J"
-                  android:textColor="#666666"
+                  android:layout_marginTop="6dp"
+                  android:text="Sen"
+                  android:textColor="#999999"
                   android:textSize="10sp"/>
             </LinearLayout>
 
-            <!-- Sat -->
+            <!-- Day 2 -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="bottom|center_horizontal">
+              <TextView
+                  android:id="@+id/txt_val_2"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="0m"
+                  android:textColor="#666666"
+                  android:textSize="9sp"
+                  android:layout_marginBottom="4dp"/>
               <View
-                  android:layout_width="12dp"
-                  android:layout_height="20dp"
+                  android:id="@+id/bar_day_2"
+                  android:layout_width="14dp"
+                  android:layout_height="10dp"
                   android:background="#FF8F00"/>
               <TextView
+                  android:id="@+id/txt_lbl_2"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_marginTop="4dp"
-                  android:text="S"
-                  android:textColor="#666666"
+                  android:layout_marginTop="6dp"
+                  android:text="Sel"
+                  android:textColor="#999999"
                   android:textSize="10sp"/>
             </LinearLayout>
 
-            <!-- Sun -->
+            <!-- Day 3 -->
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center">
-              <View
-                  android:layout_width="12dp"
-                  android:layout_height="70dp"
-                  android:background="#FF6D00"/>
+                android:gravity="bottom|center_horizontal">
               <TextView
+                  android:id="@+id/txt_val_3"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_marginTop="4dp"
-                  android:text="M"
+                  android:text="0m"
                   android:textColor="#666666"
+                  android:textSize="9sp"
+                  android:layout_marginBottom="4dp"/>
+              <View
+                  android:id="@+id/bar_day_3"
+                  android:layout_width="14dp"
+                  android:layout_height="10dp"
+                  android:background="#FF8F00"/>
+              <TextView
+                  android:id="@+id/txt_lbl_3"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="6dp"
+                  android:text="Rab"
+                  android:textColor="#999999"
+                  android:textSize="10sp"/>
+            </LinearLayout>
+
+            <!-- Day 4 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="bottom|center_horizontal">
+              <TextView
+                  android:id="@+id/txt_val_4"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="0m"
+                  android:textColor="#666666"
+                  android:textSize="9sp"
+                  android:layout_marginBottom="4dp"/>
+              <View
+                  android:id="@+id/bar_day_4"
+                  android:layout_width="14dp"
+                  android:layout_height="10dp"
+                  android:background="#FF8F00"/>
+              <TextView
+                  android:id="@+id/txt_lbl_4"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="6dp"
+                  android:text="Kam"
+                  android:textColor="#999999"
+                  android:textSize="10sp"/>
+            </LinearLayout>
+
+            <!-- Day 5 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="bottom|center_horizontal">
+              <TextView
+                  android:id="@+id/txt_val_5"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="0m"
+                  android:textColor="#666666"
+                  android:textSize="9sp"
+                  android:layout_marginBottom="4dp"/>
+              <View
+                  android:id="@+id/bar_day_5"
+                  android:layout_width="14dp"
+                  android:layout_height="10dp"
+                  android:background="#FF8F00"/>
+              <TextView
+                  android:id="@+id/txt_lbl_5"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="6dp"
+                  android:text="Jum"
+                  android:textColor="#999999"
+                  android:textSize="10sp"/>
+            </LinearLayout>
+
+            <!-- Day 6 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="bottom|center_horizontal">
+              <TextView
+                  android:id="@+id/txt_val_6"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="0m"
+                  android:textColor="#666666"
+                  android:textSize="9sp"
+                  android:layout_marginBottom="4dp"/>
+              <View
+                  android:id="@+id/bar_day_6"
+                  android:layout_width="14dp"
+                  android:layout_height="10dp"
+                  android:background="#FF8F00"/>
+              <TextView
+                  android:id="@+id/txt_lbl_6"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="6dp"
+                  android:text="Sab"
+                  android:textColor="#999999"
+                  android:textSize="10sp"/>
+            </LinearLayout>
+
+            <!-- Day 7 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="bottom|center_horizontal">
+              <TextView
+                  android:id="@+id/txt_val_7"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="0m"
+                  android:textColor="#666666"
+                  android:textSize="9sp"
+                  android:layout_marginBottom="4dp"/>
+              <View
+                  android:id="@+id/bar_day_7"
+                  android:layout_width="14dp"
+                  android:layout_height="10dp"
+                  android:background="#FF8F00"/>
+              <TextView
+                  android:id="@+id/txt_lbl_7"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="6dp"
+                  android:text="Min"
+                  android:textColor="#999999"
                   android:textSize="10sp"/>
             </LinearLayout>
 
@@ -284,6 +418,7 @@
 
         </LinearLayout>
       </androidx.cardview.widget.CardView>
+
 
       <!-- Leaderboard Header -->
       <TextView
@@ -296,13 +431,16 @@
           android:layout_marginBottom="12dp"/>
 
       <!-- Rank 1 -->
+      <!-- Rank 1 -->
       <androidx.cardview.widget.CardView
+          android:id="@+id/card_rank_1"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginBottom="8dp"
           app:cardCornerRadius="12dp"
           app:cardElevation="1dp">
         <RelativeLayout
+            android:id="@+id/bg_rank_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
@@ -325,6 +463,7 @@
               android:textStyle="bold"
               android:textSize="14sp"/>
           <TextView
+              android:id="@+id/desc_rank_1"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_below="@id/name_rank_1"
@@ -334,6 +473,7 @@
               android:textColor="#888888"
               android:textSize="11sp"/>
           <TextView
+              android:id="@+id/val_rank_1"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"
@@ -347,12 +487,14 @@
 
       <!-- Rank 2 -->
       <androidx.cardview.widget.CardView
+          android:id="@+id/card_rank_2"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginBottom="8dp"
           app:cardCornerRadius="12dp"
           app:cardElevation="1dp">
         <RelativeLayout
+            android:id="@+id/bg_rank_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
@@ -375,6 +517,7 @@
               android:textStyle="bold"
               android:textSize="14sp"/>
           <TextView
+              android:id="@+id/desc_rank_2"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_below="@id/name_rank_2"
@@ -384,6 +527,7 @@
               android:textColor="#888888"
               android:textSize="11sp"/>
           <TextView
+              android:id="@+id/val_rank_2"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"
@@ -395,14 +539,16 @@
         </RelativeLayout>
       </androidx.cardview.widget.CardView>
 
-      <!-- Rank 3 (Me) -->
+      <!-- Rank 3 -->
       <androidx.cardview.widget.CardView
+          android:id="@+id/card_rank_3"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginBottom="8dp"
           app:cardCornerRadius="12dp"
           app:cardElevation="1dp">
         <RelativeLayout
+            android:id="@+id/bg_rank_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
@@ -425,6 +571,7 @@
               android:textStyle="bold"
               android:textSize="14sp"/>
           <TextView
+              android:id="@+id/desc_rank_3"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_below="@id/name_rank_3"
@@ -434,6 +581,7 @@
               android:textColor="#888888"
               android:textSize="11sp"/>
           <TextView
+              android:id="@+id/val_rank_3"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_alignParentEnd="true"

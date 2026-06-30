@@ -182,6 +182,9 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
   private var progressDialog: ProgressDialog? = null
   private var isFoldableDeviceOpenAndVertical = false
 
+  private var stravaSessionStartTime: Long = 0
+  private val stravaPagesReadThisSession = mutableSetOf<Int>()
+
   private var bookmarksMenuItem: MenuItem? = null
   private var isCurrentPageReadingBookmarked = false
 
@@ -663,6 +666,7 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
         object : SimpleOnPageChangeListener() {
           override fun onPageSelected(position: Int) {
             val page = quranInfo.getPageFromPosition(position, isDualPageVisible)
+            stravaPagesReadThisSession.add(page)
             trySend(page)
           }
         }
@@ -884,6 +888,10 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
     recentPagePresenter.bind(currentPageFlow)
     readingBookmarkPresenter.bind(currentPageFlow, this)
 
+    stravaSessionStartTime = System.currentTimeMillis()
+    stravaPagesReadThisSession.clear()
+    stravaPagesReadThisSession.add(currentPage)
+
     if (shouldReconnect) {
       foregroundDisposable.add(
         Completable.timer(500, TimeUnit.MILLISECONDS)
@@ -1075,6 +1083,10 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
   }
 
   public override fun onPause() {
+    val elapsedMs = System.currentTimeMillis() - stravaSessionStartTime
+    val elapsedSec = elapsedMs / 1000
+    saveStravaStats(elapsedSec, stravaPagesReadThisSession.size)
+
     foregroundDisposable.clear()
     promptDialog?.dismiss()
     promptDialog = null
@@ -1947,6 +1959,21 @@ class PagerActivity : AppCompatActivity(), AudioBarListener, OnBookmarkTagsUpdat
 
     override fun onPanelAnchored(panel: View) {
     }
+  }
+
+  private fun saveStravaStats(durationSec: Long, pagesCount: Int) {
+    if (durationSec < 5) return
+    
+    val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+    val todayStr = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date())
+    
+    val currentDuration = prefs.getLong("strava_duration_$todayStr", 0L)
+    val currentPages = prefs.getInt("strava_pages_$todayStr", 0)
+    
+    prefs.edit()
+        .putLong("strava_duration_$todayStr", currentDuration + durationSec)
+        .putInt("strava_pages_$todayStr", currentPages + pagesCount)
+        .apply()
   }
 
   companion object {

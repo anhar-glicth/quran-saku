@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/root"
     android:orientation="vertical"
     android:background="#FFF9F9F9">
 
@@ -11,9 +10,11 @@
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize"
-      android:background="@color/toolbar"
-      android:theme="@style/ToolbarStyle"
-      app:titleTextAppearance="@style/ToolbarTitleText" />
+      android:background="#FFFFFF"
+      app:title="Pejuang Quran"
+      app:titleTextColor="@color/accent_color"
+      app:navigationIcon="?attr/homeAsUpIndicator"
+      app:elevation="2dp" />
 
   <ScrollView
       android:layout_width="match_parent"
@@ -26,84 +27,261 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+      <!-- Header Quote Card -->
+      <com.google.android.material.card.MaterialCardView
+          android:layout_width="match_parent"
+          android:layout_height="180dp"
+          android:layout_marginBottom="24dp"
+          app:cardCornerRadius="16dp"
+          app:cardElevation="2dp"
+          app:strokeWidth="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+          <!-- Background Image -->
+          <ImageView
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:src="@drawable/bg_home_verse_card"
+              android:scaleType="centerCrop" />
+
+          <!-- Dark Overlay / Scrim -->
+          <View
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#95000000" />
+
+          <!-- Decorative geometric patterns in code or text -->
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="✨"
+              android:textSize="40sp"
+              android:layout_alignParentEnd="true"
+              android:layout_margin="16dp"
+              android:alpha="0.2"/>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:gravity="center"
+              android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="“Siapa yang menunjukkan kepada kebaikan, maka ia mendapat pahala seperti orang yang melakukannya.”"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="italic|bold"
+                android:gravity="center"
+                android:shadowColor="#40000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="— HR. Muslim —"
+                android:textColor="#E0F2F1"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+
+          </LinearLayout>
+        </RelativeLayout>
+      </com.google.android.material.card.MaterialCardView>
+
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Tantangan Aktif"
+          android:text="Kategori Kemitraan"
           android:textColor="#212121"
           android:textSize="16sp"
           android:textStyle="bold"
-          android:layout_marginBottom="12dp" />
+          android:layout_marginBottom="4dp" />
 
-      <!-- Challenge 1 -->
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Pilih kategori kemitraan di bawah ini untuk melihat lembaga yang ikut andil mendukung program Al-Quran."
+          android:textColor="#888888"
+          android:textSize="11sp"
+          android:layout_marginBottom="16dp" />
+
+      <!-- 1. Mitra Utama -->
       <com.google.android.material.card.MaterialCardView
+          android:id="@+id/btn_mitra_utama"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
+          android:layout_marginBottom="12dp"
           app:cardCornerRadius="14dp"
           app:cardElevation="1dp"
           app:strokeWidth="1dp"
           app:strokeColor="#FFEAEAEA"
-          app:cardBackgroundColor="#FFFFFF">
-
+          app:cardBackgroundColor="#FFFFFF"
+          android:clickable="true"
+          android:focusable="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
           <TextView
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="One Juz One Day"
-              android:textColor="@color/accent_color"
-              android:textSize="14sp"
-              android:textStyle="bold" />
-
-          <TextView
-              android:layout_width="wrap_content"
+              android:text="🤝"
+              android:textSize="28sp" />
+          <LinearLayout
+              android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:text="Tantangan harian membaca 1 Juz per hari untuk meraih kebiasaan baik."
-              android:textColor="#666666"
-              android:textSize="12sp"
-              android:layout_marginTop="4dp"
-              android:layout_marginBottom="12dp" />
-
-          <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="6dp">
-
+              android:layout_weight="1"
+              android:orientation="vertical"
+              android:layout_marginStart="16dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sisa 12 jam lagi"
-                android:textColor="#999999"
-                android:textSize="11sp" />
-
+                android:text="Mitra Utama"
+                android:textColor="#212121"
+                android:textSize="14sp"
+                android:textStyle="bold" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Belum Selesai"
-                android:textColor="#D84315"
+                android:text="Lembaga penyokong utama program Quran"
+                android:textColor="#888888"
                 android:textSize="11sp"
-                android:textStyle="bold"
-                android:layout_alignParentEnd="true" />
-          </RelativeLayout>
-
-          <com.google.android.material.progressindicator.LinearProgressIndicator
-              android:layout_width="match_parent"
+                android:layout_marginTop="2dp" />
+          </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:progress="30"
-              app:trackColor="#FFE0E0E0"
-              app:indicatorColor="@color/accent_color"
-              app:trackThickness="6dp"
-              app:trackCornerRadius="3dp" />
+              android:text="›"
+              android:textColor="@color/accent_color"
+              android:textSize="24sp"
+              android:textStyle="bold"/>
         </LinearLayout>
       </com.google.android.material.card.MaterialCardView>
 
-      <!-- Challenge 2 -->
+      <!-- 2. Pendukung Resmi -->
       <com.google.android.material.card.MaterialCardView
+          android:id="@+id/btn_pendukung_resmi"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF"
+          android:clickable="true"
+          android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="💎"
+              android:textSize="28sp" />
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical"
+              android:layout_marginStart="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pendukung Resmi"
+                android:textColor="#212121"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instansi yang menyokong sarana &amp; operasional"
+                android:textColor="#888888"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+          </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="›"
+              android:textColor="@color/accent_color"
+              android:textSize="24sp"
+              android:textStyle="bold"/>
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- 3. Mitra Distribusi -->
+      <com.google.android.material.card.MaterialCardView
+          android:id="@+id/btn_mitra_distribusi"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="12dp"
+          app:cardCornerRadius="14dp"
+          app:cardElevation="1dp"
+          app:strokeWidth="1dp"
+          app:strokeColor="#FFEAEAEA"
+          app:cardBackgroundColor="#FFFFFF"
+          android:clickable="true"
+          android:focusable="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="🕌"
+              android:textSize="28sp" />
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical"
+              android:layout_marginStart="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mitra Distribusi"
+                android:textColor="#212121"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Masjid &amp; lembaga penyalur mushaf Al-Quran"
+                android:textColor="#888888"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
+          </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="›"
+              android:textColor="@color/accent_color"
+              android:textSize="24sp"
+              android:textStyle="bold"/>
+        </LinearLayout>
+      </com.google.android.material.card.MaterialCardView>
+
+      <!-- 4. Mitra Edukasi -->
+      <com.google.android.material.card.MaterialCardView
+          android:id="@+id/btn_mitra_edukasi"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginBottom="24dp"
@@ -111,164 +289,48 @@
           app:cardElevation="1dp"
           app:strokeWidth="1dp"
           app:strokeColor="#FFEAEAEA"
-          app:cardBackgroundColor="#FFFFFF">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Penghafal Surah Al-Mulk"
-              android:textColor="@color/accent_color"
-              android:textSize="14sp"
-              android:textStyle="bold" />
-
-          <TextView
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Selesaikan hafalan Surah Al-Mulk dalam kurun waktu 1 minggu."
-              android:textColor="#666666"
-              android:textSize="12sp"
-              android:layout_marginTop="4dp"
-              android:layout_marginBottom="12dp" />
-
-          <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginBottom="6dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sisa 3 hari lagi"
-                android:textColor="#999999"
-                android:textSize="11sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sedang Berjalan (5/7 Hari)"
-                android:textColor="#0288D1"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:layout_alignParentEnd="true" />
-          </RelativeLayout>
-
-          <com.google.android.material.progressindicator.LinearProgressIndicator
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:progress="71"
-              app:trackColor="#FFE0E0E0"
-              app:indicatorColor="@color/accent_color"
-              app:trackThickness="6dp"
-              app:trackCornerRadius="3dp" />
-        </LinearLayout>
-      </com.google.android.material.card.MaterialCardView>
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Pencapaian Lencana"
-          android:textColor="#212121"
-          android:textSize="16sp"
-          android:textStyle="bold"
-          android:layout_marginBottom="12dp" />
-
-      <!-- Badges card -->
-      <com.google.android.material.card.MaterialCardView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          app:cardCornerRadius="14dp"
-          app:cardElevation="1dp"
-          app:strokeWidth="1dp"
-          app:strokeColor="#FFEAEAEA"
           app:cardBackgroundColor="#FFFFFF"
-          android:layout_marginBottom="16dp">
-
+          android:clickable="true"
+          android:focusable="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-          <LinearLayout
-              android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+          <TextView
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:weightSum="3"
-              android:gravity="center">
-
-            <!-- Gold Badge -->
-            <LinearLayout
-                android:layout_width="0dp"
+              android:text="📚"
+              android:textSize="28sp" />
+          <LinearLayout
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:orientation="vertical"
+              android:layout_marginStart="16dp">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="🏆"
-                  android:textSize="32sp" />
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Pejuang Emas"
-                  android:textColor="#212121"
-                  android:textSize="11sp"
-                  android:textStyle="bold"
-                  android:layout_marginTop="4dp" />
-            </LinearLayout>
-
-            <!-- Silver Badge -->
-            <LinearLayout
-                android:layout_width="0dp"
+                android:text="Mitra Edukasi"
+                android:textColor="#212121"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="🥈"
-                  android:textSize="32sp" />
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Pejuang Perak"
-                  android:textColor="#212121"
-                  android:textSize="11sp"
-                  android:textStyle="bold"
-                  android:layout_marginTop="4dp" />
-            </LinearLayout>
-
-            <!-- Bronze Badge -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="🥉"
-                  android:textSize="32sp" />
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Pejuang Perunggu"
-                  android:textColor="#212121"
-                  android:textSize="11sp"
-                  android:textStyle="bold"
-                  android:layout_marginTop="4dp" />
-            </LinearLayout>
-
+                android:text="Pesantren &amp; komunitas pembina kajian Quran"
+                android:textColor="#888888"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp" />
           </LinearLayout>
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="›"
+              android:textColor="@color/accent_color"
+              android:textSize="24sp"
+              android:textStyle="bold"/>
         </LinearLayout>
       </com.google.android.material.card.MaterialCardView>
 

@@ -120,6 +120,10 @@
         android:theme="@style/QuranToolBarDayNight"
         android:exported="false"/>
     <activity
+        android:name=".PejuangPartnerDetailActivity"
+        android:theme="@style/QuranToolBarDayNight"
+        android:exported="false"/>
+    <activity
         android:name=".DzikirActivity"
         android:theme="@style/QuranToolBarDayNight"
         android:exported="false"/>
