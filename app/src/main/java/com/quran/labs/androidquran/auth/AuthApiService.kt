@@ -11,6 +11,10 @@ import com.quran.labs.androidquran.model.EventSaveResponse
 import com.quran.labs.androidquran.model.SimpleResponse
 import com.quran.labs.androidquran.model.MyGroupResponse
 import com.quran.labs.androidquran.model.PendingMembersResponse
+import com.quran.labs.androidquran.model.CampaignListResponse
+import com.quran.labs.androidquran.model.CampaignSaveResponse
+import com.quran.labs.androidquran.model.RegistrationStatusResponse
+import com.quran.labs.androidquran.model.EventRegistrationsResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -89,6 +93,28 @@ interface AuthApiService {
         @Field("text_color")  textColor: String = "#004D40"
     ): Response<PartnerAddResponse>
 
+    @FormUrlEncoded
+    @POST("auth/partners_api.php")
+    suspend fun editPartner(
+        @Field("action")      action: String = "edit",
+        @Field("user_id")     userId: Int,
+        @Field("id")          id: Int,
+        @Field("category_id") categoryId: String,
+        @Field("logo_text")   logoText: String,
+        @Field("name")        name: String,
+        @Field("description") description: String,
+        @Field("bg_color")    bgColor: String = "#E0F2F1",
+        @Field("text_color")  textColor: String = "#004D40"
+    ): Response<SimpleResponse>
+
+    @FormUrlEncoded
+    @POST("auth/partners_api.php")
+    suspend fun deletePartner(
+        @Field("action")  action: String = "delete",
+        @Field("user_id") userId: Int,
+        @Field("id")      id: Int
+    ): Response<SimpleResponse>
+
     // ─── Kalender & Kegiatan: Events ─────────────────────────
     @GET("auth/events_api.php")
     suspend fun getEvents(
@@ -116,7 +142,8 @@ interface AuthApiService {
         @Field("time_range")  timeRange: String = "09:00 - 11:30 WIB",
         @Field("speaker")     speaker: String,
         @Field("location")    location: String = "Online Zoom",
-        @Field("is_featured") isFeatured: Int = 0
+        @Field("is_featured") isFeatured: Int = 0,
+        @Field("image_url")   imageUrl: String = ""
     ): Response<EventSaveResponse>
 
     @FormUrlEncoded
@@ -232,4 +259,59 @@ interface AuthApiService {
         @Field("name")    name: String,
         @Field("email")   email: String
     ): Response<SimpleResponse>
+
+    // ─── Campaign Donasi ──────────────────────────────────────
+    @GET("auth/campaign_api.php")
+    suspend fun getCampaigns(
+        @Query("action") action: String = "list",
+        @Query("all")    all: Int = 0
+    ): Response<CampaignListResponse>
+
+    @FormUrlEncoded
+    @POST("auth/campaign_api.php")
+    suspend fun saveCampaign(
+        @Field("action")      action: String = "save",
+        @Field("user_id")     userId: Int,
+        @Field("id")          id: Int = 0,
+        @Field("title")       title: String,
+        @Field("description") description: String,
+        @Field("image_url")   imageUrl: String = "",
+        @Field("donate_url")  donateUrl: String = "",
+        @Field("is_active")   isActive: Int = 1
+    ): Response<CampaignSaveResponse>
+
+    @FormUrlEncoded
+    @POST("auth/campaign_api.php")
+    suspend fun deleteCampaign(
+        @Field("action")  action: String = "delete",
+        @Field("user_id") userId: Int,
+        @Field("id")      id: Int
+    ): Response<SimpleResponse>
+
+    // ─── Event Registrations ─────────────────────────────────
+    @FormUrlEncoded
+    @POST("auth/events_api.php")
+    suspend fun registerEvent(
+        @Field("action")   action: String = "register",
+        @Field("event_id") eventId: Int,
+        @Field("user_id")  userId: Int,
+        @Field("name")     name: String,
+        @Field("email")    email: String,
+        @Field("phone")    phone: String,
+        @Field("notes")    notes: String
+    ): Response<SimpleResponse>
+
+    @GET("auth/events_api.php")
+    suspend fun checkRegistration(
+        @Query("action")   action: String = "check_registration",
+        @Query("event_id") eventId: Int,
+        @Query("user_id")  userId: Int
+    ): Response<RegistrationStatusResponse>
+
+    @GET("auth/events_api.php")
+    suspend fun getEventRegistrations(
+        @Query("action")   action: String = "get_registrations",
+        @Query("user_id")  userId: Int,
+        @Query("event_id") eventId: Int
+    ): Response<EventRegistrationsResponse>
 }

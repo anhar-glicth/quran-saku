@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Lengkap"
+            android:textColor="#ff212121"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+            
+        <EditText
+            android:id="@+id/et_reg_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Nama Lengkap"
+            android:textSize="14sp"
+            android:inputType="textPersonName"
+            android:paddingHorizontal="10dp"
+            android:layout_marginBottom="12dp"/>
+            
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alamat Email"
+            android:textColor="#ff212121"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+            
+        <EditText
+            android:id="@+id/et_reg_email"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="contoh@email.com"
+            android:textSize="14sp"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="10dp"
+            android:layout_marginBottom="12dp"/>
+            
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No. WhatsApp / HP"
+            android:textColor="#ff212121"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+            
+        <EditText
+            android:id="@+id/et_reg_phone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="08xxxxxxxxxx"
+            android:textSize="14sp"
+            android:inputType="phone"
+            android:paddingHorizontal="10dp"
+            android:layout_marginBottom="12dp"/>
+            
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Catatan Tambahan (Opsional)"
+            android:textColor="#ff212121"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+            
+        <EditText
+            android:id="@+id/et_reg_notes"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:hint="Tulis catatan jika ada..."
+            android:textSize="14sp"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:padding="10dp"/>
+            
+    </LinearLayout>
+</ScrollView>

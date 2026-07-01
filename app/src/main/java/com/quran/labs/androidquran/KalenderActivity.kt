@@ -43,9 +43,7 @@ class KalenderActivity : AppCompatActivity() {
     // Event views
     private lateinit var viewEventDivider: View
     private lateinit var layoutEventDetail: View
-    private lateinit var tvDetailEventTitle: TextView
-    private lateinit var tvDetailEventSpeaker: TextView
-    private lateinit var tvDetailEventInfo: TextView
+    private lateinit var layoutDynamicEventsContainer: LinearLayout
     private lateinit var btnManageEvent: Button
 
     private var currentMonthCalendar: Calendar = Calendar.getInstance()
@@ -84,9 +82,7 @@ class KalenderActivity : AppCompatActivity() {
         // Event views bind
         viewEventDivider = findViewById(R.id.view_event_divider)
         layoutEventDetail = findViewById(R.id.layout_event_detail)
-        tvDetailEventTitle = findViewById(R.id.tv_detail_event_title)
-        tvDetailEventSpeaker = findViewById(R.id.tv_detail_event_speaker)
-        tvDetailEventInfo = findViewById(R.id.tv_detail_event_info)
+        layoutDynamicEventsContainer = findViewById(R.id.layout_dynamic_events_container)
         btnManageEvent = findViewById(R.id.btn_manage_date_event)
 
         // Setup Grid RecyclerView
@@ -252,6 +248,60 @@ class KalenderActivity : AppCompatActivity() {
         updateDetailCardForCustomDate(date, hDay, hMonth, fastingInfo)
     }
 
+    private fun dp(value: Int): Int {
+        return (value * resources.displayMetrics.density).toInt()
+    }
+
+    private fun showAdminEventOptionsDialog(event: EventItem, dateStr: String) {
+        val options = arrayOf("✏️ Edit Kegiatan", "❌ Hapus Kegiatan")
+        AlertDialog.Builder(this)
+            .setTitle("Pilihan Admin")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> showAddEventDialog(event, dateStr)
+                    1 -> confirmDeleteEvent(event)
+                }
+            }
+            .show()
+    }
+
+    private fun confirmDeleteEvent(event: EventItem) {
+        AlertDialog.Builder(this)
+            .setTitle("Hapus Kegiatan")
+            .setMessage("Apakah Anda yakin ingin menghapus kegiatan \"${event.title}\"?")
+            .setPositiveButton("Ya, Hapus") { _, _ ->
+                deleteCalendarEvent(event.id)
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun deleteCalendarEvent(id: Int) {
+        val adminUserId = sessionManager.getUserId()
+        lifecycleScope.launch {
+            try {
+                val response = AuthClient.apiService.deleteEvent(
+                    userId = adminUserId,
+                    id = id
+                )
+                if (response.isSuccessful && response.body()?.success == true) {
+                    runOnUiThread {
+                        Toast.makeText(this@KalenderActivity, "Kegiatan berhasil dihapus", Toast.LENGTH_SHORT).show()
+                        loadMonthData()
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@KalenderActivity, "Gagal menghapus kegiatan: " + response.body()?.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    Toast.makeText(this@KalenderActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     private fun updateDetailCardForCustomDate(
         date: Calendar,
         hijriDay: Int,
@@ -286,13 +336,66 @@ class KalenderActivity : AppCompatActivity() {
 
         // Bind event detail if any
         val formattedDate = dbDateFormat.format(date.time)
-        val event = monthEvents.find { it.eventDate == formattedDate }
-        if (event != null) {
+        val eventsForDay = monthEvents.filter { it.eventDate == formattedDate }
+
+        layoutDynamicEventsContainer.removeAllViews()
+
+        if (eventsForDay.isNotEmpty()) {
             viewEventDivider.visibility = View.VISIBLE
             layoutEventDetail.visibility = View.VISIBLE
-            tvDetailEventTitle.text = event.title
-            tvDetailEventSpeaker.text = "Pembicara: " + event.speaker
-            tvDetailEventInfo.text = "Waktu: ${event.timeRange} • Lokasi: ${event.location}"
+
+            for (event in eventsForDay) {
+                val eventContainer = LinearLayout(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        setMargins(0, 0, 0, dp(12))
+                    }
+                    orientation = LinearLayout.VERTICAL
+                    setPadding(dp(8), dp(8), dp(8), dp(8))
+                }
+
+                val tvTitle = TextView(this).apply {
+                    text = event.title
+                    setTextColor(Color.parseColor("#212121"))
+                    textSize = 14f
+                    setTypeface(null, android.graphics.Typeface.BOLD)
+                }
+
+                val tvSpeaker = TextView(this).apply {
+                    text = "Pembicara: ${event.speaker}"
+                    setTextColor(Color.parseColor("#555555"))
+                    textSize = 12f
+                    setPadding(0, dp(2), 0, 0)
+                }
+
+                val tvInfo = TextView(this).apply {
+                    text = "Waktu: ${event.timeRange} • Lokasi: ${event.location}"
+                    setTextColor(Color.parseColor("#666666"))
+                    textSize = 11f
+                    setPadding(0, dp(2), 0, 0)
+                }
+
+                eventContainer.addView(tvTitle)
+                eventContainer.addView(tvSpeaker)
+                eventContainer.addView(tvInfo)
+
+                // If user is admin, allow clicking on the event item to edit or delete it
+                if (sessionManager.isLoggedIn() && sessionManager.getUserRole() == "admin") {
+                    eventContainer.isClickable = true
+                    eventContainer.isFocusable = true
+                    val typedValue = android.util.TypedValue()
+                    theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)
+                    eventContainer.setBackgroundResource(typedValue.resourceId)
+
+                    eventContainer.setOnClickListener {
+                        showAdminEventOptionsDialog(event, formattedDate)
+                    }
+                }
+
+                layoutDynamicEventsContainer.addView(eventContainer)
+            }
         } else {
             viewEventDivider.visibility = View.GONE
             layoutEventDetail.visibility = View.GONE
@@ -309,6 +412,7 @@ class KalenderActivity : AppCompatActivity() {
         val etDate = dialogView.findViewById<EditText>(R.id.et_event_date)
         val etTime = dialogView.findViewById<EditText>(R.id.et_event_time)
         val etLocation = dialogView.findViewById<EditText>(R.id.et_event_location)
+        val etImageUrl = dialogView.findViewById<EditText>(R.id.et_event_image_url)
         val cbFeatured = dialogView.findViewById<CheckBox>(R.id.cb_featured)
 
         // Setup category spinner
@@ -329,6 +433,7 @@ class KalenderActivity : AppCompatActivity() {
             etSpeaker.setText(eventToEdit.speaker)
             etTime.setText(eventToEdit.timeRange)
             etLocation.setText(eventToEdit.location)
+            etImageUrl.setText(eventToEdit.imageUrl ?: "")
             cbFeatured.isChecked = eventToEdit.isFeatured
         }
 
@@ -342,10 +447,11 @@ class KalenderActivity : AppCompatActivity() {
                 val speaker = etSpeaker.text.toString().trim()
                 val time = etTime.text.toString().trim()
                 val location = etLocation.text.toString().trim()
+                val imgUrl = etImageUrl.text.toString().trim()
                 val isFeaturedVal = if (cbFeatured.isChecked) 1 else 0
 
                 if (title.isNotEmpty() && desc.isNotEmpty() && speaker.isNotEmpty()) {
-                    saveCalendarEvent(eventToEdit?.id ?: 0, title, cat, desc, preselectedDate, time, speaker, location, isFeaturedVal)
+                    saveCalendarEvent(eventToEdit?.id ?: 0, title, cat, desc, preselectedDate, time, speaker, location, isFeaturedVal, imgUrl)
                 } else {
                     Toast.makeText(this, "Field penting tidak boleh kosong", Toast.LENGTH_SHORT).show()
                 }
@@ -356,7 +462,7 @@ class KalenderActivity : AppCompatActivity() {
 
     private fun saveCalendarEvent(
         id: Int, title: String, cat: String, desc: String, date: String,
-        time: String, speaker: String, location: String, featured: Int
+        time: String, speaker: String, location: String, featured: Int, imageUrl: String
     ) {
         val adminUserId = sessionManager.getUserId()
         lifecycleScope.launch {
@@ -364,7 +470,8 @@ class KalenderActivity : AppCompatActivity() {
                 val response = AuthClient.apiService.saveEvent(
                     userId = adminUserId, id = id, title = title, category = cat,
                     description = desc, eventDate = date, timeRange = time,
-                    speaker = speaker, location = location, isFeatured = featured
+                    speaker = speaker, location = location, isFeatured = featured,
+                    imageUrl = imageUrl
                 )
                 if (response.isSuccessful && response.body()?.success == true) {
                     runOnUiThread {

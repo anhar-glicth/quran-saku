@@ -5,6 +5,7 @@ import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,10 +13,13 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.quran.labs.androidquran.CatatanActivity
 import com.quran.labs.androidquran.DzikirActivity
@@ -25,10 +29,15 @@ import com.quran.labs.androidquran.PejuangQuranActivity
 import com.quran.labs.androidquran.KalenderActivity
 import com.quran.labs.androidquran.ui.QuranActivity
 import com.quran.labs.androidquran.R
-import androidx.appcompat.app.AlertDialog
+import com.quran.labs.androidquran.auth.AuthClient
+import com.quran.labs.androidquran.auth.SessionManager
 import com.quran.labs.androidquran.adhan.AdhanScheduler
 import com.quran.labs.androidquran.adhan.IndonesiaCities
 import com.quran.labs.androidquran.adhan.PrayerTimeCalculator
+import com.quran.labs.androidquran.model.CampaignItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -91,6 +100,9 @@ class PendampingIbadahFragment : Fragment() {
         view.findViewById<View>(R.id.btn_select_city)?.setOnClickListener {
             showCityPickerDialog()
         }
+
+        // --- Load Campaign Dinamis ---
+        loadCampaigns(view)
 
         // --- Toggle Notifikasi Adzan ---
         val switchAdhan = view.findViewById<SwitchMaterial>(R.id.switch_adhan)
@@ -313,4 +325,261 @@ class PendampingIbadahFragment : Fragment() {
             }
         }
     }
+
+    // ─── Campaign Donasi ─────────────────────────────────────────
+
+    private fun loadCampaigns(view: View) {
+        val sessionManager = SessionManager(requireContext())
+        val isAdmin = sessionManager.isLoggedIn() && sessionManager.getUserRole() == "admin"
+
+        val rvCampaigns = view.findViewById<RecyclerView>(R.id.rv_campaigns)
+        val tvNoCampaign = view.findViewById<TextView>(R.id.tv_no_campaign)
+        val btnAddCampaign = view.findViewById<TextView>(R.id.btn_add_campaign)
+
+        // Tampilkan tombol tambah untuk admin
+        if (isAdmin) {
+            btnAddCampaign?.visibility = View.VISIBLE
+            btnAddCampaign?.setOnClickListener { showCampaignDialog(null, view) }
+        }
+
+        rvCampaigns?.layoutManager = LinearLayoutManager(
+            requireContext(), LinearLayoutManager.HORIZONTAL, false
+        )
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val allParam = if (isAdmin) 1 else 0
+                val response = AuthClient.apiService.getCampaigns(all = allParam)
+                if (response.isSuccessful) {
+                    val campaigns = response.body()?.data ?: emptyList()
+                    if (campaigns.isEmpty()) {
+                        tvNoCampaign?.visibility = View.VISIBLE
+                        rvCampaigns?.visibility = View.GONE
+                    } else {
+                        tvNoCampaign?.visibility = View.GONE
+                        rvCampaigns?.visibility = View.VISIBLE
+                        rvCampaigns?.adapter = CampaignAdapter(campaigns, isAdmin,
+                            onClick = { campaign ->
+                                if (campaign.donateUrl.isNotEmpty()) {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(campaign.donateUrl))
+                                    startActivity(intent)
+                                } else {
+                                    Toast.makeText(context, "Link donasi belum tersedia", Toast.LENGTH_SHORT).show()
+                                }
+                            },
+                            onLongClick = { campaign ->
+                                if (isAdmin) showAdminCampaignOptions(campaign, view)
+                            }
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                // Gagal load — biarkan kosong
+            }
+        }
+    }
+
+    private fun showAdminCampaignOptions(campaign: CampaignItem, view: View) {
+        val options = arrayOf("✏️ Edit Campaign", "❌ Hapus Campaign")
+        AlertDialog.Builder(requireContext())
+            .setTitle("Pilihan Admin")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> showCampaignDialog(campaign, view)
+                    1 -> confirmDeleteCampaign(campaign, view)
+                }
+            }
+            .show()
+    }
+
+    private fun confirmDeleteCampaign(campaign: CampaignItem, view: View) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Hapus Campaign")
+            .setMessage("Yakin ingin menghapus campaign \"${campaign.title}\"?")
+            .setPositiveButton("Ya, Hapus") { _, _ ->
+                val sessionManager = SessionManager(requireContext())
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        val response = AuthClient.apiService.deleteCampaign(
+                            userId = sessionManager.getUserId(),
+                            id = campaign.id
+                        )
+                        activity?.runOnUiThread {
+                            if (response.isSuccessful && response.body()?.success == true) {
+                                Toast.makeText(context, "Campaign berhasil dihapus", Toast.LENGTH_SHORT).show()
+                                loadCampaigns(view)
+                            } else {
+                                Toast.makeText(context, "Gagal menghapus campaign", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } catch (e: Exception) {
+                        activity?.runOnUiThread {
+                            Toast.makeText(context, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun showCampaignDialog(campaignToEdit: CampaignItem?, view: View) {
+        val ctx = context ?: return
+        val dialogView = LayoutInflater.from(ctx).inflate(R.layout.dialog_add_campaign, null)
+
+        val etTitle = dialogView.findViewById<EditText>(R.id.et_campaign_title)
+        val etDesc = dialogView.findViewById<EditText>(R.id.et_campaign_desc)
+        val etImageUrl = dialogView.findViewById<EditText>(R.id.et_campaign_image_url)
+        val etDonateUrl = dialogView.findViewById<EditText>(R.id.et_campaign_donate_url)
+        val cbActive = dialogView.findViewById<CheckBox>(R.id.cb_campaign_active)
+        val imgPreview = dialogView.findViewById<ImageView>(R.id.img_campaign_photo_preview)
+        val tvPlaceholder = dialogView.findViewById<TextView>(R.id.tv_campaign_photo_placeholder)
+
+        // Fill existing data if editing
+        if (campaignToEdit != null) {
+            etTitle.setText(campaignToEdit.title)
+            etDesc.setText(campaignToEdit.description)
+            etImageUrl.setText(campaignToEdit.imageUrl)
+            etDonateUrl.setText(campaignToEdit.donateUrl)
+            cbActive.isChecked = campaignToEdit.isActive
+
+            // Load existing photo preview
+            val existingUrl = campaignToEdit.imageUrl
+            if (existingUrl.isNotEmpty()) {
+                tvPlaceholder.visibility = View.GONE
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        val bitmap = withContext(Dispatchers.IO) {
+                            val conn = java.net.URL(existingUrl).openConnection() as java.net.HttpURLConnection
+                            conn.doInput = true; conn.connect()
+                            BitmapFactory.decodeStream(conn.inputStream)
+                        }
+                        imgPreview.setImageBitmap(bitmap)
+                    } catch (_: Exception) {}
+                }
+            }
+        }
+
+        // Live preview foto dari URL
+        etImageUrl.addTextChangedListener(object : android.text.TextWatcher {
+            override fun afterTextChanged(s: android.text.Editable?) {
+                val url = s.toString().trim()
+                if (url.startsWith("http")) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        try {
+                            val bitmap = withContext(Dispatchers.IO) {
+                                val conn = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+                                conn.doInput = true; conn.connect()
+                                BitmapFactory.decodeStream(conn.inputStream)
+                            }
+                            imgPreview.setImageBitmap(bitmap)
+                            tvPlaceholder.visibility = View.GONE
+                        } catch (_: Exception) {}
+                    }
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        AlertDialog.Builder(ctx)
+            .setTitle(if (campaignToEdit == null) "➕ Tambah Campaign" else "✏️ Edit Campaign")
+            .setView(dialogView)
+            .setPositiveButton("Simpan") { _, _ ->
+                val title = etTitle.text.toString().trim()
+                val desc = etDesc.text.toString().trim()
+                val imageUrl = etImageUrl.text.toString().trim()
+                val donateUrl = etDonateUrl.text.toString().trim()
+                val isActive = if (cbActive.isChecked) 1 else 0
+
+                if (title.isEmpty()) {
+                    Toast.makeText(ctx, "Judul tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                    return@setPositiveButton
+                }
+
+                val sessionManager = SessionManager(ctx)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        val response = AuthClient.apiService.saveCampaign(
+                            userId = sessionManager.getUserId(),
+                            id = campaignToEdit?.id ?: 0,
+                            title = title,
+                            description = desc,
+                            imageUrl = imageUrl,
+                            donateUrl = donateUrl,
+                            isActive = isActive
+                        )
+                        activity?.runOnUiThread {
+                            if (response.isSuccessful && response.body()?.success == true) {
+                                Toast.makeText(ctx, "Campaign berhasil disimpan", Toast.LENGTH_SHORT).show()
+                                loadCampaigns(view)
+                            } else {
+                                Toast.makeText(ctx, "Gagal menyimpan: ${response.body()?.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } catch (e: Exception) {
+                        activity?.runOnUiThread {
+                            Toast.makeText(ctx, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    // ─── Campaign RecyclerView Adapter ───────────────────────────
+
+    inner class CampaignAdapter(
+        private val list: List<CampaignItem>,
+        private val isAdmin: Boolean,
+        private val onClick: (CampaignItem) -> Unit,
+        private val onLongClick: (CampaignItem) -> Unit
+    ) : RecyclerView.Adapter<CampaignAdapter.ViewHolder>() {
+
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val imgBanner: ImageView = view.findViewById(R.id.img_campaign_banner)
+            val tvTitle: TextView = view.findViewById(R.id.tv_campaign_title)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_campaign_card, parent, false)
+            return ViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val campaign = list[position]
+            holder.tvTitle.text = campaign.title
+
+            // Load banner image from URL
+            if (campaign.imageUrl.isNotEmpty()) {
+                val url = campaign.imageUrl
+                holder.imgBanner.tag = url
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        val bitmap = withContext(Dispatchers.IO) {
+                            val conn = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+                            conn.doInput = true; conn.connect()
+                            BitmapFactory.decodeStream(conn.inputStream)
+                        }
+                        if (holder.imgBanner.tag == url) {
+                            holder.imgBanner.setImageBitmap(bitmap)
+                        }
+                    } catch (_: Exception) {}
+                }
+            }
+
+            holder.itemView.setOnClickListener { onClick(campaign) }
+            if (isAdmin) {
+                holder.itemView.setOnLongClickListener {
+                    onLongClick(campaign)
+                    true
+                }
+            }
+        }
+
+        override fun getItemCount() = list.size
+    }
+
 }

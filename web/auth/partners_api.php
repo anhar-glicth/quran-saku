@@ -1,7 +1,7 @@
 <?php
 // ============================================================
 // partners_api.php
-// API untuk Pejuang Kebaikan / Mitra (list, add)
+// API untuk Pejuang Kebaikan / Mitra (list, add, edit, delete)
 // ============================================================
 
 header('Content-Type: application/json');
@@ -41,15 +41,18 @@ if ($action === 'list') {
     exit;
 }
 
-if ($action === 'add') {
-    $userId = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
-    
-    // Check if user is admin
+// Check admin role helper
+function checkAdmin($db, $userId) {
     $userStmt = $db->prepare("SELECT role FROM users WHERE id = ?");
     $userStmt->execute([$userId]);
     $user = $userStmt->fetch();
+    return ($user && $user['role'] === 'admin');
+}
+
+if ($action === 'add') {
+    $userId = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
     
-    if (!$user || $user['role'] !== 'admin') {
+    if (!checkAdmin($db, $userId)) {
         echo json_encode(['success' => false, 'message' => 'Akses ditolak. Hanya admin yang dapat menambah mitra.']);
         exit;
     }
@@ -85,6 +88,67 @@ if ($action === 'add') {
             'text_color'  => $textColor
         ]
     ]);
+    exit;
+}
+
+if ($action === 'edit') {
+    $userId = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
+    $id     = isset($_POST['id']) ? intval($_POST['id']) : 0;
+    
+    if (!checkAdmin($db, $userId)) {
+        echo json_encode(['success' => false, 'message' => 'Akses ditolak.']);
+        exit;
+    }
+    
+    $categoryId  = $_POST['category_id'] ?? '';
+    $logoText    = trim($_POST['logo_text'] ?? '');
+    $name        = trim($_POST['name'] ?? '');
+    $description = trim($_POST['description'] ?? '');
+    $bgColor     = $_POST['bg_color'] ?? '#E0F2F1';
+    $textColor   = $_POST['text_color'] ?? '#004D40';
+    
+    if ($id <= 0 || empty($categoryId) || empty($logoText) || empty($name) || empty($description)) {
+        echo json_encode(['success' => false, 'message' => 'Semua field wajib diisi']);
+        exit;
+    }
+    
+    $stmt = $db->prepare("
+        UPDATE partners 
+        SET category_id = ?, logo_text = ?, name = ?, description = ?, bg_color = ?, text_color = ?
+        WHERE id = ?
+    ");
+    $result = $stmt->execute([$categoryId, $logoText, $name, $description, $bgColor, $textColor, $id]);
+    
+    if ($result) {
+        echo json_encode(['success' => true, 'message' => 'Mitra berhasil diperbarui']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Gagal memperbarui mitra']);
+    }
+    exit;
+}
+
+if ($action === 'delete') {
+    $userId = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
+    $id     = isset($_POST['id']) ? intval($_POST['id']) : 0;
+    
+    if (!checkAdmin($db, $userId)) {
+        echo json_encode(['success' => false, 'message' => 'Akses ditolak.']);
+        exit;
+    }
+    
+    if ($id <= 0) {
+        echo json_encode(['success' => false, 'message' => 'ID mitra tidak valid.']);
+        exit;
+    }
+    
+    $stmt = $db->prepare("DELETE FROM partners WHERE id = ?");
+    $result = $stmt->execute([$id]);
+    
+    if ($result) {
+        echo json_encode(['success' => true, 'message' => 'Mitra berhasil dihapus']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Gagal menghapus mitra']);
+    }
     exit;
 }
 

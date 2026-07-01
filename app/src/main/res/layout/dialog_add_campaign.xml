@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Judul -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Judul Campaign"
+            android:textColor="#555555"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/et_campaign_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contoh: Wakaf Al-Quran Braille"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Deskripsi -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deskripsi Campaign"
+            android:textColor="#555555"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/et_campaign_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ceritakan campaign ini..."
+            android:textSize="14sp"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Preview foto -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Foto Banner Campaign"
+            android:textColor="#555555"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_campaign_photo_preview"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="1dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#FFEAEAEA"
+            android:layout_marginBottom="8dp">
+
+            <ImageView
+                android:id="@+id/img_campaign_photo_preview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_home_verse_card"/>
+
+            <TextView
+                android:id="@+id/tv_campaign_photo_placeholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="🖼️ Pratinjau foto muncul di sini"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:background="#88000000"
+                android:padding="8dp"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <EditText
+            android:id="@+id/et_campaign_image_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="URL Foto: https://example.com/banner.jpg"
+            android:textSize="13sp"
+            android:inputType="textUri"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Link Donasi -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🔗 Link Donasi"
+            android:textColor="#FF6D00"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/et_campaign_donate_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="https://kitabisa.com/campaign/..."
+            android:textSize="14sp"
+            android:inputType="textUri"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Status Aktif -->
+        <CheckBox
+            android:id="@+id/cb_campaign_active"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tampilkan campaign (Aktif)"
+            android:checked="true"
+            android:textSize="13sp"/>
+
+    </LinearLayout>
+</ScrollView>

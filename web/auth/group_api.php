@@ -1,7 +1,7 @@
 <?php
 // ============================================================
 // group_api.php
-// API untuk Fitur Grup Ngaji (create, join, my_group, members, react, update)
+// API untuk Fitur Grup Ngaji (create, join, my_group, pending_requests, update)
 // ============================================================
 
 header('Content-Type: application/json');
@@ -14,38 +14,75 @@ $db = getDB();
 
 $action = $_REQUEST['action'] ?? 'my_group';
 
-// ─── AMBIL GRUP SAYA ─────────────────────────────────────────
+// Helper function to generate unique group code
+function generateGroupCode($db) {
+    $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    do {
+        $code = '';
+        for ($i = 0; $i < 8; $i++) {
+            $code .= $chars[rand(0, strlen($chars) - 1)];
+        }
+        $stmt = $db->prepare("SELECT id FROM ngaji_groups WHERE group_code = ?");
+        $stmt->execute([$code]);
+    } while ($stmt->fetch());
+    return $code;
+}
+
+// Helper to get baseUrl dynamically
+function getBaseUrl() {
+    $host = $_SERVER['HTTP_HOST'] ?? '127.0.0.1';
+    return "http://" . $host . "/quran_android/web/";
+}
+
+// ─── AMBIL GRUP SAYA / DETAIL GRUP ───────────────────────────
 if ($action === 'my_group') {
     $userId = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
+    $groupId = isset($_GET['group_id']) ? intval($_GET['group_id']) : 0;
     
-    if ($userId <= 0) {
-        echo json_encode(['success' => false, 'message' => 'User ID tidak valid']);
+    if ($groupId > 0) {
+        // Query group directly by ID
+        $stmt = $db->prepare("
+            SELECT g.*, 'active' AS member_status, u.name AS admin_name, u2.name AS last_reader_name
+            FROM ngaji_groups g
+            JOIN users u ON u.id = g.admin_user_id
+            LEFT JOIN users u2 ON u2.id = g.last_reader_id
+            WHERE g.id = ?
+            LIMIT 1
+        ");
+        $stmt->execute([$groupId]);
+        $group = $stmt->fetch(PDO::FETCH_ASSOC);
+    } else if ($userId > 0) {
+        // Query group based on user's active/pending membership
+        $stmt = $db->prepare("
+            SELECT g.*, m.status AS member_status, u.name AS admin_name, u2.name AS last_reader_name
+            FROM group_members m
+            JOIN ngaji_groups g ON g.id = m.group_id
+            JOIN users u ON u.id = g.admin_user_id
+            LEFT JOIN users u2 ON u2.id = g.last_reader_id
+            WHERE m.user_id = ?
+            LIMIT 1
+        ");
+        $stmt->execute([$userId]);
+        $group = $stmt->fetch(PDO::FETCH_ASSOC);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Parameter user_id atau group_id tidak valid']);
         exit;
     }
-    
-    // Cari apakah user tergabung di grup (status active atau pending)
-    $stmt = $db->prepare("
-        SELECT g.*, m.status AS member_status, u.name AS admin_name, u2.name AS last_reader_name
-        FROM group_members m
-        JOIN ngaji_groups g ON g.id = m.group_id
-        JOIN users u ON u.id = g.admin_user_id
-        LEFT JOIN users u2 ON u2.id = g.last_reader_id
-        WHERE m.user_id = ?
-        LIMIT 1
-    ");
-    $stmt->execute([$userId]);
-    $group = $stmt->fetch(PDO::FETCH_ASSOC);
     
     if (!$group) {
         echo json_encode(['success' => true, 'has_group' => false]);
         exit;
     }
     
-    // Jika status active, ambil juga info progress & anggota
+    $groupId = (int)$group['id'];
     $members = [];
     $pendingRequests = [];
+    $relay = [];
+    $progressPct = 0;
+    
+    // Fetch members, relays, and progress if status is active
     if ($group['member_status'] === 'active') {
-        // Ambil Anggota
+        // Fetch active members
         $mStmt = $db->prepare("
             SELECT m.user_id, u.name AS user_name, m.last_page_read, m.status, m.joined_at
             FROM group_members m
@@ -53,11 +90,12 @@ if ($action === 'my_group') {
             WHERE m.group_id = ? AND m.status = 'active'
             ORDER BY m.joined_at ASC
         ");
-        $mStmt->execute([$group['id']]);
+        $mStmt->execute([$groupId]);
         $members = $mStmt->fetchAll(PDO::FETCH_ASSOC);
         
-        // Jika user adalah admin grup, ambil juga daftar pending requests
-        if ((int)$group['admin_user_id'] === $userId) {
+        // Fetch pending requests (if user is admin)
+        // Also support fetching pending list if requested by admin userId
+        if ((int)$group['admin_user_id'] === $userId || $userId === 0) {
             $pStmt = $db->prepare("
                 SELECT m.user_id, u.name AS user_name, m.joined_at
                 FROM group_members m
@@ -65,20 +103,42 @@ if ($action === 'my_group') {
                 WHERE m.group_id = ? AND m.status = 'pending'
                 ORDER BY m.joined_at ASC
             ");
-            $pStmt->execute([$group['id']]);
+            $pStmt->execute([$groupId]);
             $pendingRequests = $pStmt->fetchAll(PDO::FETCH_ASSOC);
         }
+        
+        // Fetch reading relays
+        $rStmt = $db->prepare("
+            SELECT r.*, u.name AS user_name
+            FROM ngaji_reading_relay r
+            JOIN users u ON u.id = r.user_id
+            WHERE r.group_id = ?
+            ORDER BY r.read_at DESC
+        ");
+        $rStmt->execute([$groupId]);
+        $relay = $rStmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Calculate progress percentage based on unique pages read in relay
+        $pagesMap = [];
+        foreach ($relay as $rItem) {
+            if ($rItem['page_number'] > 0) {
+                $pagesMap[$rItem['page_number']] = true;
+            }
+        }
+        $totalPagesRead = count($pagesMap);
+        $totalTargetPages = (int)$group['khatam_target'] * 604;
+        $progressPct = min(100, $totalTargetPages > 0 ? round(($totalPagesRead / $totalTargetPages) * 100) : 0);
     }
     
     echo json_encode([
         'success' => true,
         'has_group' => true,
         'group' => [
-            'id'                => (int)$group['id'],
+            'id'                => $groupId,
             'group_code'        => $group['group_code'],
             'name'              => $group['name'],
-            'description'       => $group['description'],
-            'photo_url'         => $group['photo_url'] ? 'http://172.21.93.124/quran_android/web/' . $group['photo_url'] : null,
+            'description'       => $group['description'] ?? '',
+            'photo_url'         => $group['photo_url'] ? getBaseUrl() . $group['photo_url'] : null,
             'admin_user_id'     => (int)$group['admin_user_id'],
             'admin_name'        => $group['admin_name'],
             'khatam_target'     => (int)$group['khatam_target'],
@@ -86,10 +146,29 @@ if ($action === 'my_group') {
             'current_page'      => (int)$group['current_page'],
             'last_reader_id'    => $group['last_reader_id'] ? (int)$group['last_reader_id'] : null,
             'last_reader_name'  => $group['last_reader_name'] ?: 'Belum ada',
-            'member_status'     => $group['member_status'],
-            'members'           => $members,
-            'pending_requests'  => $pendingRequests
-        ]
+            'member_status'     => $group['member_status']
+        ],
+        'members' => array_map(function($m) {
+            return [
+                'user_id' => (int)$m['user_id'],
+                'user_name' => $m['user_name'],
+                'last_page_read' => (int)$m['last_page_read'],
+                'joined_at' => $m['joined_at']
+            ];
+        }, $members),
+        'relay' => array_map(function($r) {
+            return [
+                'id' => (int)$r['id'],
+                'user_id' => (int)$r['user_id'],
+                'user_name' => $r['user_name'],
+                'surah_number' => (int)$r['surah_number'],
+                'surah_name' => $r['surah_name'],
+                'ayah_number' => (int)$r['ayah_number'],
+                'page_number' => (int)$r['page_number'],
+                'read_at' => $r['read_at']
+            ];
+        }, $relay),
+        'progressPercent' => (int)$progressPct
     ]);
     exit;
 }
@@ -117,12 +196,7 @@ if ($action === 'create') {
     }
     
     // Generate unique group code: QS-XXXX
-    $code = '';
-    do {
-        $code = 'QS-' . strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
-        $codeCheck = $db->prepare("SELECT id FROM ngaji_groups WHERE group_code = ?");
-        $codeCheck->execute([$code]);
-    } while ($codeCheck->fetch());
+    $code = generateGroupCode($db);
     
     // Handle photo upload
     $photoPath = null;
@@ -248,12 +322,63 @@ if ($action === 'update_page') {
         ");
         $mStmt->execute([$page, $groupId, $userId]);
         
+        // Tambahkan ke ngaji_reading_relay
+        $rStmt = $db->prepare("
+            INSERT INTO ngaji_reading_relay (group_id, user_id, surah_number, surah_name, ayah_number, page_number)
+            VALUES (?, ?, 0, NULL, 0, ?)
+        ");
+        $rStmt->execute([$groupId, $userId, $page]);
+        
         $db->commit();
         echo json_encode(['success' => true, 'message' => 'Progress bacaan grup di-update ke halaman ' . $page]);
     } catch (Exception $e) {
         $db->rollBack();
         echo json_encode(['success' => false, 'message' => 'Gagal meng-update progress: ' . $e->getMessage()]);
     }
+    exit;
+}
+
+// ─── AMBIL PERMINTAAN GABUNG PENDING (ADMIN ONLY) ─────────────
+if ($action === 'pending_requests') {
+    $userId = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
+    $groupId = isset($_GET['group_id']) ? intval($_GET['group_id']) : 0;
+    
+    if ($userId <= 0 || $groupId <= 0) {
+        echo json_encode(['success' => false, 'message' => 'Parameter tidak valid']);
+        exit;
+    }
+    
+    // Cek admin grup
+    $aStmt = $db->prepare("SELECT admin_user_id FROM ngaji_groups WHERE id = ? LIMIT 1");
+    $aStmt->execute([$groupId]);
+    $group = $aStmt->fetch();
+    
+    if (!$group || (int)$group['admin_user_id'] !== $userId) {
+        echo json_encode(['success' => false, 'message' => 'Akses ditolak. Anda bukan admin grup ini']);
+        exit;
+    }
+    
+    $pStmt = $db->prepare("
+        SELECT m.user_id, u.name AS user_name, m.joined_at
+        FROM group_members m
+        JOIN users u ON u.id = m.user_id
+        WHERE m.group_id = ? AND m.status = 'pending'
+        ORDER BY m.joined_at ASC
+    ");
+    $pStmt->execute([$groupId]);
+    $pending = $pStmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo json_encode([
+        'success' => true,
+        'data' => array_map(function($m) {
+            return [
+                'user_id' => (int)$m['user_id'],
+                'user_name' => $m['user_name'],
+                'role' => 'member',
+                'joined_at' => $m['joined_at']
+            ];
+        }, $pending)
+    ]);
     exit;
 }
 
@@ -279,6 +404,46 @@ if ($action === 'approve_member' || $action === 'reject_member') {
     }
     
     if ($action === 'approve_member') {
+        $stmt = $db->prepare("
+            UPDATE group_members 
+            SET status = 'active', joined_at = NOW() 
+            WHERE group_id = ? AND user_id = ?
+        ");
+    } else {
+        $stmt = $db->prepare("
+            DELETE FROM group_members 
+            WHERE group_id = ? AND user_id = ?
+        ");
+    }
+    $stmt->execute([$groupId, $targetUserId]);
+    
+    echo json_encode(['success' => true, 'message' => 'Status keanggotaan berhasil diperbarui']);
+    exit;
+}
+
+// ─── RESPOND JOIN REQUEST (ADMIN ONLY) ───────────────────────
+if ($action === 'respond_join_request') {
+    $adminId = isset($_POST['admin_id']) ? intval($_POST['admin_id']) : 0;
+    $targetUserId = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
+    $groupId = isset($_POST['group_id']) ? intval($_POST['group_id']) : 0;
+    $responseAction = $_POST['action_type'] ?? ''; // 'approve' or 'reject'
+    
+    if ($adminId <= 0 || $targetUserId <= 0 || $groupId <= 0 || !in_array($responseAction, ['approve', 'reject'])) {
+        echo json_encode(['success' => false, 'message' => 'Parameter tidak valid']);
+        exit;
+    }
+    
+    // Validasi admin
+    $aStmt = $db->prepare("SELECT admin_user_id FROM ngaji_groups WHERE id = ? LIMIT 1");
+    $aStmt->execute([$groupId]);
+    $group = $aStmt->fetch();
+    
+    if (!$group || (int)$group['admin_user_id'] !== $adminId) {
+        echo json_encode(['success' => false, 'message' => 'Anda bukan admin dari grup ini']);
+        exit;
+    }
+    
+    if ($responseAction === 'approve') {
         $stmt = $db->prepare("
             UPDATE group_members 
             SET status = 'active', joined_at = NOW() 

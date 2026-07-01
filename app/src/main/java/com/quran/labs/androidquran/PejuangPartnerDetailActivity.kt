@@ -211,6 +211,148 @@ class PejuangPartnerDetailActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showAdminOptionsDialog(item: PartnerApiItem) {
+        val options = arrayOf("✏️ Edit Mitra", "❌ Hapus Mitra")
+        AlertDialog.Builder(this)
+            .setTitle("Pilihan Admin")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> showEditPartnerDialog(item)
+                    1 -> confirmDeletePartner(item)
+                }
+            }
+            .show()
+    }
+
+    private fun showEditPartnerDialog(item: PartnerApiItem) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_partner, null)
+        val etName = dialogView.findViewById<EditText>(R.id.et_partner_name)
+        val etLogo = dialogView.findViewById<EditText>(R.id.et_partner_logo)
+        val etDesc = dialogView.findViewById<EditText>(R.id.et_partner_desc)
+        val rgColors = dialogView.findViewById<RadioGroup>(R.id.rg_colors)
+
+        etName.setText(item.name)
+        etLogo.setText(item.logoText)
+        etDesc.setText(item.description)
+
+        // Color presets
+        val presets = listOf(
+            Triple("#E0F2F1", "#004D40", "Teal"),
+            Triple("#FFF3E0", "#E65100", "Orange"),
+            Triple("#E8F5E9", "#1B5E20", "Green"),
+            Triple("#F3E5F5", "#4A148C", "Purple"),
+            Triple("#FFEBEE", "#C62828", "Red")
+        )
+
+        presets.forEachIndexed { index, preset ->
+            val rb = RadioButton(this).apply {
+                id = View.generateViewId()
+                text = preset.third
+                setTextColor(Color.parseColor(preset.second))
+                buttonTintList = ColorStateList.valueOf(Color.parseColor(preset.second))
+                setPadding(0, 0, 20, 0)
+            }
+            rgColors.addView(rb)
+            
+            if (item.bgColor.equals(preset.first, ignoreCase = true) && 
+                item.textColor.equals(preset.second, ignoreCase = true)) {
+                rgColors.check(rb.id)
+            } else if (index == 0 && rgColors.checkedRadioButtonId == View.NO_ID) {
+                rgColors.check(rb.id)
+            }
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("✏️ Edit Mitra")
+            .setView(dialogView)
+            .setPositiveButton("Simpan") { _, _ ->
+                val name = etName.text.toString().trim()
+                val logo = etLogo.text.toString().trim()
+                val desc = etDesc.text.toString().trim()
+                
+                val checkedId = rgColors.checkedRadioButtonId
+                val selectedIndex = (0 until rgColors.childCount).indexOfFirst { rgColors.getChildAt(it).id == checkedId }
+                val colorPreset = presets.getOrElse(selectedIndex) { presets[0] }
+
+                if (name.isNotEmpty() && logo.isNotEmpty() && desc.isNotEmpty()) {
+                    updatePartner(item.id, logo, name, desc, colorPreset.first, colorPreset.second)
+                } else {
+                    Toast.makeText(this, "Semua field wajib diisi", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun updatePartner(id: Int, logo: String, name: String, desc: String, bg: String, text: String) {
+        val adminUserId = sessionManager.getUserId()
+        lifecycleScope.launch {
+            try {
+                val response = AuthClient.apiService.editPartner(
+                    userId = adminUserId,
+                    id = id,
+                    categoryId = categoryId,
+                    logoText = logo,
+                    name = name,
+                    description = desc,
+                    bgColor = bg,
+                    textColor = text
+                )
+                if (response.isSuccessful && response.body()?.success == true) {
+                    runOnUiThread {
+                        Toast.makeText(this@PejuangPartnerDetailActivity, "Mitra berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                        loadPartners()
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@PejuangPartnerDetailActivity, "Gagal memperbarui mitra: " + response.body()?.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    Toast.makeText(this@PejuangPartnerDetailActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun confirmDeletePartner(item: PartnerApiItem) {
+        AlertDialog.Builder(this)
+            .setTitle("Hapus Mitra")
+            .setMessage("Apakah Anda yakin ingin menghapus mitra \"${item.name}\"?")
+            .setPositiveButton("Ya, Hapus") { _, _ ->
+                deletePartner(item.id)
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun deletePartner(id: Int) {
+        val adminUserId = sessionManager.getUserId()
+        lifecycleScope.launch {
+            try {
+                val response = AuthClient.apiService.deletePartner(
+                    userId = adminUserId,
+                    id = id
+                )
+                if (response.isSuccessful && response.body()?.success == true) {
+                    runOnUiThread {
+                        Toast.makeText(this@PejuangPartnerDetailActivity, "Mitra berhasil dihapus", Toast.LENGTH_SHORT).show()
+                        loadPartners()
+                    }
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this@PejuangPartnerDetailActivity, "Gagal menghapus mitra: " + response.body()?.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    Toast.makeText(this@PejuangPartnerDetailActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
     inner class PartnerAdapter(private val list: List<PartnerApiItem>) :
         RecyclerView.Adapter<PartnerAdapter.ViewHolder>() {
 
@@ -248,6 +390,16 @@ class PejuangPartnerDetailActivity : AppCompatActivity() {
                 else -> "Mitra"
             }
             holder.tvRole.text = roleName
+
+            // Setup edit/delete on long press for admin
+            if (sessionManager.isLoggedIn() && sessionManager.getUserRole() == "admin") {
+                holder.itemView.setOnLongClickListener {
+                    showAdminOptionsDialog(item)
+                    true
+                }
+            } else {
+                holder.itemView.setOnLongClickListener(null)
+            }
         }
 
         override fun getItemCount(): Int = list.size

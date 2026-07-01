@@ -34,6 +34,13 @@ class CurvedBottomNavContainer @JvmOverloads constructor(
         setWillNotDraw(false)
         setBackgroundColor(Color.TRANSPARENT)
         setLayerType(LAYER_TYPE_SOFTWARE, null)
+
+        val resolvedColor = androidx.core.content.ContextCompat.getColor(
+            context,
+            com.quran.labs.androidquran.R.color.secondary_dark_background
+        )
+        bgPaint.color = resolvedColor
+
         bgPaint.setShadowLayer(dp(8f), 0f, dp(-3f), Color.parseColor("#1A000000"))
         topShadowPaint.strokeWidth = dp(1f)
     }

@@ -19,12 +19,17 @@
       app:elevation="2dp" />
 
   <!-- Main Scrollable Area -->
-  <LinearLayout
+  <ScrollView
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
-      android:orientation="vertical"
-      android:padding="16dp">
+      android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
     <!-- Month Navigation Header -->
     <com.google.android.material.card.MaterialCardView
@@ -254,34 +259,13 @@
                 android:textColor="#FF6D00"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="8dp" />
 
-            <TextView
-                android:id="@+id/tv_detail_event_title"
+            <LinearLayout
+                android:id="@+id/layout_dynamic_events_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Kajian Akbar Menyambut Ramadhan"
-                android:textColor="#212121"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_detail_event_speaker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Pembicara: Ustadz Adi Hidayat"
-                android:textColor="#555555"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp" />
-
-            <TextView
-                android:id="@+id/tv_detail_event_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Waktu: 09:00 WIB • Lokasi: Zoom"
-                android:textColor="#666666"
-                android:textSize="11sp"
-                android:layout_marginTop="2dp" />
+                android:orientation="vertical" />
         </LinearLayout>
 
         <!-- Admin Action Button -->
@@ -291,7 +275,7 @@
             android:layout_height="36dp"
             android:layout_marginTop="12dp"
             android:background="@drawable/bg_segmented_selected"
-            android:text="+ Tambah / Edit Kegiatan"
+            android:text="+ Tambah Kegiatan"
             android:textColor="#FFFFFF"
             android:textSize="11sp"
             android:textStyle="bold"
@@ -300,5 +284,6 @@
       </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-  </LinearLayout>
+    </LinearLayout>
+  </ScrollView>
 </LinearLayout>

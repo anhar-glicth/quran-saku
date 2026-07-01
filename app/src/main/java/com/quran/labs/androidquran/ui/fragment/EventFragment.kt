@@ -1,7 +1,10 @@
 package com.quran.labs.androidquran.ui.fragment
 
+import android.content.Intent
 import android.app.DatePickerDialog
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +24,10 @@ import com.quran.labs.androidquran.R
 import com.quran.labs.androidquran.auth.AuthClient
 import com.quran.labs.androidquran.auth.SessionManager
 import com.quran.labs.androidquran.model.EventItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -44,6 +52,26 @@ class EventFragment : Fragment() {
     private val allEvents = mutableListOf<EventItem>()
     private val displayedEvents = mutableListOf<EventItem>()
     private lateinit var adapter: EventAdapter
+
+    // Photo pick helpers
+    private var pendingPhotoPreview: ImageView? = null
+    private var pendingImageUrlField: EditText? = null
+    private var pendingPhotoPlaceholder: TextView? = null
+    private var selectedPhotoUri: Uri? = null
+    private lateinit var photoPickLauncher: ActivityResultLauncher<String>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        photoPickLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.let {
+                selectedPhotoUri = it
+                pendingPhotoPreview?.setImageURI(it)
+                pendingPhotoPlaceholder?.visibility = View.GONE
+                // Also clear URL field since a local image was picked
+                pendingImageUrlField?.setText("")
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,7 +104,7 @@ class EventFragment : Fragment() {
         adapter = EventAdapter(
             displayedEvents,
             isAdmin = sessionManager.isLoggedIn() && sessionManager.getUserRole() == "admin",
-            onAction = { event -> registerForEvent(event) },
+            onAction = { event -> showEventDetail(event) },
             onDelete = { event -> confirmDeleteEvent(event) }
         )
         rvEvents.adapter = adapter
@@ -99,6 +127,11 @@ class EventFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
+        loadEvents()
+    }
+
+    override fun onResume() {
+        super.onResume()
         loadEvents()
     }
 
@@ -165,7 +198,7 @@ class EventFragment : Fragment() {
             tvFeaturedTime.text = "${formatDateIndo(featured.eventDate)} • ${featured.timeRange}"
             tvFeaturedBadge.text = featured.category.uppercase()
             btnRegisterFeatured.setOnClickListener {
-                registerForEvent(featured)
+                showEventDetail(featured)
             }
         } else {
             layoutFeatured.visibility = View.GONE
@@ -183,8 +216,20 @@ class EventFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
-    private fun registerForEvent(event: EventItem) {
-        Toast.makeText(context, "Berhasil mendaftar ke kegiatan: ${event.title}! 🌟", Toast.LENGTH_SHORT).show()
+    private fun showEventDetail(event: EventItem) {
+        val intent = Intent(context, com.quran.labs.androidquran.EventDetailActivity::class.java).apply {
+            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_ID, event.id)
+            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_TITLE, event.title)
+            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_DESC, event.description)
+            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_DATE, event.eventDate)
+            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_TIME, event.timeRange)
+            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_SPEAKER, event.speaker)
+            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_LOCATION, event.location)
+            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_CATEGORY, event.category)
+            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_IMAGE_URL, event.imageUrl)
+            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_IS_FEATURED, event.isFeatured)
+        }
+        startActivity(intent)
     }
 
     private fun confirmDeleteEvent(event: EventItem) {
@@ -228,7 +273,44 @@ class EventFragment : Fragment() {
         val etDate = dialogView.findViewById<EditText>(R.id.et_event_date)
         val etTime = dialogView.findViewById<EditText>(R.id.et_event_time)
         val etLocation = dialogView.findViewById<EditText>(R.id.et_event_location)
+        val etImageUrl = dialogView.findViewById<EditText>(R.id.et_event_image_url)
+        val imgPhotoPreview = dialogView.findViewById<ImageView>(R.id.img_event_photo_preview)
+        val tvPhotoPlaceholder = dialogView.findViewById<TextView>(R.id.tv_photo_placeholder)
+        val btnPickPhoto = dialogView.findViewById<Button>(R.id.btn_pick_photo)
         val cbFeatured = dialogView.findViewById<CheckBox>(R.id.cb_featured)
+
+        // Reset state for this dialog instance
+        selectedPhotoUri = null
+        pendingPhotoPreview = imgPhotoPreview
+        pendingImageUrlField = etImageUrl
+        pendingPhotoPlaceholder = tvPhotoPlaceholder
+
+        // Tombol pilih foto dari galeri
+        btnPickPhoto.setOnClickListener {
+            photoPickLauncher.launch("image/*")
+        }
+
+        // Preview dari URL ketika user mengetik
+        etImageUrl.addTextChangedListener(object : android.text.TextWatcher {
+            override fun afterTextChanged(s: android.text.Editable?) {
+                val url = s.toString().trim()
+                if (url.startsWith("http") && selectedPhotoUri == null) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        try {
+                            val bitmap = withContext(Dispatchers.IO) {
+                                val conn = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+                                conn.doInput = true; conn.connect()
+                                BitmapFactory.decodeStream(conn.inputStream)
+                            }
+                            imgPhotoPreview.setImageBitmap(bitmap)
+                            tvPhotoPlaceholder.visibility = View.GONE
+                        } catch (_: Exception) {}
+                    }
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
         // Setup category spinner
         val categories = listOf("Kajian", "Webinar", "Workshop", "Sosial")
@@ -263,7 +345,24 @@ class EventFragment : Fragment() {
             etDate.setText(eventToEdit.eventDate)
             etTime.setText(eventToEdit.timeRange)
             etLocation.setText(eventToEdit.location)
+            etImageUrl.setText(eventToEdit.imageUrl ?: "")
             cbFeatured.isChecked = eventToEdit.isFeatured
+
+            // Load existing photo preview
+            val existingUrl = eventToEdit.imageUrl
+            if (!existingUrl.isNullOrEmpty()) {
+                tvPhotoPlaceholder.visibility = View.GONE
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        val bitmap = withContext(Dispatchers.IO) {
+                            val conn = java.net.URL(existingUrl).openConnection() as java.net.HttpURLConnection
+                            conn.doInput = true; conn.connect()
+                            BitmapFactory.decodeStream(conn.inputStream)
+                        }
+                        imgPhotoPreview.setImageBitmap(bitmap)
+                    } catch (_: Exception) {}
+                }
+            }
         }
 
         AlertDialog.Builder(context)
@@ -277,10 +376,17 @@ class EventFragment : Fragment() {
                 val date = etDate.text.toString().trim()
                 val time = etTime.text.toString().trim()
                 val location = etLocation.text.toString().trim()
+                val imgUrl = etImageUrl.text.toString().trim()
                 val isFeaturedVal = if (cbFeatured.isChecked) 1 else 0
+                val localUri = selectedPhotoUri
 
                 if (title.isNotEmpty() && desc.isNotEmpty() && date.isNotEmpty() && speaker.isNotEmpty()) {
-                    saveEvent(eventToEdit?.id ?: 0, title, cat, desc, date, time, speaker, location, isFeaturedVal)
+                    if (localUri != null) {
+                        // Upload local photo first, then save event
+                        uploadPhotoThenSave(localUri, eventToEdit?.id ?: 0, title, cat, desc, date, time, speaker, location, isFeaturedVal)
+                    } else {
+                        saveEvent(eventToEdit?.id ?: 0, title, cat, desc, date, time, speaker, location, isFeaturedVal, imgUrl)
+                    }
                 } else {
                     Toast.makeText(context, "Field penting tidak boleh kosong", Toast.LENGTH_SHORT).show()
                 }
@@ -289,9 +395,67 @@ class EventFragment : Fragment() {
             .show()
     }
 
-    private fun saveEvent(
+    private fun uploadPhotoThenSave(
+        uri: android.net.Uri,
         id: Int, title: String, cat: String, desc: String, date: String,
         time: String, speaker: String, location: String, featured: Int
+    ) {
+        val ctx = context ?: return
+        Toast.makeText(ctx, "Mengunggah foto...", Toast.LENGTH_SHORT).show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val uploadedUrl = withContext(Dispatchers.IO) {
+                    // Read bytes from URI
+                    val inputStream = ctx.contentResolver.openInputStream(uri) ?: return@withContext null
+                    val bytes = inputStream.readBytes()
+                    inputStream.close()
+
+                    // Upload via HTTP multipart to PHP
+                    val serverBase = AuthClient.BASE_URL
+                    val boundary = "Boundary_${System.currentTimeMillis()}"
+                    val url = java.net.URL("${serverBase}auth/upload_event_photo.php")
+                    val conn = url.openConnection() as java.net.HttpURLConnection
+                    conn.requestMethod = "POST"
+                    conn.doOutput = true
+                    conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
+
+                    val output = conn.outputStream
+                    val writer = java.io.PrintStream(output, true, "UTF-8")
+                    writer.print("--$boundary\r\n")
+                    writer.print("Content-Disposition: form-data; name=\"photo\"; filename=\"event_photo.jpg\"\r\n")
+                    writer.print("Content-Type: image/jpeg\r\n\r\n")
+                    writer.flush()
+                    output.write(bytes)
+                    output.flush()
+                    writer.print("\r\n--$boundary--\r\n")
+                    writer.flush()
+
+                    val responseCode = conn.responseCode
+                    if (responseCode == 200) {
+                        val responseText = conn.inputStream.bufferedReader().readText()
+                        val json = org.json.JSONObject(responseText)
+                        if (json.optBoolean("success")) json.optString("url") else null
+                    } else null
+                }
+
+                if (!uploadedUrl.isNullOrEmpty()) {
+                    saveEvent(id, title, cat, desc, date, time, speaker, location, featured, uploadedUrl)
+                } else {
+                    activity?.runOnUiThread {
+                        Toast.makeText(ctx, "Gagal mengunggah foto. Coba masukkan URL langsung.", Toast.LENGTH_LONG).show()
+                    }
+                }
+            } catch (e: Exception) {
+                activity?.runOnUiThread {
+                    Toast.makeText(ctx, "Error upload: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun saveEvent(
+        id: Int, title: String, cat: String, desc: String, date: String,
+        time: String, speaker: String, location: String, featured: Int, imageUrl: String
     ) {
         val adminUserId = sessionManager.getUserId()
         viewLifecycleOwner.lifecycleScope.launch {
@@ -299,7 +463,8 @@ class EventFragment : Fragment() {
                 val response = AuthClient.apiService.saveEvent(
                     userId = adminUserId, id = id, title = title, category = cat,
                     description = desc, eventDate = date, timeRange = time,
-                    speaker = speaker, location = location, isFeatured = featured
+                    speaker = speaker, location = location, isFeatured = featured,
+                    imageUrl = imageUrl
                 )
                 if (response.isSuccessful && response.body()?.success == true) {
                     activity?.runOnUiThread {
@@ -344,6 +509,7 @@ class EventFragment : Fragment() {
             val tvLoc: TextView = view.findViewById(R.id.tv_event_location)
             val btnAction: TextView = view.findViewById(R.id.btn_event_action)
             val btnDelete: TextView = view.findViewById(R.id.btn_event_delete)
+            val imgBanner: ImageView = view.findViewById(R.id.img_event_banner)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -360,7 +526,34 @@ class EventFragment : Fragment() {
             holder.tvTime.text = "${formatDateIndo(item.eventDate)} • ${item.timeRange}"
             holder.tvLoc.text = item.location
 
+            // Load banner image dynamically from URL using coroutine
+            if (!item.imageUrl.isNullOrEmpty()) {
+                val currentUrl = item.imageUrl
+                holder.imgBanner.tag = currentUrl
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        val bitmap = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            val connection = java.net.URL(currentUrl).openConnection() as java.net.HttpURLConnection
+                            connection.doInput = true
+                            connection.connect()
+                            val input = connection.inputStream
+                            android.graphics.BitmapFactory.decodeStream(input)
+                        }
+                        if (holder.imgBanner.tag == currentUrl) {
+                            holder.imgBanner.setImageBitmap(bitmap)
+                        }
+                    } catch (e: Exception) {
+                        if (holder.imgBanner.tag == currentUrl) {
+                            holder.imgBanner.setImageResource(R.drawable.bg_home_verse_card)
+                        }
+                    }
+                }
+            } else {
+                holder.imgBanner.setImageResource(R.drawable.bg_home_verse_card)
+            }
+
             holder.btnAction.setOnClickListener { onAction(item) }
+            holder.itemView.setOnClickListener { onAction(item) }
 
             if (isAdmin) {
                 holder.btnDelete.visibility = View.VISIBLE
