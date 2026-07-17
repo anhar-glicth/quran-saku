@@ -11,16 +11,16 @@ import java.util.concurrent.TimeUnit
 
 object AuthClient {
 
-    // ── GANTI dengan IP komputer kamu di jaringan WiFi ──
-    // Jika tes di emulator gunakan: http://10.0.2.2/quran_android/web/
-    // Jika tes di HP nyata gunakan: http://192.168.x.x/quran_android/web/
-    const val BASE_URL = "http://172.21.93.124/quran_android/web/"
+    // ── URL Production Server ──
+    const val BASE_URL = "https://pondokquranmahasiswaadtin.com/web/"
 
     private val moshi: Moshi = Moshi.Builder()
         .build()
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
+        // NONE di production agar data user tidak bocor ke logcat
+        // Ganti ke Level.BODY hanya saat debug lokal
+        level = HttpLoggingInterceptor.Level.NONE
     }
 
     private val httpClient: OkHttpClient = OkHttpClient.Builder()

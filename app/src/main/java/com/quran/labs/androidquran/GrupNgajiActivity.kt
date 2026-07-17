@@ -72,42 +72,37 @@ class GrupNgajiActivity : AppCompatActivity() {
                 val response = AuthClient.apiService.getMyGroup(userId = userId)
                 if (response.isSuccessful) {
                     val body = response.body()
-                    runOnUiThread {
-                        progressGrup.visibility = View.GONE
-                        btnJoin.isEnabled = true
-                        btnCreate.isEnabled = true
+                    progressGrup.visibility = View.GONE
+                    btnJoin.isEnabled = true
+                    btnCreate.isEnabled = true
 
-                        if (body != null && body.hasGroup && body.group != null) {
-                            val status = body.group.memberStatus
-                            if (status == "active") {
-                                // Redirect to Group Detail
-                                val intent = Intent(this@GrupNgajiActivity, GrupDetailActivity::class.java).apply {
-                                    putExtra("group_id", body.group.id)
-                                }
-                                startActivity(intent)
-                                finish()
-                            } else if (status == "pending") {
-                                // Show pending state placeholder
-                                layEmptyGrup.visibility = View.VISIBLE
-                                val tvTitle = layEmptyGrup.findViewById<TextView>(R.id.tv_empty_title) ?: findViewById(R.id.tv_empty_title)
-                                val tvDesc = layEmptyGrup.findViewById<TextView>(R.id.tv_empty_desc) ?: findViewById(R.id.tv_empty_desc)
-                                if (tvTitle != null) tvTitle.text = "Permintaan Join Pending ⌛"
-                                if (tvDesc != null) tvDesc.text = "Permintaan gabung Anda ke grup \"${body.group.name}\" sedang menunggu persetujuan (ACC) dari admin grup."
-                                btnJoin.visibility = View.GONE
-                                btnCreate.visibility = View.GONE
+                    if (body != null && body.hasGroup && body.group != null) {
+                        val status = body.group.memberStatus
+                        if (status == "active") {
+                            val intent = Intent(this@GrupNgajiActivity, GrupDetailActivity::class.java).apply {
+                                putExtra("group_id", body.group.id)
                             }
-                        } else {
-                            // Empty state - show options
+                            startActivity(intent)
+                            finish()
+                        } else if (status == "pending") {
                             layEmptyGrup.visibility = View.VISIBLE
-                            btnJoin.visibility = View.VISIBLE
-                            btnCreate.visibility = View.VISIBLE
+                            val tvTitle = layEmptyGrup.findViewById<TextView>(R.id.tv_empty_title) ?: findViewById(R.id.tv_empty_title)
+                            val tvDesc = layEmptyGrup.findViewById<TextView>(R.id.tv_empty_desc) ?: findViewById(R.id.tv_empty_desc)
+                            if (tvTitle != null) tvTitle.text = "Permintaan Join Pending ⌛"
+                            if (tvDesc != null) tvDesc.text = "Permintaan gabung Anda ke grup \"${body.group.name}\" sedang menunggu persetujuan (ACC) dari admin grup."
+                            btnJoin.visibility = View.GONE
+                            btnCreate.visibility = View.GONE
                         }
+                    } else {
+                        layEmptyGrup.visibility = View.VISIBLE
+                        btnJoin.visibility = View.VISIBLE
+                        btnCreate.visibility = View.VISIBLE
                     }
                 } else {
-                    runOnUiThread { showError("Gagal memuat status grup (${response.code()})") }
+                    showError("Gagal memuat status grup (${response.code()})")
                 }
             } catch (e: Exception) {
-                runOnUiThread { showError("Tidak dapat terhubung ke server. Pastikan XAMPP aktif.") }
+                showError("Tidak dapat terhubung ke server. Pastikan XAMPP aktif.")
             }
         }
     }
@@ -159,21 +154,15 @@ class GrupNgajiActivity : AppCompatActivity() {
             try {
                 val response = AuthClient.apiService.joinGroup(userId = userId, groupCode = groupCode)
                 if (response.isSuccessful && response.body()?.success == true) {
-                    runOnUiThread {
-                        Toast.makeText(this@GrupNgajiActivity, "Request join berhasil dikirim!", Toast.LENGTH_SHORT).show()
-                        checkUserGroup()
-                    }
+                    Toast.makeText(this@GrupNgajiActivity, "Request join berhasil dikirim!", Toast.LENGTH_SHORT).show()
+                    checkUserGroup()
                 } else {
-                    runOnUiThread {
-                        progressGrup.visibility = View.GONE
-                        Toast.makeText(this@GrupNgajiActivity, response.body()?.message ?: "Gagal bergabung ke grup", Toast.LENGTH_SHORT).show()
-                    }
+                    progressGrup.visibility = View.GONE
+                    Toast.makeText(this@GrupNgajiActivity, response.body()?.message ?: "Gagal bergabung ke grup", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                runOnUiThread {
-                    progressGrup.visibility = View.GONE
-                    Toast.makeText(this@GrupNgajiActivity, "Koneksi ke server gagal", Toast.LENGTH_SHORT).show()
-                }
+                progressGrup.visibility = View.GONE
+                Toast.makeText(this@GrupNgajiActivity, "Koneksi ke server gagal", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -218,21 +207,15 @@ class GrupNgajiActivity : AppCompatActivity() {
                     khatamTarget = khatam, durationDays = duration
                 )
                 if (response.isSuccessful && response.body()?.success == true) {
-                    runOnUiThread {
-                        Toast.makeText(this@GrupNgajiActivity, "Grup berhasil dibuat! 🎉", Toast.LENGTH_SHORT).show()
-                        checkUserGroup()
-                    }
+                    Toast.makeText(this@GrupNgajiActivity, "Grup berhasil dibuat! 🎉", Toast.LENGTH_SHORT).show()
+                    checkUserGroup()
                 } else {
-                    runOnUiThread {
-                        progressGrup.visibility = View.GONE
-                        Toast.makeText(this@GrupNgajiActivity, response.body()?.message ?: "Gagal membuat grup", Toast.LENGTH_SHORT).show()
-                    }
+                    progressGrup.visibility = View.GONE
+                    Toast.makeText(this@GrupNgajiActivity, response.body()?.message ?: "Gagal membuat grup", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                runOnUiThread {
-                    progressGrup.visibility = View.GONE
-                    Toast.makeText(this@GrupNgajiActivity, "Koneksi ke server gagal", Toast.LENGTH_SHORT).show()
-                }
+                progressGrup.visibility = View.GONE
+                Toast.makeText(this@GrupNgajiActivity, "Koneksi ke server gagal", Toast.LENGTH_SHORT).show()
             }
         }
     }

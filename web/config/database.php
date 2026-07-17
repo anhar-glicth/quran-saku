@@ -3,16 +3,16 @@
 // Quran Saku - Konfigurasi Database
 // ============================================
 
-define('DB_HOST',     '127.0.0.1');
+define('DB_HOST',     'localhost');
 define('DB_PORT',     '3306');
-define('DB_NAME',     'quran_saku');
-define('DB_USER',     'root');
-define('DB_PASS',     '');
+define('DB_NAME',     'u290212134_quran_Saku');
+define('DB_USER',     'u290212134_quran_Saku');
+define('DB_PASS',     'f1D022013.');
 define('DB_CHARSET',  'utf8mb4');
 
 // App Settings
 define('APP_NAME',    'Quran Saku');
-define('APP_URL',     'http://localhost/quran_android/web');
+define('APP_URL',     'https://pondokquranmahasiswaadtin.com/web');
 define('APP_VERSION', '1.0.0');
 define('SESSION_LIFETIME', 86400); // 24 jam
 

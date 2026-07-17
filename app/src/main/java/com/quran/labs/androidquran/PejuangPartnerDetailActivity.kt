@@ -93,16 +93,14 @@ class PejuangPartnerDetailActivity : AppCompatActivity() {
                 val response = AuthClient.apiService.getPartners(categoryId = categoryId)
                 if (response.isSuccessful) {
                     val list = response.body()?.data ?: emptyList()
-                    runOnUiThread {
-                        progress.visibility = View.GONE
-                        if (list.isEmpty()) {
-                            tvEmpty.visibility = View.VISIBLE
-                        } else {
-                            rv.visibility = View.VISIBLE
-                            partners.clear()
-                            partners.addAll(list)
-                            adapter.notifyDataSetChanged()
-                        }
+                    progress.visibility = View.GONE
+                    if (list.isEmpty()) {
+                        tvEmpty.visibility = View.VISIBLE
+                    } else {
+                        rv.visibility = View.VISIBLE
+                        partners.clear()
+                        partners.addAll(list)
+                        adapter.notifyDataSetChanged()
                     }
                 } else {
                     showError("Gagal memuat mitra (${response.code()})")
@@ -186,19 +184,13 @@ class PejuangPartnerDetailActivity : AppCompatActivity() {
                     textColor = text
                 )
                 if (response.isSuccessful && response.body()?.success == true) {
-                    runOnUiThread {
-                        Toast.makeText(this@PejuangPartnerDetailActivity, "Mitra berhasil disimpan", Toast.LENGTH_SHORT).show()
-                        loadPartners()
-                    }
+                    Toast.makeText(this@PejuangPartnerDetailActivity, "Mitra berhasil disimpan", Toast.LENGTH_SHORT).show()
+                    loadPartners()
                 } else {
-                    runOnUiThread {
-                        Toast.makeText(this@PejuangPartnerDetailActivity, "Gagal menyimpan mitra: " + response.body()?.message, Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(this@PejuangPartnerDetailActivity, "Gagal menyimpan mitra: " + response.body()?.message, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                runOnUiThread {
-                    Toast.makeText(this@PejuangPartnerDetailActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(this@PejuangPartnerDetailActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -299,19 +291,13 @@ class PejuangPartnerDetailActivity : AppCompatActivity() {
                     textColor = text
                 )
                 if (response.isSuccessful && response.body()?.success == true) {
-                    runOnUiThread {
-                        Toast.makeText(this@PejuangPartnerDetailActivity, "Mitra berhasil diperbarui", Toast.LENGTH_SHORT).show()
-                        loadPartners()
-                    }
+                    Toast.makeText(this@PejuangPartnerDetailActivity, "Mitra berhasil diperbarui", Toast.LENGTH_SHORT).show()
+                    loadPartners()
                 } else {
-                    runOnUiThread {
-                        Toast.makeText(this@PejuangPartnerDetailActivity, "Gagal memperbarui mitra: " + response.body()?.message, Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(this@PejuangPartnerDetailActivity, "Gagal memperbarui mitra: " + response.body()?.message, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                runOnUiThread {
-                    Toast.makeText(this@PejuangPartnerDetailActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(this@PejuangPartnerDetailActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -336,19 +322,13 @@ class PejuangPartnerDetailActivity : AppCompatActivity() {
                     id = id
                 )
                 if (response.isSuccessful && response.body()?.success == true) {
-                    runOnUiThread {
-                        Toast.makeText(this@PejuangPartnerDetailActivity, "Mitra berhasil dihapus", Toast.LENGTH_SHORT).show()
-                        loadPartners()
-                    }
+                    Toast.makeText(this@PejuangPartnerDetailActivity, "Mitra berhasil dihapus", Toast.LENGTH_SHORT).show()
+                    loadPartners()
                 } else {
-                    runOnUiThread {
-                        Toast.makeText(this@PejuangPartnerDetailActivity, "Gagal menghapus mitra: " + response.body()?.message, Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(this@PejuangPartnerDetailActivity, "Gagal menghapus mitra: " + response.body()?.message, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                runOnUiThread {
-                    Toast.makeText(this@PejuangPartnerDetailActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(this@PejuangPartnerDetailActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -376,11 +356,16 @@ class PejuangPartnerDetailActivity : AppCompatActivity() {
             holder.tvDesc.text = item.description
             holder.tvLogo.text = item.logoText
 
-            val parsedBg = Color.parseColor(item.bgColor)
-            val parsedText = Color.parseColor(item.textColor)
-
-            holder.logoCard.setCardBackgroundColor(parsedBg)
-            holder.tvLogo.setTextColor(parsedText)
+            try {
+                val parsedBg = Color.parseColor(item.bgColor)
+                val parsedText = Color.parseColor(item.textColor)
+                holder.logoCard.setCardBackgroundColor(parsedBg)
+                holder.tvLogo.setTextColor(parsedText)
+            } catch (e: IllegalArgumentException) {
+                // Fallback ke warna default jika format warna dari server tidak valid
+                holder.logoCard.setCardBackgroundColor(Color.parseColor("#E0F2F1"))
+                holder.tvLogo.setTextColor(Color.parseColor("#004D40"))
+            }
 
             val roleName = when (item.categoryId) {
                 "mitra_utama" -> "Mitra Utama"

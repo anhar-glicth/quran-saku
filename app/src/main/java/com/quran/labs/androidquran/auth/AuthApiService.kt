@@ -163,8 +163,8 @@ interface AuthApiService {
 
     @GET("auth/group_api.php")
     suspend fun getGroupDetail(
-        @Query("action")   action: String = "my_group",
-        @Query("user_id")  userId: Int = 0, // Fallback parameter
+        @Query("action")   action: String = "group_detail",  // Endpoint khusus untuk detail grup by group_id
+        @Query("user_id")  userId: Int = 0,
         @Query("group_id") groupId: Int
     ): Response<MyGroupResponse>
 
@@ -206,11 +206,10 @@ interface AuthApiService {
     @FormUrlEncoded
     @POST("auth/group_api.php")
     suspend fun respondJoinRequest(
-        @Field("action")  action: String = "approve_member", // Will use approve_member or reject_member action from parameter
+        @Field("action")   action: String, // "approve_member" atau "reject_member"
         @Field("admin_id") adminId: Int,
         @Field("user_id")  targetUserId: Int,
-        @Field("group_id") groupId: Int,
-        @Field("action_type") responseAction: String // approve or reject
+        @Field("group_id") groupId: Int
     ): Response<SimpleResponse>
 
     @FormUrlEncoded

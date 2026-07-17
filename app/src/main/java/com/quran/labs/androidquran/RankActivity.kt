@@ -192,11 +192,11 @@ class RankActivity : AppCompatActivity() {
             val item = list[position]
 
             val medals = listOf("🥇", "🥈", "🥉")
-            if (position < 3) {
-                holder.txtRankNum.text = medals[position]
+            if (item.rank <= 3) {
+                holder.txtRankNum.text = medals[item.rank - 1]
                 holder.txtRankNum.textSize = 18f
             } else {
-                holder.txtRankNum.text = "${position + 1}"
+                holder.txtRankNum.text = "${item.rank}"
                 holder.txtRankNum.textSize = 14f
             }
 

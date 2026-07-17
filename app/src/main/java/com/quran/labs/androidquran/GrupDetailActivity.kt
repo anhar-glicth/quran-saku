@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -279,8 +279,7 @@ class GrupDetailActivity : AppCompatActivity() {
                     action = actionParam,
                     adminId = userId,
                     targetUserId = targetUserId,
-                    groupId = groupId,
-                    responseAction = action
+                    groupId = groupId
                 )
                 if (response.isSuccessful && response.body()?.success == true) {
                     Toast.makeText(this@GrupDetailActivity, "Berhasil memproses permintaan!", Toast.LENGTH_SHORT).show()

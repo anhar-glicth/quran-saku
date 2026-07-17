@@ -5,10 +5,10 @@
 // ============================================
 
 define('DB_HOST',    'localhost');
-define('DB_USER',    'root');
-define('DB_PASS',    '');
+define('DB_USER',    'u290212134_quran_Saku');
+define('DB_PASS',    'f1D022013.');
 define('DB_CHARSET', 'utf8mb4');
-define('DB_NAME',    'quran_saku');
+define('DB_NAME',    'u290212134_quran_Saku');
 
 $errors   = [];
 $success  = [];

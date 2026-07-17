@@ -31,6 +31,7 @@ import com.quran.labs.androidquran.ui.helpers.JumpDestination
 import com.quran.labs.androidquran.util.HafalanStorageUtils
 import dev.zacsweers.metro.Inject
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class TahfidzRecitationFragment : Fragment() {
 
@@ -49,6 +50,7 @@ class TahfidzRecitationFragment : Fragment() {
   private var selectedSura = 1
   private var selectedStartAyat = 1
   private var selectedEndAyat = 5
+  private val disposables = CompositeDisposable()
 
   // Views
   private lateinit var layoutSetup: View
@@ -175,6 +177,12 @@ class TahfidzRecitationFragment : Fragment() {
     }
   }
 
+  // Konversi angka Arab secara dinamis (mendukung semua nomor ayat)
+  private fun toArabicNumeral(num: Int): String {
+    val arabicDigits = charArrayOf('\u0660','\u0661','\u0662','\u0663','\u0664','\u0665','\u0666','\u0667','\u0668','\u0669')
+    return num.toString().map { arabicDigits[it - '0'] }.joinToString("")
+  }
+
   private fun startRecitationSession() {
     layoutSetup.visibility = View.GONE
     layoutRecitationWorkspace.visibility = View.VISIBLE
@@ -187,18 +195,14 @@ class TahfidzRecitationFragment : Fragment() {
     val startAyah = SuraAyah(selectedSura, selectedStartAyat)
     val endAyah = SuraAyah(selectedSura, selectedEndAyat)
 
-    arabicDatabaseUtils.getVerses(startAyah, endAyah)
+    val disposable = arabicDatabaseUtils.getVerses(startAyah, endAyah)
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe({ verses ->
-          // Gabungkan teks dengan nomor ayat (angka Arab)
-          val arabicNums = listOf("١","٢","٣","٤","٥","٦","٧","٨","٩","١٠",
-              "١١","١٢","١٣","١٤","١٥","١٦","١٧","١٨","١٩","٢٠",
-              "٢١","٢٢","٢٣","٢٤","٢٥","٢٦","٢٧","٢٨","٢٩","٣٠")
           val boardText = StringBuilder()
           val pureText = StringBuilder()
           verses.forEachIndexed { index, verse ->
             val ayahNum = selectedStartAyat + index
-            val numLabel = if (ayahNum <= arabicNums.size) arabicNums[ayahNum - 1] else "($ayahNum)"
+            val numLabel = toArabicNumeral(ayahNum)
             boardText.append(verse.text)
             boardText.append(" \u06DD$numLabel ")
             if (index < verses.size - 1) boardText.append("\n")
@@ -210,9 +214,10 @@ class TahfidzRecitationFragment : Fragment() {
           txtQuranVersesBoard.setTextColor(Color.parseColor("#444444"))
           txtQuranVersesBoard.textSize = 20f
           txtQuranVersesBoard.textAlignment = android.view.View.TEXT_ALIGNMENT_TEXT_END
-        }, { error ->
+        }, { _ ->
           txtQuranVersesBoard.text = "Gagal memuat ayat Al-Qur'an."
         })
+    disposables.add(disposable)
   }
 
   private fun startListening() {
@@ -458,6 +463,7 @@ class TahfidzRecitationFragment : Fragment() {
 
   override fun onDestroy() {
     super.onDestroy()
+    disposables.clear() // Mencegah memory leak dari RxJava subscription
     speechRecognizer?.destroy()
   }
 

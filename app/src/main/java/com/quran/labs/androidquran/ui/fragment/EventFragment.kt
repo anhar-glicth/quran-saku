@@ -132,7 +132,8 @@ class EventFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        loadEvents()
+        // loadEvents dipanggil sekali di onViewCreated; tidak perlu reload di setiap onResume
+        // agar tidak terjadi network call berulang saat back dari EventDetail
     }
 
     private fun loadEvents() {
@@ -146,16 +147,14 @@ class EventFragment : Fragment() {
                 val response = AuthClient.apiService.getEvents()
                 if (response.isSuccessful) {
                     val list = response.body()?.data ?: emptyList()
-                    activity?.runOnUiThread {
-                        progress.visibility = View.GONE
-                        if (list.isEmpty()) {
-                            tvEmpty.visibility = View.VISIBLE
-                        } else {
-                            rvEvents.visibility = View.VISIBLE
-                            allEvents.clear()
-                            allEvents.addAll(list)
-                            filterEvents()
-                        }
+                    progress.visibility = View.GONE
+                    if (list.isEmpty()) {
+                        tvEmpty.visibility = View.VISIBLE
+                    } else {
+                        rvEvents.visibility = View.VISIBLE
+                        allEvents.clear()
+                        allEvents.addAll(list)
+                        filterEvents()
                     }
                 } else {
                     showError("Gagal memuat event (${response.code()})")
@@ -167,13 +166,11 @@ class EventFragment : Fragment() {
     }
 
     private fun showError(msg: String) {
-        activity?.runOnUiThread {
-            progress.visibility = View.GONE
-            tvEmpty.visibility = View.VISIBLE
-            tvEmpty.text = msg
-            layoutFeatured.visibility = View.GONE
-            rvEvents.visibility = View.GONE
-        }
+        progress.visibility = View.GONE
+        tvEmpty.visibility = View.VISIBLE
+        tvEmpty.text = msg
+        layoutFeatured.visibility = View.GONE
+        rvEvents.visibility = View.GONE
     }
 
     private fun filterEvents() {
@@ -249,15 +246,13 @@ class EventFragment : Fragment() {
             try {
                 val response = AuthClient.apiService.deleteEvent(userId = adminUserId, id = event.id)
                 if (response.isSuccessful && response.body()?.success == true) {
-                    activity?.runOnUiThread {
-                        Toast.makeText(context, "Event berhasil dihapus", Toast.LENGTH_SHORT).show()
-                        loadEvents()
-                    }
-                }
-            } catch (e: Exception) {
-                activity?.runOnUiThread {
+                    Toast.makeText(context, "Event berhasil dihapus", Toast.LENGTH_SHORT).show()
+                    loadEvents()
+                } else {
                     Toast.makeText(context, "Gagal menghapus event", Toast.LENGTH_SHORT).show()
                 }
+            } catch (e: Exception) {
+                Toast.makeText(context, "Gagal menghapus event", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -441,14 +436,10 @@ class EventFragment : Fragment() {
                 if (!uploadedUrl.isNullOrEmpty()) {
                     saveEvent(id, title, cat, desc, date, time, speaker, location, featured, uploadedUrl)
                 } else {
-                    activity?.runOnUiThread {
-                        Toast.makeText(ctx, "Gagal mengunggah foto. Coba masukkan URL langsung.", Toast.LENGTH_LONG).show()
-                    }
+                    Toast.makeText(ctx, "Gagal mengunggah foto. Coba masukkan URL langsung.", Toast.LENGTH_LONG).show()
                 }
             } catch (e: Exception) {
-                activity?.runOnUiThread {
-                    Toast.makeText(ctx, "Error upload: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(ctx, "Error upload: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -467,19 +458,13 @@ class EventFragment : Fragment() {
                     imageUrl = imageUrl
                 )
                 if (response.isSuccessful && response.body()?.success == true) {
-                    activity?.runOnUiThread {
-                        Toast.makeText(context, "Event berhasil disimpan", Toast.LENGTH_SHORT).show()
-                        loadEvents()
-                    }
+                    Toast.makeText(context, "Event berhasil disimpan", Toast.LENGTH_SHORT).show()
+                    loadEvents()
                 } else {
-                    activity?.runOnUiThread {
-                        Toast.makeText(context, "Gagal menyimpan event: " + response.body()?.message, Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(context, "Gagal menyimpan event: " + response.body()?.message, Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-                activity?.runOnUiThread {
-                    Toast.makeText(context, "Tidak dapat menghubungkan ke server", Toast.LENGTH_SHORT).show()
-                }
+                Toast.makeText(context, "Tidak dapat menghubungkan ke server", Toast.LENGTH_SHORT).show()
             }
         }
     }
