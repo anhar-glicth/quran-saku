@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Play Store Listing Assets - Strava Quran</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Amiri:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #0a0e17;
+      --bg-card: rgba(22, 31, 49, 0.75);
+      --bg-card-hover: rgba(30, 42, 66, 0.85);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --primary: #10b981;
+      --primary-glow: rgba(16, 185, 129, 0.3);
+      --accent-gold: #f59e0b;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --font-main: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 40%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 40px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--primary);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 38px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 700px;
+      margin: 0 auto 24px auto;
+      line-height: 1.6;
+    }
+
+    .action-bar {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Section Layout */
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 40px 0 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 24px;
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    /* Cards Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: var(--bg-card-hover);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .card-header h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .char-count {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--accent-gold);
+    }
+
+    .input-box {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.5;
+      resize: vertical;
+      margin-bottom: 12px;
+    }
+
+    .input-box:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 12px var(--primary-glow);
+    }
+
+    /* Visual Asset Previews */
+    .preview-box {
+      background: #000;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .preview-box canvas {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .meta-tag {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    /* Toast Alert */
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #10b981;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 9999;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 { font-size: 28px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+Head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <span class="badge">Google Play Console Asset Generator</span>
+      <h1>Store Listing Assets: Strava Quran</h1>
+      <p class="subtitle">Halaman ini telah menyiapkan seluruh teks Metadata (Deskripsi) & Generator Aset Visual (Ikon & Screenshot) sesuai standar persyarakatan Google Play Store.</p>
+      <div class="action-bar">
+        <button class="btn btn-primary" onclick="downloadAllAssets()">⚡ Download Semua Gambar sekaligus (ZIP / Batch)</button>
+        <a href="#text-section" class="btn btn-outline">📜 Teks Deskripsi</a>
+        <a href="#visual-section" class="btn btn-outline">🖼️ Aset Gambar</a>
+      </div>
+    </header>
+
+    <!-- SECTION 1: TEXT METADATA -->
+    <div id="text-section"></div>
+    <h2 class="section-title">1. Metadata Teks Aplikasi (Play Store Copy)</h2>
+    
+    <div class="grid">
+      <!-- App Name -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Nama Aplikasi (App Name)</h3>
+          <span class="char-count" id="count-title">12 / 30 Karakter</span>
+        </div>
+        <input type="text" id="app-title" class="input-box" value="Strava Quran" readonly>
+        <button class="btn btn-outline" style="width:100%" onclick="copyText('app-title')">📋 Salin Nama Aplikasi</button>
+      </div>
+
+      <!-- Short Description -->
+      <div class="card" style="grid-column: span 2;">
+        <div class="card-header">
+          <h3>Deskripsi Singkat (Short Description)</h3>
+          <span class="char-count" id="count-short">77 / 80 Karakter</span>
+        </div>
+        <input type="text" id="app-short" class="input-box" value="Aplikasi Tilawah Al-Qur'an Interaktif, Dzikir, Grup Ngaji & Pelacak Target Khatam" readonly>
+        <button class="btn btn-outline" style="width:100%" onclick="copyText('app-short')">📋 Salin Deskripsi Singkat</button>
+      </div>
+    </div>
+
+    <!-- Full Description -->
+    <div class="card" style="margin-bottom: 40px;">
+      <div class="card-header">
+        <h3>Deskripsi Lengkap (Full Description)</h3>
+        <span class="char-count" id="count-full">1450 / 4000 Karakter</span>
+      </div>
+      <textarea id="app-full" class="input-box" rows="12" readonly>Strava Quran adalah aplikasi Tilawah Al-Qur'an digital interaktif dan jejaring kebaikan sosial yang dirancang untuk membantu umat Islam meningkatkan konsistensi membaca Al-Qur'an, mencapai target khatam bersama, serta mempererat tali silaturahmi antar sesama Muslim.
+
+Dengan konsep tracking dan leaderboard komunitas (seperti Strava untuk ibadah), Strava Quran mengubah kebiasaan tilawah Anda menjadi perjalanan spiritual yang terukur, menyenangkan, dan penuh keberkahan.
+
+🌟 FITUR UNGGULAN STRAVA QURAN:
+
+📖 Al-Qur'an 30 Juz Digital & Audio Murottal
+- Teks Al-Qur'an lengkap 30 Juz dengan tajwid dan terjemahan bahasa Indonesia.
+- Pemutar Audio Murottal dari Qori internasional terkenal.
+- Bookmark halaman, pencarian ayat, dan fitur mode malam yang nyaman untuk mata.
+
+👥 Grup Ngaji & Leaderboard Khatam Komunitas
+- Buat atau bergabung dengan Grup Ngaji bersama keluarga, sahabat, atau komunitas.
+- Pantau progress pembacaan per juz/halaman secara real-time.
+- Papan peringkat (Leaderboard) mingguan dan bulanan untuk memotivasi pencapaian khatam Al-Qur'an bersama.
+
+🤲 Dzikir & Doa Komunitas (Titip Doa)
+- Kumpulan Doa Harian dan Dzikir Pagi & Petang sesuai Sunnah.
+- Fitur "Titip Doa": Bagikan doa Anda dan saling mengaminkan doa sesama pengguna di seluruh Indonesia.
+
+📅 Kalender Kegiatan & Pejuang Kebaikan
+- Informasi kegiatan majelis taklim, kajian online/offline, dan event islami.
+- Wadah donasi transparan untuk pejuang kebaikan dan program dakwah Al-Qur'an.
+
+🔒 Privasi & Bebas Iklan Mengganggu
+- Pengalaman membaca Al-Qur'an yang tenang tanpa distraksi iklan berlebih.
+- Data pengguna tersimpan dengan aman dan terlindungi.
+
+Ayo mulai perjalanan tilawah harianmu sekarang! Unduh Strava Quran dan jadilah bagian dari generasi pencinta Al-Qur'an yang saling mendukung dalam kebaikan.</textarea>
+      <button class="btn btn-primary" style="width:100%" onclick="copyText('app-full')">📋 Salin Deskripsi Lengkap</button>
+    </div>
+
+    <!-- SECTION 2: VISUAL ASSETS -->
+    <div id="visual-section"></div>
+    <h2 class="section-title">2. Generator Aset Gambar (Sesuai Spesifikasi Google Play)</h2>
+    <p class="subtitle" style="margin-bottom: 25px;">Seluruh gambar di bawah digenerate otomatis menggunakan canvas beresolusi tinggi sesuai standar resmi Google Play Console. Klik tombol download pada masing-masing aset untuk menyimpan PNG asli.</p>
+
+    <div class="grid">
+      <!-- App Icon 512x512 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Ikon Aplikasi (App Icon)</h3>
+          <span class="char-count">512 x 512 px</span>
+        </div>
+        <div class="meta-tag">Format: PNG | Maks 1 MB</div>
+        <div class="preview-box">
+          <canvas id="canvas-icon" width="512" height="512"></canvas>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="downloadCanvas('canvas-icon', 'app_icon_512x512.png')">⬇️ Download Icon (512x512)</button>
+      </div>
+
+      <!-- Feature Graphic 1024x500 -->
+      <div class="card" style="grid-column: span 2;">
+        <div class="card-header">
+          <h3>Gambar Fitur (Feature Graphic)</h3>
+          <span class="char-count">1024 x 500 px</span>
+        </div>
+        <div class="meta-tag">Format: PNG | Maks 15 MB</div>
+        <div class="preview-box">
+          <canvas id="canvas-feature" width="1024" height="500"></canvas>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="downloadCanvas('canvas-feature', 'feature_graphic_1024x500.png')">⬇️ Download Feature Graphic (1024x500)</button>
+      </div>
+    </div>
+
+    <!-- Phone Screenshots Title -->
+    <h3 style="margin: 30px 0 15px 0; color: #fff; font-size: 20px;">📱 Screenshot Ponsel (Phone Screenshots - 1080 x 1920 px)</h3>
+    <div class="grid">
+      <!-- Screenshot 1 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Screenshot 1: Al-Qur'an 30 Juz</h3>
+          <span class="char-count">1080 x 1920 px</span>
+        </div>
+        <div class="preview-box">
+          <canvas id="canvas-ss1" width="1080" height="1920"></canvas>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="downloadCanvas('canvas-ss1', 'screenshot_phone_1.png')">⬇️ Download Screenshot 1</button>
+      </div>
+
+      <!-- Screenshot 2 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Screenshot 2: Grup Ngaji</h3>
+          <span class="char-count">1080 x 1920 px</span>
+        </div>
+        <div class="preview-box">
+          <canvas id="canvas-ss2" width="1080" height="1920"></canvas>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="downloadCanvas('canvas-ss2', 'screenshot_phone_2.png')">⬇️ Download Screenshot 2</button>
+      </div>
+
+      <!-- Screenshot 3 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Screenshot 3: Leaderboard</h3>
+          <span class="char-count">1080 x 1920 px</span>
+        </div>
+        <div class="preview-box">
+          <canvas id="canvas-ss3" width="1080" height="1920"></canvas>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="downloadCanvas('canvas-ss3', 'screenshot_phone_3.png')">⬇️ Download Screenshot 3</button>
+      </div>
+
+      <!-- Screenshot 4 -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Screenshot 4: Titip Doa</h3>
+          <span class="char-count">1080 x 1920 px</span>
+        </div>
+        <div class="preview-box">
+          <canvas id="canvas-ss4" width="1080" height="1920"></canvas>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="downloadCanvas('canvas-ss4', 'screenshot_phone_4.png')">⬇️ Download Screenshot 4</button>
+      </div>
+    </div>
+
+    <!-- Tablet Screenshots Title -->
+    <h3 style="margin: 30px 0 15px 0; color: #fff; font-size: 20px;">💻 Screenshot Tablet 7" & 10" (Tablet Screenshots)</h3>
+    <div class="grid">
+      <!-- Screenshot Tablet 7" -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Tablet 7 Inci</h3>
+          <span class="char-count">1200 x 1920 px</span>
+        </div>
+        <div class="preview-box">
+          <canvas id="canvas-tab7" width="1200" height="1920"></canvas>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="downloadCanvas('canvas-tab7', 'screenshot_tablet_7inch.png')">⬇️ Download Tablet 7"</button>
+      </div>
+
+      <!-- Screenshot Tablet 10" -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Tablet 10 Inci</h3>
+          <span class="char-count">1600 x 2560 px</span>
+        </div>
+        <div class="preview-box">
+          <canvas id="canvas-tab10" width="1600" height="2560"></canvas>
+        </div>
+        <button class="btn btn-primary" style="width:100%" onclick="downloadCanvas('canvas-tab10', 'screenshot_tablet_10inch.png')">⬇️ Download Tablet 10"</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Element -->
+  <div id="toast" class="toast">Teks berhasil disalin ke clipboard!</div>
+
+  <script>
+    // Copy Text Helper
+    function copyText(elementId) {
+      const el = document.getElementById(elementId);
+      el.select();
+      el.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(el.value);
+      showToast("Teks berhasil disalin ke clipboard!");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3000);
+    }
+
+    // Canvas Downloader
+    function downloadCanvas(canvasId, fileName) {
+      const canvas = document.getElementById(canvasId);
+      const link = document.createElement('a');
+      link.download = fileName;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    function downloadAllAssets() {
+      const assets = [
+        { id: 'canvas-icon', name: 'app_icon_512x512.png' },
+        { id: 'canvas-feature', name: 'feature_graphic_1024x500.png' },
+        { id: 'canvas-ss1', name: 'screenshot_phone_1.png' },
+        { id: 'canvas-ss2', name: 'screenshot_phone_2.png' },
+        { id: 'canvas-ss3', name: 'screenshot_phone_3.png' },
+        { id: 'canvas-ss4', name: 'screenshot_phone_4.png' },
+        { id: 'canvas-tab7', name: 'screenshot_tablet_7inch.png' },
+        { id: 'canvas-tab10', name: 'screenshot_tablet_10inch.png' }
+      ];
+
+      assets.forEach((ast, idx) => {
+        setTimeout(() => {
+          downloadCanvas(ast.id, ast.name);
+        }, idx * 400);
+      });
+      showToast("Mengunduh 8 file gambar sekaligus...");
+    }
+
+    // Render Canvas Visuals
+    window.onload = function() {
+      renderIcon();
+      renderFeatureGraphic();
+      renderSS1();
+      renderSS2();
+      renderSS3();
+      renderSS4();
+      renderTab7();
+      renderTab10();
+    };
+
+    // 1. App Icon (512x512)
+    function renderIcon() {
+      const cvs = document.getElementById('canvas-icon');
+      const ctx = cvs.getContext('2d');
+      const w = 512, h = 512;
+
+      // Background Gradient
+      const grad = ctx.createLinearGradient(0, 0, w, h);
+      grad.addColorStop(0, '#064e3b');
+      grad.addColorStop(0.5, '#047857');
+      grad.addColorStop(1, '#022c22');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Activity Ring Glow (Strava-inspired green/gold glow)
+      ctx.beginPath();
+      ctx.arc(w/2, h/2, 190, 0, Math.PI * 2);
+      ctx.lineWidth = 14;
+      ctx.strokeStyle = '#10b981';
+      ctx.shadowColor = '#10b981';
+      ctx.shadowBlur = 25;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(w/2, h/2, 160, -Math.PI/2, Math.PI * 0.85);
+      ctx.lineWidth = 10;
+      ctx.strokeStyle = '#f59e0b';
+      ctx.shadowColor = '#f59e0b';
+      ctx.shadowBlur = 20;
+      ctx.stroke();
+
+      ctx.shadowBlur = 0; // reset
+
+      // Center Quran Icon Base
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 150px Amiri, serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('القرآن', w/2, h/2 - 10);
+
+      // App Title Text below
+      ctx.fillStyle = '#a7f3d0';
+      ctx.font = 'bold 36px "Plus Jakarta Sans"';
+      ctx.fillText('STRAVA QURAN', w/2, h/2 + 130);
+    }
+
+    // 2. Feature Graphic (1024x500)
+    function renderFeatureGraphic() {
+      const cvs = document.getElementById('canvas-feature');
+      const ctx = cvs.getContext('2d');
+      const w = 1024, h = 500;
+
+      // Background Gradient
+      const grad = ctx.createLinearGradient(0, 0, w, h);
+      grad.addColorStop(0, '#022c22');
+      grad.addColorStop(0.5, '#065f46');
+      grad.addColorStop(1, '#064e3b');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Decorative Geometric Shapes
+      ctx.fillStyle = 'rgba(16, 185, 129, 0.08)';
+      ctx.beginPath();
+      ctx.arc(w - 100, 100, 300, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Title & Subtitle Left Side
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 20px "Plus Jakarta Sans"';
+      ctx.fillText('APLIKASI TILAWAH & KHATAM BERSAMA', 80, 140);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 54px "Plus Jakarta Sans"';
+      ctx.fillText('Strava Quran', 80, 210);
+
+      ctx.fillStyle = '#9ca3af';
+      ctx.font = '500 22px "Plus Jakarta Sans"';
+      ctx.fillText('Track Your Qur\'an Journey & Achieve Khatam Together', 80, 260);
+
+      // Feature Pills
+      const pills = ['📖 30 Juz Al-Qur\'an', '👥 Grup Ngaji', '🏆 Leaderboard', '🤲 Titip Doa'];
+      let px = 80;
+      pills.forEach(p => {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+        ctx.beginPath();
+        ctx.roundRect(px, 310, 180, 44, 22);
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
+        ctx.stroke();
+
+        ctx.fillStyle = '#6ee7b7';
+        ctx.font = '600 15px "Plus Jakarta Sans"';
+        ctx.textAlign = 'center';
+        ctx.fillText(p, px + 90, 337);
+        px += 195;
+      });
+      ctx.textAlign = 'left';
+
+      // Call to action badge
+      ctx.fillStyle = 'linear-gradient(135deg, #10b981, #059669)';
+      ctx.fillStyle = '#10b981';
+      ctx.beginPath();
+      ctx.roundRect(80, 390, 220, 50, 12);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 18px "Plus Jakarta Sans"';
+      ctx.textAlign = 'center';
+      ctx.fillText('GET IT ON GOOGLE PLAY', 190, 422);
+
+      // Right Side Arabic Calligraphy Preview
+      ctx.textAlign = 'center';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.font = 'bold 160px Amiri, serif';
+      ctx.fillText('القرآن الكريم', w - 240, h/2 + 20);
+    }
+
+    // Helper Function to Draw Phone Screenshot Template
+    function drawPhoneFrame(ctx, w, h, title, subtitle, arabicHeading, mainContentFn) {
+      // Background
+      const grad = ctx.createLinearGradient(0, 0, w, h);
+      grad.addColorStop(0, '#0b132b');
+      grad.addColorStop(1, '#1c2541');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Header Text Banner
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#f59e0b';
+      ctx.font = 'bold 36px "Plus Jakarta Sans"';
+      ctx.fillText(subtitle.toUpperCase(), w/2, 140);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 64px "Plus Jakarta Sans"';
+      ctx.fillText(title, w/2, 230);
+
+      // Phone Frame Container
+      const frameX = 140, frameY = 320, frameW = w - 280, frameH = h - 380;
+      
+      // Outer Frame Shadow
+      ctx.shadowColor = 'rgba(16, 185, 129, 0.3)';
+      ctx.shadowBlur = 40;
+
+      // Phone Body
+      ctx.fillStyle = '#0f172a';
+      ctx.beginPath();
+      ctx.roundRect(frameX, frameY, frameW, frameH, 48);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.lineWidth = 6;
+      ctx.stroke();
+
+      ctx.shadowBlur = 0; // reset shadow
+
+      // Notch / Camera island
+      ctx.fillStyle = '#000000';
+      ctx.beginPath();
+      ctx.roundRect(w/2 - 90, frameY + 16, 180, 30, 15);
+      ctx.fill();
+
+      // Screen Inner Content Area
+      const scX = frameX + 20, scY = frameY + 65, scW = frameW - 40, scH = frameH - 85;
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath();
+      ctx.roundRect(scX, scY, scW, scH, 30);
+      ctx.fill();
+
+      // Call Custom Content Function
+      mainContentFn(ctx, scX, scY, scW, scH);
+    }
+
+    // 3. Phone Screenshot 1: Al-Qur'an 30 Juz
+    function renderSS1() {
+      const cvs = document.getElementById('canvas-ss1');
+      const ctx = cvs.getContext('2d');
+      drawPhoneFrame(cvs, 1080, 1920, 'Al-Qur\'an 30 Juz Digital', 'Teks Tajwid & Audio Murottal', 'القرآن', (c, x, y, w, h) => {
+        // App Bar inside phone screen
+        c.fillStyle = '#065f46';
+        c.fillRect(x, y, w, 90);
+        c.fillStyle = '#ffffff';
+        c.font = 'bold 32px "Plus Jakarta Sans"';
+        c.textAlign = 'left';
+        c.fillText('Surah Al-Fatihah (الفاتحة)', x + 30, y + 55);
+
+        // Quran Verse Card 1
+        c.fillStyle = '#334155';
+        c.beginPath();
+        c.roundRect(x + 20, y + 120, w - 40, 220, 20);
+        c.fill();
+        c.fillStyle = '#f59e0b';
+        c.font = 'bold 44px Amiri, serif';
+        c.textAlign = 'right';
+        c.fillText('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', x + w - 40, y + 190);
+        c.fillStyle = '#cbd5e1';
+        c.font = '24px "Plus Jakarta Sans"';
+        c.textAlign = 'left';
+        c.fillText('Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang', x + 40, y + 270);
+
+        // Quran Verse Card 2
+        c.fillStyle = '#334155';
+        c.beginPath();
+        c.roundRect(x + 20, y + 360, w - 40, 260, 20);
+        c.fill();
+        c.fillStyle = '#f59e0b';
+        c.font = 'bold 44px Amiri, serif';
+        c.textAlign = 'right';
+        c.fillText('الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ', x + w - 40, y + 430);
+        c.fillStyle = '#cbd5e1';
+        c.font = '24px "Plus Jakarta Sans"';
+        c.textAlign = 'left';
+        c.fillText('Segala puji bagi Allah, Tuhan seluruh alam.', x + 40, y + 510);
+
+        // Audio Player Bar Bottom
+        c.fillStyle = '#10b981';
+        c.beginPath();
+        c.roundRect(x + 20, y + h - 140, w - 40, 100, 25);
+        c.fill();
+        c.fillStyle = '#ffffff';
+        c.font = 'bold 28px "Plus Jakarta Sans"';
+        c.fillText('▶  Mendengarkan: Sheikh Mishary Rashid', x + 40, y + h - 80);
+      });
+    }
+
+    // 4. Phone Screenshot 2: Grup Ngaji
+    function renderSS2() {
+      const cvs = document.getElementById('canvas-ss2');
+      const ctx = cvs.getContext('2d');
+      drawPhoneFrame(cvs, 1080, 1920, 'Grup Ngaji & Khatam', 'Target Tilawah Komunitas', 'الجروب', (c, x, y, w, h) => {
+        c.fillStyle = '#047857';
+        c.fillRect(x, y, w, 90);
+        c.fillStyle = '#ffffff';
+        c.font = 'bold 32px "Plus Jakarta Sans"';
+        c.textAlign = 'left';
+        c.fillText('Grup: Pejuang Khatam Ramadhan', x + 30, y + 55);
+
+        // Progress Card
+        c.fillStyle = '#0f172a';
+        c.beginPath();
+        c.roundRect(x + 20, y + 120, w - 40, 260, 20);
+        c.fill();
+        c.fillStyle = '#10b981';
+        c.font = 'bold 28px "Plus Jakarta Sans"';
+        c.fillText('Target Khatam Bersama: 30 Juz', x + 40, y + 170);
+
+        // Progress Bar
+        c.fillStyle = '#334155';
+        c.beginPath();
+        c.roundRect(x + 40, y + 210, w - 120, 30, 15);
+        c.fill();
+        c.fillStyle = '#10b981';
+        c.beginPath();
+        c.roundRect(x + 40, y + 210, (w - 120) * 0.75, 30, 15);
+        c.fill();
+
+        c.fillStyle = '#ffffff';
+        c.font = 'bold 26px "Plus Jakarta Sans"';
+        c.fillText('Progress: 75% (Juz 23/30)', x + 40, y + 290);
+
+        // Member List
+        const members = [
+          { name: 'Ahmad Santri', progress: 'Juz 25 (Halaman 500)', status: 'Online' },
+          { name: 'Muhammad Anhar', progress: 'Juz 23 (Halaman 460)', status: 'Selesai' },
+          { name: 'Fajar Maulana', progress: 'Juz 20 (Halaman 400)', status: 'Membaca' }
+        ];
+
+        let my = y + 410;
+        members.forEach(m => {
+          c.fillStyle = '#334155';
+          c.beginPath();
+          c.roundRect(x + 20, my, w - 40, 130, 16);
+          c.fill();
+          c.fillStyle = '#ffffff';
+          c.font = 'bold 28px "Plus Jakarta Sans"';
+          c.fillText('👤 ' + m.name, x + 40, my + 50);
+          c.fillStyle = '#94a3b8';
+          c.font = '24px "Plus Jakarta Sans"';
+          c.fillText(m.progress, x + 40, my + 95);
+          my += 150;
+        });
+      });
+    }
+
+    // 5. Phone Screenshot 3: Leaderboard
+    function renderSS3() {
+      const cvs = document.getElementById('canvas-ss3');
+      const ctx = cvs.getContext('2d');
+      drawPhoneFrame(cvs, 1080, 1920, 'Leaderboard Tilawah', 'Kompetisi Kebaikan Mingguan', 'الترتيب', (c, x, y, w, h) => {
+        c.fillStyle = '#065f46';
+        c.fillRect(x, y, w, 90);
+        c.fillStyle = '#ffffff';
+        c.font = 'bold 32px "Plus Jakarta Sans"';
+        c.textAlign = 'left';
+        c.fillText('🏆 Leaderboard Pejuang Tilawah', x + 30, y + 55);
+
+        // Top 3 Podium Card
+        c.fillStyle = '#1e1b4b';
+        c.beginPath();
+        c.roundRect(x + 20, y + 120, w - 40, 240, 20);
+        c.fill();
+
+        c.fillStyle = '#f59e0b';
+        c.font = 'bold 30px "Plus Jakarta Sans"';
+        c.textAlign = 'center';
+        c.fillText('🥇 Juara 1: Ahmad Santri (120 Halaman)', x + w/2, y + 190);
+        c.fillStyle = '#e2e8f0';
+        c.font = 'bold 26px "Plus Jakarta Sans"';
+        c.fillText('🥈 Juara 2: Ustadz Solihin (95 Halaman)', x + w/2, y + 250);
+        c.fillText('🥉 Juara 3: Fajar Maulana (80 Halaman)', x + w/2, y + 310);
+        c.textAlign = 'left';
+      });
+    }
+
+    // 6. Phone Screenshot 4: Titip Doa
+    function renderSS4() {
+      const cvs = document.getElementById('canvas-ss4');
+      const ctx = cvs.getContext('2d');
+      drawPhoneFrame(cvs, 1080, 1920, 'Titip Doa & Dzikir', 'Saling Mengaminkan Doa', 'الدعاء', (c, x, y, w, h) => {
+        c.fillStyle = '#047857';
+        c.fillRect(x, y, w, 90);
+        c.fillStyle = '#ffffff';
+        c.font = 'bold 32px "Plus Jakarta Sans"';
+        c.textAlign = 'left';
+        c.fillText('🤲 Komunitas Titip Doa Harian', x + 30, y + 55);
+
+        // Doa Card 1
+        c.fillStyle = '#334155';
+        c.beginPath();
+        c.roundRect(x + 20, y + 120, w - 40, 240, 20);
+        c.fill();
+        c.fillStyle = '#f59e0b';
+        c.font = 'bold 26px "Plus Jakarta Sans"';
+        c.fillText('Hamba Allah (Jakarta)', x + 40, y + 170);
+        c.fillStyle = '#ffffff';
+        c.font = '24px "Plus Jakarta Sans"';
+        c.fillText('"Mohon doanya agar ujian kelulusan anak saya diberi kelancaran dan keberkahan."', x + 40, y + 230);
+        c.fillStyle = '#10b981';
+        c.font = 'bold 24px "Plus Jakarta Sans"';
+        c.fillText('❤️ 142 Orang Mengaminkan', x + 40, y + 310);
+      });
+    }
+
+    // 7. Tablet 7" Canvas (1200x1920)
+    function renderTab7() {
+      const cvs = document.getElementById('canvas-tab7');
+      const ctx = cvs.getContext('2d');
+      drawPhoneFrame(cvs, 1200, 1920, 'Strava Quran untuk Tablet 7"', 'Tampilan Luas & Nyaman', 'القرآن', (c, x, y, w, h) => {
+        c.fillStyle = '#10b981';
+        c.font = 'bold 36px "Plus Jakarta Sans"';
+        c.textAlign = 'center';
+        c.fillText('Optimized Layout for 7-Inch Tablets', x + w/2, y + h/2);
+      });
+    }
+
+    // 8. Tablet 10" Canvas (1600x2560)
+    function renderTab10() {
+      const cvs = document.getElementById('canvas-tab10');
+      const ctx = cvs.getContext('2d');
+      drawPhoneFrame(cvs, 1600, 2560, 'Strava Quran untuk Tablet 10"', 'Pengalaman Membaca Maksimal', 'القرآن', (c, x, y, w, h) => {
+        c.fillStyle = '#f59e0b';
+        c.font = 'bold 44px "Plus Jakarta Sans"';
+        c.textAlign = 'center';
+        c.fillText('HD Resolution Support for 10-Inch Tablets', x + w/2, y + h/2);
+      });
+    }
+  </script>
+</body>
+</html>

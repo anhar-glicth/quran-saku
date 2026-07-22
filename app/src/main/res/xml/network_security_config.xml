@@ -2,6 +2,7 @@
 <network-security-config>
   <base-config cleartextTrafficPermitted="true" />
   <domain-config cleartextTrafficPermitted="true">
+    <domain includeSubdomains="true">pondokquranmahasiswaadtin.com</domain>
     <domain includeSubdomains="true">quran.com</domain>
     <domain includeSubdomains="true">quranicaudio.com</domain>
   </domain-config>
