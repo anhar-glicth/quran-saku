@@ -14,7 +14,7 @@ $user = isLoggedIn() ? getCurrentUser() : null;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pembayaran Zakat - Quran Saku</title>
+    <title>Pembayaran Zakat - Strava Quran</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -249,7 +249,7 @@ $user = isLoggedIn() ? getCurrentUser() : null;
                     <i class="fa-solid fa-hand-holding-heart"></i>
                 </div>
                 <h1 class="title">Pembayaran Zakat</h1>
-                <p class="subtitle">Salurkan zakat Anda secara aman melalui portal resmi mitra pembayaran Quran Saku.</p>
+                <p class="subtitle">Salurkan zakat Anda secara aman melalui portal resmi mitra pembayaran Strava Quran.</p>
             </div>
 
             <form id="zakatForm" onsubmit="handlePayment(event)">
@@ -312,7 +312,7 @@ $user = isLoggedIn() ? getCurrentUser() : null;
             </button>
         </div>
 
-        <p class="footer-note">&copy; <?php echo date('Y'); ?> Quran Saku. Semua Transaksi Terenkripsi Aman.</p>
+        <p class="footer-note">&copy; <?php echo date('Y'); ?> Strava Quran. Semua Transaksi Terenkripsi Aman.</p>
     </div>
 
     <script>

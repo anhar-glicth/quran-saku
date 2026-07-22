@@ -250,7 +250,7 @@ class KomunitasFragment : Fragment() {
 
         AlertDialog.Builder(ctx)
             .setTitle("✍️ Titip Doa")
-            .setMessage("Doamu akan dibagikan kepada sesama pengguna Quran Saku")
+            .setMessage("Doamu akan dibagikan kepada sesama pengguna Strava Quran")
             .setView(layout)
             .setPositiveButton("Kirim Doa 🤲") { _, _ ->
                 val doaText = etDoa.text.toString().trim()

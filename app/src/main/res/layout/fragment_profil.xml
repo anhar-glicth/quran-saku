@@ -444,7 +444,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Quran Saku adalah aplikasi Al-Quran gratis yang dikembangkan oleh Amal Abadi Palestina (adtin), bekerja sama dengan Velora.id untuk mendekatkan umat dengan Al-Qur'an melalui teknologi modern."
+            android:text="Strava Quran adalah aplikasi Al-Quran gratis yang dikembangkan oleh Amal Abadi Palestina (adtin), bekerja sama dengan Velora.id untuk mendekatkan umat dengan Al-Qur'an melalui teknologi modern."
             android:textColor="@color/text_hint_color"
             android:textSize="13sp"
             android:lineSpacingMultiplier="1.4"

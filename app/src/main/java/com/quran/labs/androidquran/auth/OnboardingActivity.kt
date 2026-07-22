@@ -31,8 +31,8 @@ class OnboardingActivity : AppCompatActivity() {
     private val slides = listOf(
         OnboardingSlide(
             imageRes    = R.drawable.ic_onboarding_1,
-            title       = "QURAN SAKU",
-            description = "Quran saku adalah super app untuk membantu kamu dalam beribadah, menghapal quran serta pengingat ibadah lainnya."
+            title       = "STRAVA QURAN",
+            description = "Strava Quran adalah super app untuk membantu kamu dalam beribadah, menghapal quran serta pengingat ibadah lainnya."
         ),
         OnboardingSlide(
             imageRes    = R.drawable.ic_onboarding_2,

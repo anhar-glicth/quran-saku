@@ -53,10 +53,10 @@ class PejuangPartnerDetailActivity : AppCompatActivity() {
         tvTitle.text = categoryName
 
         val descText = when (categoryId) {
-            "mitra_utama" -> "Lembaga pendukung utama yang mendanai dan ikut andil penuh menyebarkan program Quran Saku."
+            "mitra_utama" -> "Lembaga pendukung utama yang mendanai dan ikut andil penuh menyebarkan program Strava Quran."
             "pendukung_resmi" -> "Instansi dan donatur resmi penyokong sarana prasarana serta biaya operasional program."
             "mitra_distribusi" -> "Masjid, yayasan, dan organisasi penyalur resmi mushaf dan edukasi aplikasi ke umat."
-            "mitra_edukasi" -> "Lembaga pendidikan, pondok pesantren, dan pembina tahfidz mitra program Quran Saku."
+            "mitra_edukasi" -> "Lembaga pendidikan, pondok pesantren, dan pembina tahfidz mitra program Strava Quran."
             else -> "Lembaga-lembaga yang ikut berpartisipasi membagikan atau mendukung program Quran."
         }
         tvDesc.text = descText

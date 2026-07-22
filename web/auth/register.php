@@ -93,7 +93,7 @@ try {
 
     echo json_encode([
         'success'  => true,
-        'message'  => 'Registrasi berhasil! Selamat datang di Quran Saku, ' . htmlspecialchars($name) . '.',
+        'message'  => 'Registrasi berhasil! Selamat datang di Strava Quran, ' . htmlspecialchars($name) . '.',
         'redirect' => APP_URL . '/user/dashboard.php',
     ]);
 

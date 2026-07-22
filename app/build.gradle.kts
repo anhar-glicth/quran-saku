@@ -125,8 +125,8 @@ androidComponents {
     )
 
     if (variant.applicationId.get().endsWith("debug")) {
-      variant.manifestPlaceholders.put("app_debug_label", "Quran Saku")
-      (variant as? HasUnitTest)?.unitTest?.manifestPlaceholders?.put("app_debug_label", "Quran Saku")
+      variant.manifestPlaceholders.put("app_debug_label", "Strava Quran")
+      (variant as? HasUnitTest)?.unitTest?.manifestPlaceholders?.put("app_debug_label", "Strava Quran")
     }
   }
 }

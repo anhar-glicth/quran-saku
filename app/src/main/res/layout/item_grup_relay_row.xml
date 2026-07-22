@@ -53,7 +53,7 @@
                 android:id="@+id/txt_relay_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Membaca Quran Saku"
+                android:text="Membaca Strava Quran"
                 android:textColor="#888888"
                 android:textSize="11sp"
                 android:layout_marginTop="2dp" />

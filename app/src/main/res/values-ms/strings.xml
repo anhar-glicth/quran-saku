@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Quran Saku</string>
+  <string name="app_name">Strava Quran</string>
   <string name="downloadPrompt_title">Muat turun fail yang diperlukan?</string>
   <string name="downloadPrompt">Untuk prestasi yang optimal, beberapa fail perlu dimuat turun. Jika anda memilih untuk tidak melakukannya sekarang, setiap halaman yang dibuka nanti akan mengambil lebih masa. Apakah anda ingin memuat turun fail yang diperlukan sekarang?</string>
   <string name="downloadTabletPrompt">Kami baru saja meningkatkan kualiti halaman untuk tablet. Apakah anda ingin memuat turun sekarang?</string>
@@ -28,13 +28,13 @@
   <string name="gotoPage">Ke halaman</string>
 
   <!-- about -->
-  <string name="about_description">Quran Saku ialah aplikasi Al-Quran percuma yang dibangunkan oleh Amal Abadi Palestina (dikenali sebagai adtin), dengan kerjasama Velora.id. Semoga aplikasi ini menjadi amal jariah bagi semua yang terlibat. Jangan lupa sertakan para pembangun dalam doa anda.</string>
+  <string name="about_description">Strava Quran ialah aplikasi Al-Quran percuma yang dibangunkan oleh Amal Abadi Palestina (dikenali sebagai adtin), dengan kerjasama Velora.id. Semoga aplikasi ini menjadi amal jariah bagi semua yang terlibat. Jangan lupa sertakan para pembangun dalam doa anda.</string>
   <string name="about_developer_category">Tentang Pembangun</string>
   <string name="about_organization">Amal Abadi Palestina (adtin)</string>
-  <string name="about_organization_summary">Organisasi pengelola dan pemilik aplikasi Quran Saku</string>
+  <string name="about_organization_summary">Organisasi pengelola dan pemilik aplikasi Strava Quran</string>
   <string name="about_organization_url" translatable="false">https://adtin.id</string>
   <string name="about_partner">Velora.id</string>
-  <string name="about_partner_summary">Rakan kongsi pembangun dalam pembuatan aplikasi Quran Saku</string>
+  <string name="about_partner_summary">Rakan kongsi pembangun dalam pembuatan aplikasi Strava Quran</string>
   <string name="about_partner_url" translatable="false">https://velora.id</string>
   <string name="about_developer">Muhammad Anhar Solihin</string>
   <string name="about_developer_summary">Fullstack Developer — bertanggungjawab atas seluruh pembangunan teknikal aplikasi</string>

@@ -268,14 +268,14 @@ class ZakatFragment : Fragment() {
 
   private fun shareCalculation() {
     val textToShare = """
-      *Kalkulasi Zakat - Quran Saku*
+      *Kalkulasi Zakat - Strava Quran*
       Kategori: Zakat ${activeTab.replaceFirstChar { it.uppercase() }}
       Status: ${tvStatus.text}
       Jumlah Zakat: ${tvZakatAmount.text}
       
       _${tvCalculationNotes.text}_
       
-      Dihitung menggunakan Aplikasi Quran Saku.
+      Dihitung menggunakan Aplikasi Strava Quran.
     """.trimIndent()
 
     val sendIntent = Intent().apply {

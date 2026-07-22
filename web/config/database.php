@@ -1,6 +1,6 @@
 <?php
 // ============================================
-// Quran Saku - Konfigurasi Database
+// Strava Quran - Konfigurasi Database
 // ============================================
 
 define('DB_HOST',     'localhost');
@@ -11,7 +11,7 @@ define('DB_PASS',     'f1D022013.');
 define('DB_CHARSET',  'utf8mb4');
 
 // App Settings
-define('APP_NAME',    'Quran Saku');
+define('APP_NAME',    'Strava Quran');
 define('APP_URL',     'https://pondokquranmahasiswaadtin.com/web');
 define('APP_VERSION', '1.0.0');
 define('SESSION_LIFETIME', 86400); // 24 jam

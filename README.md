@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/quran/quran_android/main/app/src/madani/res/drawable-xxhdpi/icon.png" alt='Quran for Android logo'/>
 
-# Quran Saku
+# Strava Quran
 
 **Developed / Modified by Muhammad Anhar Solihin**
 

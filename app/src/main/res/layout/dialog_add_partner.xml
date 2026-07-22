@@ -55,7 +55,7 @@
         android:id="@+id/et_partner_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contoh: Penyokong distribusi Al-Quran Saku..."
+        android:hint="Contoh: Penyokong distribusi Strava Quran..."
         android:textSize="14sp"
         android:inputType="textMultiLine"
         android:minLines="2"

@@ -48,7 +48,7 @@ class GrupDetailAdapter(
             relayHolder.tvSurah.text = if (item.surahName != null) {
                 "Membaca: ${item.surahName} Hlm ${item.pageNumber}"
             } else {
-                "Membaca Quran Saku Hlm ${item.pageNumber}"
+                "Membaca Strava Quran Hlm ${item.pageNumber}"
             }
             relayHolder.tvPage.text = "Hlm ${item.pageNumber}"
         } else {

@@ -23,7 +23,7 @@ if (!empty($_SESSION['onboarding_done'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quran Saku - Selamat Datang</title>
+    <title>Strava Quran - Selamat Datang</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -349,8 +349,8 @@ if (!empty($_SESSION['onboarding_done'])) {
             </div>
 
             <div class="text-area" style="justify-content: flex-start; padding-top: 18px;">
-                <h2 class="slide-title">QURAN<br>SAKU</h2>
-                <p class="slide-desc">Quran saku adalah super app untuk membantu kamu dalam beribadah, menghapal quran serta pengingat ibadah lainnya.</p>
+                <h2 class="slide-title">STRAVA<br>QURAN</h2>
+                <p class="slide-desc">Strava Quran adalah super app untuk membantu kamu dalam beribadah, menghapal quran serta pengingat ibadah lainnya.</p>
             </div>
         </div>
 
