@@ -4,7 +4,6 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -112,12 +111,10 @@ class PejuangPartnerDetailActivity : AppCompatActivity() {
     }
 
     private fun showError(msg: String) {
-        runOnUiThread {
-            progress.visibility = View.GONE
-            tvEmpty.visibility = View.VISIBLE
-            tvEmpty.text = msg
-            rv.visibility = View.GONE
-        }
+        progress.visibility = View.GONE
+        tvEmpty.visibility = View.VISIBLE
+        tvEmpty.text = msg
+        rv.visibility = View.GONE
     }
 
     private fun showAddPartnerDialog() {
@@ -193,14 +190,6 @@ class PejuangPartnerDetailActivity : AppCompatActivity() {
                 Toast.makeText(this@PejuangPartnerDetailActivity, "Koneksi server gagal", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun showAdminOptionsDialog(item: PartnerApiItem) {

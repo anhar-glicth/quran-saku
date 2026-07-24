@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-  <base-config cleartextTrafficPermitted="true" />
+  <!-- Only allow cleartext (HTTP) for specific app server domains -->
   <domain-config cleartextTrafficPermitted="true">
     <domain includeSubdomains="true">pondokquranmahasiswaadtin.com</domain>
     <domain includeSubdomains="true">quran.com</domain>

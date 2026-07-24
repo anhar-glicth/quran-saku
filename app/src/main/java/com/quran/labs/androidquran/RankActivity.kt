@@ -3,13 +3,11 @@ package com.quran.labs.androidquran
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
@@ -40,7 +38,6 @@ class RankActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_rank)
 
         sessionManager = SessionManager(this)
@@ -150,21 +147,11 @@ class RankActivity : AppCompatActivity() {
     }
 
     private fun showError(msg: String) {
-        runOnUiThread {
-            progressRank.visibility = View.GONE
-            txtEmpty.visibility = View.VISIBLE
-            txtEmpty.text = msg
-            cardUserRank.visibility = View.GONE
-            cardLeaderboard.visibility = View.GONE
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+        progressRank.visibility = View.GONE
+        txtEmpty.visibility = View.VISIBLE
+        txtEmpty.text = msg
+        cardUserRank.visibility = View.GONE
+        cardLeaderboard.visibility = View.GONE
     }
 
     inner class RankListAdapter(

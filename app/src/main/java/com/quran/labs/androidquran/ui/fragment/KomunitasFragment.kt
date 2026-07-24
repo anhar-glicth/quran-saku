@@ -173,10 +173,6 @@ class KomunitasFragment : Fragment() {
 
         val userId = sessionManager.getUserId()
 
-        // Optimistic update dulu (update UI sebelum network)
-        val isCurrentlyLiked = if (type == "like") item.isLiked else item.isLiked
-        val isCurrentlyAaminned = if (type == "aamiin") item.isAaminned else item.isAaminned
-
         val updatedItem = if (type == "like") {
             item.copy(
                 isLiked = !item.isLiked,

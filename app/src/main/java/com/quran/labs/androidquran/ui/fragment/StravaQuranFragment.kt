@@ -3,7 +3,7 @@ package com.quran.labs.androidquran.ui.fragment
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,13 +69,13 @@ class StravaQuranFragment : Fragment() {
             btnDuration.setTextColor(Color.WHITE)
             btnDuration.background = rootViewBackground(0xFFFF6D00.toInt())
             
-            btnPages.setTextColor(0xFF666666.toInt())
+            btnPages.setTextColor(Color.parseColor("#666666"))
             btnPages.background = null
         } else {
             btnPages.setTextColor(Color.WHITE)
             btnPages.background = rootViewBackground(0xFFFF6D00.toInt())
             
-            btnDuration.setTextColor(0xFF666666.toInt())
+            btnDuration.setTextColor(Color.parseColor("#666666"))
             btnDuration.background = null
         }
     }
@@ -127,7 +127,7 @@ class StravaQuranFragment : Fragment() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
-        val dayLabelFormat = SimpleDateFormat("EEE", Locale("id")) // Indonesia day names: Sen, Sel, etc.
+        val dayLabelFormat = SimpleDateFormat("EEE", Locale.forLanguageTag("id")) // Indonesia day names: Sen, Sel, etc.
 
         // Get the rolling 7 days (ending today)
         val days = mutableListOf<DayData>()
