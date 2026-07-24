@@ -178,33 +178,32 @@
     </ScrollView>
 
     <!-- PHASE 2: RECITATION WORKSPACE -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layout_recitation_workspace"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="16dp"
         android:visibility="gone">
 
       <!-- Header details -->
       <TextView
           android:id="@+id/txt_recitation_header"
-          android:layout_width="wrap_content"
+          android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="Surah Al-Fatihah, Ayat 1-5"
           android:textColor="#333333"
           android:textSize="16sp"
           android:textStyle="bold"
-          android:layout_alignParentTop="true"
-          android:layout_centerHorizontal="true"/>
+          android:gravity="center"
+          android:layout_marginBottom="12dp"/>
 
-      <!-- Verses card view -->
+      <!-- Verses card view — takes all remaining space -->
       <androidx.cardview.widget.CardView
           android:id="@+id/card_verses_board"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_below="@id/txt_recitation_header"
-          android:layout_marginTop="16dp"
-          android:layout_above="@+id/layout_mic_controls"
+          android:layout_height="0dp"
+          android:layout_weight="1"
           android:layout_marginBottom="16dp"
           app:cardCornerRadius="16dp"
           app:cardElevation="2dp">
@@ -271,7 +270,6 @@
           android:layout_height="wrap_content"
           android:orientation="vertical"
           android:gravity="center"
-          android:layout_alignParentBottom="true"
           android:paddingBottom="12dp">
 
         <!-- Accuracy result panel -->
@@ -337,6 +335,6 @@
 
       </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
   </FrameLayout>
 </LinearLayout>

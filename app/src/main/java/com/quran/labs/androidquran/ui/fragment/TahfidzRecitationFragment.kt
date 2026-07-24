@@ -314,15 +314,8 @@ class TahfidzRecitationFragment : Fragment() {
 
     val targetWords = targetVersesText.split("\\s+".toRegex()).filter { it.isNotEmpty() }
     val cleanTargetWords = cleanTargetText.split("\\s+".toRegex()).filter { it.isNotEmpty() }
-    // Coba cocokkan dengan dan tanpa harakat dari hasil speech recognizer
-    val spokenVariants = listOf(
-      cleanSpokenText,
-      stripHarakat(spokenText.replace("ال", ""))
-    )
-    val spokenWords = spokenVariants
-      .flatMap { it.split("\\s+".toRegex()) }
-      .filter { it.isNotEmpty() }
-      .distinct()
+    // Gunakan hanya 1 variant teks ucapan (tanpa harakat) untuk pencocokan yang proporsional
+    val spokenWords = cleanSpokenText.split("\\s+".toRegex()).filter { it.isNotEmpty() }
 
     val n = cleanTargetWords.size
     val m = spokenWords.size
