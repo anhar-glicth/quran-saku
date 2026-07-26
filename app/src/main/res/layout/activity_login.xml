@@ -15,13 +15,20 @@
         android:padding="28dp">
 
         <!-- Logo / Brand -->
-        <Space android:layout_width="0dp" android:layout_height="64dp"/>
+        <Space android:layout_width="0dp" android:layout_height="32dp"/>
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_strava_quran_logo"
+            android:contentDescription="STRAVA QURAN Logo"
+            android:layout_marginBottom="12dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quran"
-            android:textSize="40sp"
+            android:text="STRAVA"
+            android:textSize="36sp"
             android:textStyle="bold"
             android:textColor="@color/primary_orange"
             android:letterSpacing="-0.02"
@@ -30,8 +37,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="saku"
-            android:textSize="40sp"
+            android:text="QURAN"
+            android:textSize="36sp"
             android:textStyle="bold"
             android:textColor="@color/text_dark"
             android:letterSpacing="-0.02"
