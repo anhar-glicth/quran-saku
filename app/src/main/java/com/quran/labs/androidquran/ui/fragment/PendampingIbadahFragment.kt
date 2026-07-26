@@ -104,6 +104,9 @@ class PendampingIbadahFragment : Fragment() {
         // --- Load Campaign Dinamis ---
         loadCampaigns(view)
 
+        // --- Setup Rotator Donasi Ticker (5 Detik) ---
+        setupDonationTicker(view)
+
         // --- Toggle Notifikasi Adzan ---
         val switchAdhan = view.findViewById<SwitchMaterial>(R.id.switch_adhan)
         val tvStatus = view.findViewById<TextView>(R.id.tv_adhan_status)
@@ -582,4 +585,92 @@ class PendampingIbadahFragment : Fragment() {
         override fun getItemCount() = list.size
     }
 
+    // ─── ROTATOR DONASI TICKER (5 DETIK) ──────────────────────
+    private var tickerHandler: android.os.Handler? = null
+    private var tickerRunnable: Runnable? = null
+    private var donationItems = listOf<com.quran.labs.androidquran.model.DonationItem>()
+    private var currentDonationIndex = 0
+
+    private fun setupDonationTicker(view: View) {
+        val switcher = view.findViewById<TextSwitcher>(R.id.switcher_donation_ticker) ?: return
+
+        switcher.setFactory {
+            TextView(requireContext()).apply {
+                setTextColor(android.graphics.Color.WHITE)
+                textSize = 12f
+                setTypeface(null, android.graphics.Typeface.BOLD)
+                setSingleLine(true)
+                ellipsize = android.text.TextUtils.TruncateAt.END
+                layoutParams = FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            }
+        }
+
+        // Animasi fade in & fade out halus
+        val fadeIn = android.view.animation.AnimationUtils.loadAnimation(requireContext(), android.R.anim.fade_in)
+        val fadeOut = android.view.animation.AnimationUtils.loadAnimation(requireContext(), android.R.anim.fade_out)
+        switcher.inAnimation = fadeIn
+        switcher.outAnimation = fadeOut
+
+        // Data awal default sampel
+        donationItems = listOf(
+            com.quran.labs.androidquran.model.DonationItem(1, "Ahmad Fauzi", 100000.0, "Rp 100.000", "Sedekah Mushaf", "5 mnt lalu"),
+            com.quran.labs.androidquran.model.DonationItem(2, "Hamba Allah", 50000.0, "Rp 50.000", "Infaq Dakwah", "15 mnt lalu"),
+            com.quran.labs.androidquran.model.DonationItem(3, "Siti Nurhaliza", 250000.0, "Rp 250.000", "Beasiswa Tahfidz", "45 mnt lalu")
+        )
+
+        displayCurrentDonation(switcher)
+
+        // Fetch data asli dari server API
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val response = AuthClient.apiService.getDonationsTicker()
+                if (response.isSuccessful) {
+                    val list = response.body()?.data
+                    if (!list.isNullOrEmpty()) {
+                        donationItems = list
+                        currentDonationIndex = 0
+                        displayCurrentDonation(switcher)
+                    }
+                }
+            } catch (_: Exception) {}
+        }
+
+        // Jalankan rotasi otomatis 5 detik
+        startDonationTickerLoop(switcher)
+    }
+
+    private fun displayCurrentDonation(switcher: TextSwitcher) {
+        if (donationItems.isEmpty()) return
+        val item = donationItems[currentDonationIndex % donationItems.size]
+        val text = "${item.userName} berdonasi ${item.formattedAmount} • ${item.timeAgo}"
+        switcher.setText(text)
+    }
+
+    private fun startDonationTickerLoop(switcher: TextSwitcher) {
+        stopDonationTickerLoop()
+        tickerHandler = android.os.Handler(android.os.Looper.getMainLooper())
+        tickerRunnable = object : Runnable {
+            override fun run() {
+                if (donationItems.isNotEmpty()) {
+                    currentDonationIndex = (currentDonationIndex + 1) % donationItems.size
+                    displayCurrentDonation(switcher)
+                }
+                tickerHandler?.postDelayed(this, 5000) // 5 Detik
+            }
+        }
+        tickerHandler?.postDelayed(tickerRunnable!!, 5000)
+    }
+
+    private fun stopDonationTickerLoop() {
+        tickerRunnable?.let { tickerHandler?.removeCallbacks(it) }
+        tickerHandler = null
+    }
+
+    override fun onDestroyView() {
+        stopDonationTickerLoop()
+        super.onDestroyView()
+    }
 }

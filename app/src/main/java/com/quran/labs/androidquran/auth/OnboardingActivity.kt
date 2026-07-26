@@ -7,12 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.quran.labs.androidquran.QuranDataActivity
 import com.quran.labs.androidquran.R
 import com.quran.labs.androidquran.databinding.ActivityOnboardingBinding
@@ -32,17 +32,17 @@ class OnboardingActivity : AppCompatActivity() {
         OnboardingSlide(
             imageRes    = R.drawable.ic_onboarding_1,
             title       = "STRAVA QURAN",
-            description = "Strava Quran adalah super app untuk membantu kamu dalam beribadah, menghapal quran serta pengingat ibadah lainnya."
+            description = "Strava Quran adalah super app untuk membantu kamu dalam beribadah, menghafal quran serta pengingat ibadah lainnya."
         ),
         OnboardingSlide(
             imageRes    = R.drawable.ic_onboarding_2,
-            title       = "Ibadah Lebih Mudah",
-            description = "Jadwal sholat, arah kiblat, dzikir harian, dan doa pilihan tersedia dalam satu aplikasi yang elegan."
+            title       = "Track Tilawah & Target",
+            description = "Catat dan lacak progres tilawah harianmu seperti Strava, raih konsistensi membaca Al-Qur'an setiap hari."
         ),
         OnboardingSlide(
             imageRes    = R.drawable.ic_onboarding_3,
-            title       = "Be Better",
-            description = "Menyediakan semua kebutuhan ibadahmu di dalam satu aplikasi. Mulai perjalanan spiritualmu hari ini."
+            title       = "Komunitas Pejuang Quran",
+            description = "Bergabung dalam grup ngaji, ikuti leaderboard pejuang tilawah, dan saling menyemangati dalam kebaikan."
         )
     )
 
@@ -60,14 +60,45 @@ class OnboardingActivity : AppCompatActivity() {
     private fun setupViewPager() {
         binding.viewPager.adapter = OnboardingAdapter(this, slides)
 
-        // Connect TabLayout dots to ViewPager2
-        TabLayoutMediator(binding.tabDots, binding.viewPager) { _, _ -> }.attach()
+        setupDots(slides.size)
 
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 updateNavButtons(position)
+                updateDots(position)
             }
         })
+    }
+
+    private fun setupDots(count: Int) {
+        binding.layoutDots.removeAllViews()
+        val density = resources.displayMetrics.density
+        val sizePx = (10 * density).toInt()
+        val marginPx = (4 * density).toInt()
+
+        for (i in 0 until count) {
+            val dot = View(this).apply {
+                val params = LinearLayout.LayoutParams(sizePx, sizePx).apply {
+                    setMargins(marginPx, 0, marginPx, 0)
+                }
+                layoutParams = params
+                background = ContextCompat.getDrawable(
+                    this@OnboardingActivity,
+                    if (i == 0) R.drawable.dot_active else R.drawable.dot_inactive
+                )
+            }
+            binding.layoutDots.addView(dot)
+        }
+    }
+
+    private fun updateDots(position: Int) {
+        for (i in 0 until binding.layoutDots.childCount) {
+            val dot = binding.layoutDots.getChildAt(i)
+            dot.background = ContextCompat.getDrawable(
+                this,
+                if (i == position) R.drawable.dot_active else R.drawable.dot_inactive
+            )
+        }
     }
 
     private fun setupButtons() {

@@ -313,4 +313,9 @@ interface AuthApiService {
         @Query("user_id")  userId: Int,
         @Query("event_id") eventId: Int
     ): Response<EventRegistrationsResponse>
+
+    @GET("auth/donations_api.php")
+    suspend fun getDonationsTicker(
+        @Query("limit") limit: Int = 20
+    ): Response<com.quran.labs.androidquran.model.DonationTickerResponse>
 }
