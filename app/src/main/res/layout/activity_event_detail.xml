@@ -240,6 +240,20 @@
                 android:lineSpacingMultiplier="1.6"
                 android:layout_marginBottom="32dp"/>
 
+            <!-- Tombol Link Meeting / Google Maps -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_open_event_link"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="📹 Buka Link Zoom / Virtual Meeting"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"
+                app:cornerRadius="12dp"
+                android:backgroundTint="#2196F3"
+                android:textColor="#FFFFFF"
+                android:visibility="gone"/>
+
             <!-- Tombol Daftar -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_register_event"

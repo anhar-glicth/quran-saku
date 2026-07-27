@@ -130,6 +130,24 @@
             android:textSize="14sp"
             android:layout_marginBottom="16dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Link Meeting (Zoom) / Google Maps (Opsional)"
+            android:textColor="#555555"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"/>
+
+        <EditText
+            android:id="@+id/et_event_link_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="https://zoom.us/j/... atau https://maps.google.com/..."
+            android:textSize="13sp"
+            android:inputType="textUri"
+            android:layout_marginBottom="16dp"/>
+
         <!-- ── Foto Event Section ── -->
         <TextView
             android:layout_width="wrap_content"

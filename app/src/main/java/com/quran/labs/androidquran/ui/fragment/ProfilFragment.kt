@@ -86,6 +86,18 @@ class ProfilFragment : Fragment() {
             }
         }
 
+        // ─── WhatsApp Customer Service Click ─────────────────
+        view.findViewById<View>(R.id.btn_live_chat)?.setOnClickListener {
+            try {
+                val phoneNumber = "6287822352371"
+                val message = "Assalamu'alaikum CS Strava Quran, saya ingin bertanya..."
+                val url = "https://api.whatsapp.com/send?phone=$phoneNumber&text=${android.net.Uri.encode(message)}"
+                startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url)))
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Tidak dapat membuka WhatsApp", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         // Set up other Click Listeners
         view.findViewById<View>(R.id.btn_settings)?.setOnClickListener {
             startActivity(Intent(requireContext(), QuranPreferenceActivity::class.java))

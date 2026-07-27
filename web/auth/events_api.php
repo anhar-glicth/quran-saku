@@ -23,6 +23,17 @@ try {
     }
 }
 
+// Self-healing migration: check if link_url column exists, if not create it
+try {
+    $db->query("SELECT link_url FROM events LIMIT 1");
+} catch (PDOException $e) {
+    try {
+        $db->query("ALTER TABLE events ADD COLUMN link_url VARCHAR(255) DEFAULT ''");
+    } catch (PDOException $ex) {
+        // Ignore if already exists
+    }
+}
+
 // Self-healing migration: check if event_registrations table exists, if not create it
 try {
     $db->query("SELECT id FROM event_registrations LIMIT 1");
@@ -71,7 +82,8 @@ if ($action === 'list') {
             'speaker'     => $row['speaker'],
             'location'    => $row['location'],
             'is_featured' => (bool)$row['is_featured'],
-            'image_url'   => $row['image_url'] ?? ''
+            'image_url'   => $row['image_url'] ?? '',
+            'link_url'    => $row['link_url'] ?? ''
         ];
     }, $rows);
     
@@ -101,7 +113,8 @@ if ($action === 'monthly') {
             'speaker'     => $row['speaker'],
             'location'    => $row['location'],
             'is_featured' => (bool)$row['is_featured'],
-            'image_url'   => $row['image_url'] ?? ''
+            'image_url'   => $row['image_url'] ?? '',
+            'link_url'    => $row['link_url'] ?? ''
         ];
     }, $rows);
     
@@ -132,6 +145,7 @@ if ($action === 'save') {
     $location    = trim($_POST['location'] ?? 'Online Zoom');
     $isFeatured  = isset($_POST['is_featured']) ? intval($_POST['is_featured']) : 0;
     $imageUrl    = trim($_POST['image_url'] ?? '');
+    $linkUrl     = trim($_POST['link_url'] ?? '');
     
     if (empty($title) || empty($description) || empty($eventDate) || empty($speaker)) {
         echo json_encode(['success' => false, 'message' => 'Semua field wajib diisi']);
@@ -142,18 +156,18 @@ if ($action === 'save') {
         // Edit existing
         $stmt = $db->prepare("
             UPDATE events 
-            SET title = ?, category = ?, description = ?, event_date = ?, time_range = ?, speaker = ?, location = ?, is_featured = ?, image_url = ?
+            SET title = ?, category = ?, description = ?, event_date = ?, time_range = ?, speaker = ?, location = ?, is_featured = ?, image_url = ?, link_url = ?
             WHERE id = ?
         ");
-        $stmt->execute([$title, $category, $description, $eventDate, $timeRange, $speaker, $location, $isFeatured, $imageUrl, $id]);
+        $stmt->execute([$title, $category, $description, $eventDate, $timeRange, $speaker, $location, $isFeatured, $imageUrl, $linkUrl, $id]);
         $eventId = $id;
     } else {
         // Create new
         $stmt = $db->prepare("
-            INSERT INTO events (title, category, description, event_date, time_range, speaker, location, is_featured, image_url)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO events (title, category, description, event_date, time_range, speaker, location, is_featured, image_url, link_url)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$title, $category, $description, $eventDate, $timeRange, $speaker, $location, $isFeatured, $imageUrl]);
+        $stmt->execute([$title, $category, $description, $eventDate, $timeRange, $speaker, $location, $isFeatured, $imageUrl, $linkUrl]);
         $eventId = (int)$db->lastInsertId();
     }
     
@@ -170,7 +184,8 @@ if ($action === 'save') {
             'speaker'     => $speaker,
             'location'    => $location,
             'is_featured' => (bool)$isFeatured,
-            'image_url'   => $imageUrl
+            'image_url'   => $imageUrl,
+            'link_url'    => $linkUrl
         ]
     ]);
     exit;

@@ -160,6 +160,10 @@
         android:name=".KalenderActivity"
         android:theme="@style/QuranToolBarDayNight"
         android:exported="false"/>
+    <activity
+        android:name=".EventDetailActivity"
+        android:theme="@style/QuranToolBarDayNight"
+        android:exported="false"/>
 
     <!-- Adzan components -->
     <receiver

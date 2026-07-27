@@ -143,7 +143,8 @@ interface AuthApiService {
         @Field("speaker")     speaker: String,
         @Field("location")    location: String = "Online Zoom",
         @Field("is_featured") isFeatured: Int = 0,
-        @Field("image_url")   imageUrl: String = ""
+        @Field("image_url")   imageUrl: String = "",
+        @Field("link_url")    linkUrl: String = ""
     ): Response<EventSaveResponse>
 
     @FormUrlEncoded

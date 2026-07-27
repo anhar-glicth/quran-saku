@@ -37,6 +37,7 @@ class EventDetailActivity : AppCompatActivity() {
         const val EXTRA_EVENT_LOCATION  = "event_location"
         const val EXTRA_EVENT_CATEGORY  = "event_category"
         const val EXTRA_EVENT_IMAGE_URL = "event_image_url"
+        const val EXTRA_EVENT_LINK_URL  = "event_link_url"
         const val EXTRA_EVENT_IS_FEATURED = "event_is_featured"
     }
 
@@ -62,6 +63,7 @@ class EventDetailActivity : AppCompatActivity() {
         val location      = intent.getStringExtra(EXTRA_EVENT_LOCATION) ?: ""
         val category      = intent.getStringExtra(EXTRA_EVENT_CATEGORY) ?: ""
         val imageUrl      = intent.getStringExtra(EXTRA_EVENT_IMAGE_URL) ?: ""
+        val linkUrl       = intent.getStringExtra(EXTRA_EVENT_LINK_URL) ?: ""
         val isFeatured    = intent.getBooleanExtra(EXTRA_EVENT_IS_FEATURED, false)
 
         // Bind views
@@ -72,6 +74,41 @@ class EventDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tv_detail_category_badge).text = category.uppercase()
         findViewById<TextView>(R.id.tv_detail_datetime).text =
             "${formatDateIndo(date)} • $time"
+
+        val btnOpenLink = findViewById<MaterialButton>(R.id.btn_open_event_link)
+        if (linkUrl.isNotEmpty()) {
+            btnOpenLink.visibility = View.VISIBLE
+            val lowerLink = linkUrl.lowercase()
+            when {
+                lowerLink.contains("zoom") || lowerLink.contains("meet") || lowerLink.contains("teams") -> {
+                    btnOpenLink.text = "📹 Buka Link Zoom / Virtual Meeting"
+                    btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#2196F3"))
+                }
+                lowerLink.contains("maps") || lowerLink.contains("goo.gl") -> {
+                    btnOpenLink.text = "📍 Buka Lokasi di Google Maps"
+                    btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#4CAF50"))
+                }
+                else -> {
+                    btnOpenLink.text = "🔗 Buka Link Acara"
+                    btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#FF6D00"))
+                }
+            }
+
+            btnOpenLink.setOnClickListener {
+                try {
+                    val uri = if (!linkUrl.startsWith("http://") && !linkUrl.startsWith("https://")) {
+                        Uri.parse("https://$linkUrl")
+                    } else {
+                        Uri.parse(linkUrl)
+                    }
+                    startActivity(Intent(Intent.ACTION_VIEW, uri))
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Tidak dapat membuka link", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            btnOpenLink.visibility = View.GONE
+        }
 
         val btnRegister = findViewById<MaterialButton>(R.id.btn_register_event)
         val btnViewRegistrants = findViewById<MaterialButton>(R.id.btn_view_registrants)

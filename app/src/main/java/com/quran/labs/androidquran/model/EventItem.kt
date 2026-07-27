@@ -14,7 +14,8 @@ data class EventItem(
     @Json(name = "speaker")     val speaker: String,
     @Json(name = "location")    val location: String,
     @Json(name = "is_featured") val isFeatured: Boolean,
-    @Json(name = "image_url")   val imageUrl: String? = null
+    @Json(name = "image_url")   val imageUrl: String? = null,
+    @Json(name = "link_url")    val linkUrl: String? = null
 )
 
 @JsonClass(generateAdapter = true)

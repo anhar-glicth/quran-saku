@@ -15,24 +15,43 @@
       android:paddingTop="20dp"
       android:paddingBottom="32dp">
 
-    <!-- Header: Konfigurasi -->
-    <TextView
-        android:layout_width="wrap_content"
+    <!-- Header with Strava Quran Logo -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Konfigurasi"
-        android:textColor="@color/title_color"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-medium"
-        android:layout_marginBottom="2dp"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Personalisasi pengalaman spiritual Anda"
-        android:textColor="@color/text_hint_color"
-        android:textSize="13sp"
-        android:layout_marginBottom="20dp"/>
+      <ImageView
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          android:src="@drawable/ic_strava_quran_logo"
+          android:scaleType="fitCenter"/>
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_marginStart="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Strava Al-Qur'an"
+            android:textColor="@color/title_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pengaturan &amp; Layanan Profil"
+            android:textColor="@color/text_hint_color"
+            android:textSize="12sp"/>
+      </LinearLayout>
+    </LinearLayout>
 
     <!-- Profile Card -->
     <com.google.android.material.card.MaterialCardView
@@ -365,20 +384,18 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-          <!-- Live Chat Button -->
+          <!-- Live Chat / WhatsApp CS Button -->
           <com.google.android.material.button.MaterialButton
               android:id="@+id/btn_live_chat"
               android:layout_width="0dp"
               android:layout_height="48dp"
               android:layout_weight="1"
-              android:text="LIVE CHAT"
+              android:text="WHATSAPP CS"
               android:textSize="12sp"
               android:textColor="#FFFFFF"
               android:layout_marginEnd="8dp"
-              app:backgroundTint="@color/accent_color"
+              app:backgroundTint="#25D366"
               app:cornerRadius="12dp"
-              app:icon="@android:drawable/ic_dialog_email"
-              app:iconTint="#FFFFFF"
               app:iconSize="16dp"
               app:iconGravity="textStart"/>
 

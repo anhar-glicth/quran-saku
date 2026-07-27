@@ -145,6 +145,7 @@ class EventFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 val response = AuthClient.apiService.getEvents()
+                if (!isAdded) return@launch
                 if (response.isSuccessful) {
                     val list = response.body()?.data ?: emptyList()
                     progress.visibility = View.GONE
@@ -160,7 +161,9 @@ class EventFragment : Fragment() {
                     showError("Gagal memuat event (${response.code()})")
                 }
             } catch (e: Exception) {
-                showError("Tidak dapat terhubung ke server.")
+                if (isAdded) {
+                    showError("Tidak dapat terhubung ke server.")
+                }
             }
         }
     }
@@ -214,19 +217,25 @@ class EventFragment : Fragment() {
     }
 
     private fun showEventDetail(event: EventItem) {
-        val intent = Intent(context, com.quran.labs.androidquran.EventDetailActivity::class.java).apply {
-            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_ID, event.id)
-            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_TITLE, event.title)
-            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_DESC, event.description)
-            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_DATE, event.eventDate)
-            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_TIME, event.timeRange)
-            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_SPEAKER, event.speaker)
-            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_LOCATION, event.location)
-            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_CATEGORY, event.category)
-            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_IMAGE_URL, event.imageUrl)
-            putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_IS_FEATURED, event.isFeatured)
+        val ctx = context ?: return
+        try {
+            val intent = Intent(ctx, com.quran.labs.androidquran.EventDetailActivity::class.java).apply {
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_ID, event.id)
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_TITLE, event.title)
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_DESC, event.description)
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_DATE, event.eventDate)
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_TIME, event.timeRange)
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_SPEAKER, event.speaker)
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_LOCATION, event.location)
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_CATEGORY, event.category)
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_IMAGE_URL, event.imageUrl)
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_LINK_URL, event.linkUrl)
+                putExtra(com.quran.labs.androidquran.EventDetailActivity.EXTRA_EVENT_IS_FEATURED, event.isFeatured)
+            }
+            startActivity(intent)
+        } catch (e: Exception) {
+            Toast.makeText(ctx, "Gagal membuka detail event: ${e.message}", Toast.LENGTH_SHORT).show()
         }
-        startActivity(intent)
     }
 
     private fun confirmDeleteEvent(event: EventItem) {
@@ -268,6 +277,7 @@ class EventFragment : Fragment() {
         val etDate = dialogView.findViewById<EditText>(R.id.et_event_date)
         val etTime = dialogView.findViewById<EditText>(R.id.et_event_time)
         val etLocation = dialogView.findViewById<EditText>(R.id.et_event_location)
+        val etLinkUrl = dialogView.findViewById<EditText>(R.id.et_event_link_url)
         val etImageUrl = dialogView.findViewById<EditText>(R.id.et_event_image_url)
         val imgPhotoPreview = dialogView.findViewById<ImageView>(R.id.img_event_photo_preview)
         val tvPhotoPlaceholder = dialogView.findViewById<TextView>(R.id.tv_photo_placeholder)
@@ -340,6 +350,7 @@ class EventFragment : Fragment() {
             etDate.setText(eventToEdit.eventDate)
             etTime.setText(eventToEdit.timeRange)
             etLocation.setText(eventToEdit.location)
+            etLinkUrl.setText(eventToEdit.linkUrl ?: "")
             etImageUrl.setText(eventToEdit.imageUrl ?: "")
             cbFeatured.isChecked = eventToEdit.isFeatured
 
@@ -371,6 +382,7 @@ class EventFragment : Fragment() {
                 val date = etDate.text.toString().trim()
                 val time = etTime.text.toString().trim()
                 val location = etLocation.text.toString().trim()
+                val linkUrlVal = etLinkUrl.text.toString().trim()
                 val imgUrl = etImageUrl.text.toString().trim()
                 val isFeaturedVal = if (cbFeatured.isChecked) 1 else 0
                 val localUri = selectedPhotoUri
@@ -378,9 +390,9 @@ class EventFragment : Fragment() {
                 if (title.isNotEmpty() && desc.isNotEmpty() && date.isNotEmpty() && speaker.isNotEmpty()) {
                     if (localUri != null) {
                         // Upload local photo first, then save event
-                        uploadPhotoThenSave(localUri, eventToEdit?.id ?: 0, title, cat, desc, date, time, speaker, location, isFeaturedVal)
+                        uploadPhotoThenSave(localUri, eventToEdit?.id ?: 0, title, cat, desc, date, time, speaker, location, linkUrlVal, isFeaturedVal)
                     } else {
-                        saveEvent(eventToEdit?.id ?: 0, title, cat, desc, date, time, speaker, location, isFeaturedVal, imgUrl)
+                        saveEvent(eventToEdit?.id ?: 0, title, cat, desc, date, time, speaker, location, linkUrlVal, isFeaturedVal, imgUrl)
                     }
                 } else {
                     Toast.makeText(context, "Field penting tidak boleh kosong", Toast.LENGTH_SHORT).show()
@@ -393,7 +405,7 @@ class EventFragment : Fragment() {
     private fun uploadPhotoThenSave(
         uri: android.net.Uri,
         id: Int, title: String, cat: String, desc: String, date: String,
-        time: String, speaker: String, location: String, featured: Int
+        time: String, speaker: String, location: String, linkUrl: String, featured: Int
     ) {
         val ctx = context ?: return
         Toast.makeText(ctx, "Mengunggah foto...", Toast.LENGTH_SHORT).show()
@@ -434,7 +446,7 @@ class EventFragment : Fragment() {
                 }
 
                 if (!uploadedUrl.isNullOrEmpty()) {
-                    saveEvent(id, title, cat, desc, date, time, speaker, location, featured, uploadedUrl)
+                    saveEvent(id, title, cat, desc, date, time, speaker, location, linkUrl, featured, uploadedUrl)
                 } else {
                     Toast.makeText(ctx, "Gagal mengunggah foto. Coba masukkan URL langsung.", Toast.LENGTH_LONG).show()
                 }
@@ -446,7 +458,7 @@ class EventFragment : Fragment() {
 
     private fun saveEvent(
         id: Int, title: String, cat: String, desc: String, date: String,
-        time: String, speaker: String, location: String, featured: Int, imageUrl: String
+        time: String, speaker: String, location: String, linkUrl: String, featured: Int, imageUrl: String
     ) {
         val adminUserId = sessionManager.getUserId()
         viewLifecycleOwner.lifecycleScope.launch {
@@ -454,7 +466,7 @@ class EventFragment : Fragment() {
                 val response = AuthClient.apiService.saveEvent(
                     userId = adminUserId, id = id, title = title, category = cat,
                     description = desc, eventDate = date, timeRange = time,
-                    speaker = speaker, location = location, isFeatured = featured,
+                    speaker = speaker, location = location, linkUrl = linkUrl, isFeatured = featured,
                     imageUrl = imageUrl
                 )
                 if (response.isSuccessful && response.body()?.success == true) {
