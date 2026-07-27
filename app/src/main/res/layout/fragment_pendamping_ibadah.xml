@@ -41,15 +41,15 @@
               android:textSize="13sp"
               android:textStyle="bold"
               android:alpha="0.9"
-              android:visibility="invisible" />
+              android:visibility="visible" />
 
           <TextView
               android:id="@+id/tv_verse_arabic"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_below="@id/tv_verse_title"
-              android:layout_marginTop="16dp"
-              android:layout_marginBottom="12dp"
+              android:layout_marginTop="10dp"
+              android:layout_marginBottom="8dp"
               android:text="وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِنْ مُدَّكِرٍ"
               android:textColor="#FFFFFF"
               android:textSize="22sp"
@@ -61,7 +61,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_below="@id/tv_verse_arabic"
-              android:layout_marginBottom="16dp"
+              android:layout_marginBottom="12dp"
               android:text="Dan sungguh, telah Kami mudahkan Al-Qur'an untuk pelajaran, maka adakah orang yang mau mengambil pelajaran"
               android:textColor="#FFFFFF"
               android:textSize="13sp"

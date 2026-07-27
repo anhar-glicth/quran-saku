@@ -1,5 +1,6 @@
 package com.quran.labs.androidquran.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,14 +10,30 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.quran.data.core.QuranInfo
+import com.quran.labs.androidquran.QuranApplication
 import com.quran.labs.androidquran.R
+import com.quran.labs.androidquran.data.QuranDisplayData
 import com.quran.labs.androidquran.ui.QuranActivity
 import com.quran.labs.androidquran.ui.helpers.JumpDestination
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.launch
 
 class TilawahDashboardFragment : Fragment() {
 
+  @Inject
+  lateinit var quranInfo: QuranInfo
+
+  @Inject
+  lateinit var quranDisplayData: QuranDisplayData
+
   private var lastPage = 293 // Default to Al-Kahf
+
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+    val app = context.applicationContext as QuranApplication
+    app.applicationComponent.inject(this)
+  }
 
   override fun onCreateView(
       inflater: LayoutInflater,
@@ -62,7 +79,11 @@ class TilawahDashboardFragment : Fragment() {
         val recentPage = activity.latestPage()
         if (recentPage > 0) {
           lastPage = recentPage
-          view.findViewById<TextView>(R.id.txt_last_read_sura).text = "Halaman Terakhir"
+          val suraNumber = quranInfo.getSuraNumberFromPage(recentPage)
+          val suraName = quranDisplayData.getSuraName(requireContext(), suraNumber, wantPrefix = true)
+          val firstAyah = quranInfo.getFirstAyahOnPage(recentPage)
+          
+          view.findViewById<TextView>(R.id.txt_last_read_sura).text = "$suraName: Ayat $firstAyah"
           view.findViewById<TextView>(R.id.txt_last_read_page).text = "Halaman $recentPage"
         }
       }

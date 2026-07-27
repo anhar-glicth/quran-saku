@@ -11,7 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.quran.labs.androidquran.R
+import androidx.lifecycle.lifecycleScope
+import com.quran.labs.androidquran.auth.AuthClient
 import com.quran.labs.androidquran.auth.SessionManager
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -20,6 +23,7 @@ import java.util.Locale
 class StravaQuranFragment : Fragment() {
 
     private var isDurationMode = true // true: duration, false: pages
+    private var cachedCompetitors: List<LeaderboardItem>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -208,60 +212,91 @@ class StravaQuranFragment : Fragment() {
     private fun setupLeaderboard(rootView: View, myWeeklyDuration: Long, myWeeklyPages: Long) {
         val context = context ?: return
         val sessionManager = SessionManager(context)
+        val currentUserId = sessionManager.getUserId()
         
-        // Retrieve real user name if logged in
         val myName = if (sessionManager.isLoggedIn()) {
             sessionManager.getUserName()
         } else {
             "Saya (Anda)"
         }
 
-        val userLevel = when {
-            myWeeklyDuration >= 60 -> "Level 4"
-            myWeeklyDuration >= 30 -> "Level 3"
-            myWeeklyDuration >= 15 -> "Level 2"
+        fun getLevel(dur: Long): String = when {
+            dur >= 60 -> "Level 4"
+            dur >= 30 -> "Level 3"
+            dur >= 15 -> "Level 2"
             else -> "Level 1"
         }
 
-        // Generate dynamic competitors based on current date to simulate dynamic online tracking
-        val dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
-        val fauziDuration = 35L + (dayOfWeek * 3) % 15
-        val fauziPages = 15L + (dayOfWeek * 2) % 8
-        val aminDuration = 20L + (dayOfWeek * 2) % 12
-        val aminPages = 8L + (dayOfWeek * 1) % 6
-
-        // Leaderboard competitors data
-        val competitors = mutableListOf(
-            LeaderboardItem("Ahmad Fauzi", fauziDuration, fauziPages, "Level 5", false),
-            LeaderboardItem("Yusuf Amin", aminDuration, aminPages, "Level 3", false),
-            LeaderboardItem("Saya (Anda)", myWeeklyDuration, myWeeklyPages, userLevel, true)
+        // Initial local user entry
+        val myLevel = getLevel(myWeeklyDuration)
+        val initialList = mutableListOf(
+            LeaderboardItem(myName, myWeeklyDuration, myWeeklyPages, myLevel, true)
         )
 
-        // Make sure the user item has their real name
-        competitors.forEachIndexed { index, item ->
-            if (item.isMe) {
-                competitors[index] = item.copy(name = myName)
+        val cached = cachedCompetitors
+        if (cached != null) {
+            renderLeaderboardUI(rootView, cached)
+        } else {
+            renderLeaderboardUI(rootView, initialList)
+        }
+
+        // Fetch real server users from backend API
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val response = AuthClient.apiService.getLeaderboard(period = "weekly", limit = 10)
+                if (response.isSuccessful) {
+                    val apiItems = response.body()?.data
+                    if (!apiItems.isNullOrEmpty()) {
+                        val realList = mutableListOf<LeaderboardItem>()
+                        var meFoundInApi = false
+
+                        for (item in apiItems) {
+                            val isMe = (currentUserId > 0 && item.userId == currentUserId)
+                            if (isMe) meFoundInApi = true
+                            
+                            val nameStr = if (isMe) myName else item.userName
+                            val levelStr = getLevel(item.totalMinutes.toLong())
+                            realList.add(
+                                LeaderboardItem(
+                                    name = nameStr,
+                                    duration = item.totalMinutes.toLong(),
+                                    pages = item.totalPages.toLong(),
+                                    level = levelStr,
+                                    isMe = isMe
+                                )
+                            )
+                        }
+
+                        if (!meFoundInApi && sessionManager.isLoggedIn()) {
+                            realList.add(LeaderboardItem(myName, myWeeklyDuration, myWeeklyPages, myLevel, true))
+                        }
+
+                        cachedCompetitors = realList
+                        renderLeaderboardUI(rootView, realList)
+                    }
+                }
+            } catch (_: Exception) {
+                // Network/API fallback
             }
         }
+    }
 
-        // Sort competitors depending on active mode
-        if (isDurationMode) {
-            competitors.sortByDescending { it.duration }
+    private fun renderLeaderboardUI(rootView: View, list: List<LeaderboardItem>) {
+        val context = context ?: return
+        val sortedList = if (isDurationMode) {
+            list.sortedByDescending { it.duration }
         } else {
-            competitors.sortByDescending { it.pages }
+            list.sortedByDescending { it.pages }
         }
 
-        val medals = listOf("🥇", "🥈", "🥉")
+        val medals = listOf("🥇", "🥈", "🥉", "4️⃣", "5️⃣")
 
         for (i in 0..2) {
-            val item = competitors[i]
-            val index = i + 1
-
-            val rankId = resources.getIdentifier("txt_rank_$index", "id", context.packageName)
-            val nameId = resources.getIdentifier("name_rank_$index", "id", context.packageName)
-            val descId = resources.getIdentifier("desc_rank_$index", "id", context.packageName)
-            val valId = resources.getIdentifier("val_rank_$index", "id", context.packageName)
-            val bgId = resources.getIdentifier("bg_rank_$index", "id", context.packageName)
+            val rankId = resources.getIdentifier("txt_rank_${i + 1}", "id", context.packageName)
+            val nameId = resources.getIdentifier("name_rank_${i + 1}", "id", context.packageName)
+            val descId = resources.getIdentifier("desc_rank_${i + 1}", "id", context.packageName)
+            val valId = resources.getIdentifier("val_rank_${i + 1}", "id", context.packageName)
+            val bgId = resources.getIdentifier("bg_rank_${i + 1}", "id", context.packageName)
 
             val tvRank = rootView.findViewById<TextView>(rankId)
             val tvName = rootView.findViewById<TextView>(nameId)
@@ -270,20 +305,23 @@ class StravaQuranFragment : Fragment() {
             val vBg = rootView.findViewById<View>(bgId)
 
             if (tvRank != null && tvName != null && tvDesc != null && tvVal != null && vBg != null) {
-                tvRank.text = medals[i]
-                tvName.text = item.name
-                
-                // Pages to km conversion (1 page = 0.4 km to maintain the original look)
-                val km = String.format(Locale.US, "%.1f", item.pages * 0.4f)
-                tvDesc.text = "${item.level} • $km km (halaman)"
-                
-                tvVal.text = if (isDurationMode) "${item.duration} Menit" else "${item.pages} Halaman"
+                if (i < sortedList.size) {
+                    val item = sortedList[i]
+                    tvRank.text = medals.getOrElse(i) { "${i + 1}" }
+                    tvName.text = item.name
+                    
+                    val km = String.format(Locale.US, "%.1f", item.pages * 0.4f)
+                    tvDesc.text = "${item.level} • $km km (halaman)"
+                    tvVal.text = if (isDurationMode) "${item.duration} Menit" else "${item.pages} Halaman"
 
-                // Highlight the user row
-                if (item.isMe) {
-                    vBg.setBackgroundColor(0xFFFFF3E0.toInt()) // Light Orange
+                    if (item.isMe) {
+                        vBg.setBackgroundColor(0xFFFFF3E0.toInt()) // Light Orange
+                    } else {
+                        vBg.setBackgroundColor(Color.WHITE)
+                    }
+                    vBg.visibility = View.VISIBLE
                 } else {
-                    vBg.setBackgroundColor(Color.WHITE)
+                    vBg.visibility = View.INVISIBLE
                 }
             }
         }

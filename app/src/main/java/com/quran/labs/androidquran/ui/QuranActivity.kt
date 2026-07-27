@@ -159,6 +159,7 @@ class QuranActivity : AppCompatActivity(),
       val insets = windowInsets.getInsets(
         WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
       )
+      val systemBarsInsets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
       root.updateLayoutParams<ViewGroup.MarginLayoutParams> {
         topMargin = insets.top
         leftMargin = insets.left
@@ -166,11 +167,11 @@ class QuranActivity : AppCompatActivity(),
       }
 
       // Berikan padding bawah ke container agar digambar di belakang navigasi bar sistem (transparan)
-      bottomNavContainer?.setPadding(0, 0, 0, insets.bottom)
+      bottomNavContainer?.setPadding(0, 0, 0, systemBarsInsets.bottom)
 
-      // Geser tombol floating ke atas sejauh insets.bottom agar posisinya tetap sinkron
+      // Geser tombol floating ke atas sejauh systemBarsInsets.bottom agar posisinya tetap sinkron
       btnCenterEvent?.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-        bottomMargin = btnOriginalMarginBottom + insets.bottom
+        bottomMargin = btnOriginalMarginBottom + systemBarsInsets.bottom
       }
 
       windowInsets
