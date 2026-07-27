@@ -76,42 +76,58 @@ class EventDetailActivity : AppCompatActivity() {
             "${formatDateIndo(date)} • $time"
 
         val btnOpenLink = findViewById<MaterialButton>(R.id.btn_open_event_link)
-        if (linkUrl.isNotEmpty()) {
-            btnOpenLink.visibility = View.VISIBLE
-            val lowerLink = linkUrl.lowercase()
-            when {
-                lowerLink.contains("zoom") || lowerLink.contains("meet") || lowerLink.contains("teams") -> {
-                    btnOpenLink.text = "📹 Buka Link Zoom / Virtual Meeting"
-                    btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#2196F3"))
-                }
-                lowerLink.contains("maps") || lowerLink.contains("goo.gl") -> {
-                    btnOpenLink.text = "📍 Buka Lokasi di Google Maps"
-                    btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#4CAF50"))
-                }
-                else -> {
-                    btnOpenLink.text = "🔗 Buka Link Acara"
-                    btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#FF6D00"))
-                }
-            }
-
-            btnOpenLink.setOnClickListener {
-                try {
-                    val uri = if (!linkUrl.startsWith("http://") && !linkUrl.startsWith("https://")) {
-                        Uri.parse("https://$linkUrl")
-                    } else {
-                        Uri.parse(linkUrl)
-                    }
-                    startActivity(Intent(Intent.ACTION_VIEW, uri))
-                } catch (e: Exception) {
-                    Toast.makeText(this, "Tidak dapat membuka link", Toast.LENGTH_SHORT).show()
-                }
-            }
-        } else {
-            btnOpenLink.visibility = View.GONE
-        }
-
         val btnRegister = findViewById<MaterialButton>(R.id.btn_register_event)
         val btnViewRegistrants = findViewById<MaterialButton>(R.id.btn_view_registrants)
+
+        fun updateLinkButtonState(isRegistered: Boolean) {
+            if (linkUrl.isEmpty()) {
+                btnOpenLink.visibility = View.GONE
+                return
+            }
+            btnOpenLink.visibility = View.VISIBLE
+            val lowerLink = linkUrl.lowercase()
+            val isVirtualMeeting = lowerLink.contains("zoom") || lowerLink.contains("meet") || lowerLink.contains("teams")
+            val isMap = lowerLink.contains("maps") || lowerLink.contains("goo.gl")
+
+            if (isVirtualMeeting) {
+                if (isRegistered || isAdmin) {
+                    btnOpenLink.text = "📹 Buka Link Zoom / Virtual Meeting"
+                    btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#2196F3"))
+                    btnOpenLink.setOnClickListener {
+                        openExternalUrl(linkUrl)
+                    }
+                } else {
+                    btnOpenLink.text = "🔒 Link Zoom Terbuka Setelah Mendaftar"
+                    btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#78909C"))
+                    btnOpenLink.setOnClickListener {
+                        Toast.makeText(this, "Daftar kegiatan ini terlebih dahulu untuk membuka Link Zoom", Toast.LENGTH_LONG).show()
+                    }
+                }
+            } else if (isMap) {
+                btnOpenLink.text = "📍 Buka Lokasi di Google Maps"
+                btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#4CAF50"))
+                btnOpenLink.setOnClickListener {
+                    openExternalUrl(linkUrl)
+                }
+            } else {
+                if (isRegistered || isAdmin) {
+                    btnOpenLink.text = "🔗 Buka Link Acara"
+                    btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#FF6D00"))
+                    btnOpenLink.setOnClickListener {
+                        openExternalUrl(linkUrl)
+                    }
+                } else {
+                    btnOpenLink.text = "🔒 Link Acara Terbuka Setelah Mendaftar"
+                    btnOpenLink.setBackgroundColor(android.graphics.Color.parseColor("#78909C"))
+                    btnOpenLink.setOnClickListener {
+                        Toast.makeText(this, "Daftar kegiatan ini terlebih dahulu untuk mengakses Link", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
+
+        // Initial setup for link button (unregistered by default unless admin)
+        updateLinkButtonState(false)
 
         // Check registration status if user is logged in
         if (sessionManager.isLoggedIn()) {
@@ -123,6 +139,7 @@ class EventDetailActivity : AppCompatActivity() {
                         runOnUiThread {
                             btnRegister.text = "✓ Anda Sudah Terdaftar"
                             btnRegister.isEnabled = false
+                            updateLinkButtonState(true)
                         }
                     }
                 } catch (_: Exception) {}
@@ -136,7 +153,9 @@ class EventDetailActivity : AppCompatActivity() {
                 startActivity(Intent(this, LoginActivity::class.java))
                 return@setOnClickListener
             }
-            showRegisterDialog(eventId, title, sessionManager, btnRegister)
+            showRegisterDialog(eventId, title, sessionManager, btnRegister) {
+                updateLinkButtonState(true)
+            }
         }
 
         // Load banner image
@@ -188,7 +207,20 @@ class EventDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun showRegisterDialog(eventId: Int, title: String, sessionManager: SessionManager, btnRegister: MaterialButton) {
+    private fun openExternalUrl(urlStr: String) {
+        try {
+            val uri = if (!urlStr.startsWith("http://") && !urlStr.startsWith("https://")) {
+                Uri.parse("https://$urlStr")
+            } else {
+                Uri.parse(urlStr)
+            }
+            startActivity(Intent(Intent.ACTION_VIEW, uri))
+        } catch (e: Exception) {
+            Toast.makeText(this, "Tidak dapat membuka link", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun showRegisterDialog(eventId: Int, title: String, sessionManager: SessionManager, btnRegister: MaterialButton, onSuccess: (() -> Unit)? = null) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_register_event, null)
         val etName = dialogView.findViewById<EditText>(R.id.et_reg_name)
         val etEmail = dialogView.findViewById<EditText>(R.id.et_reg_email)
@@ -229,6 +261,7 @@ class EventDetailActivity : AppCompatActivity() {
                                 Toast.makeText(this@EventDetailActivity, "Pendaftaran berhasil! 🌟", Toast.LENGTH_SHORT).show()
                                 btnRegister.text = "✓ Anda Sudah Terdaftar"
                                 btnRegister.isEnabled = false
+                                onSuccess?.invoke()
                             } else {
                                 Toast.makeText(this@EventDetailActivity, "Gagal mendaftar: ${response.body()?.message}", Toast.LENGTH_SHORT).show()
                             }
