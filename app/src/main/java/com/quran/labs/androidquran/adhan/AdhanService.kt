@@ -115,42 +115,42 @@ class AdhanService : Service() {
 
     private fun playAdhan(prayerName: String) {
         try {
-            mediaPlayer = MediaPlayer().apply {
-                // Cek apakah ada file adhan di raw resources
-                val rawId = try {
-                    // Coba load dari raw resource (adhan.mp3)
-                    resources.getIdentifier("adhan", "raw", packageName)
-                } catch (e: Exception) { 0 }
-
-                if (rawId != 0) {
-                    val afd = resources.openRawResourceFd(rawId)
-                    setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-                    afd.close()
-                } else {
-                    // Fallback: gunakan URL streaming adzan publik
+            // Coba putar dari raw resource adhan.mp3
+            val mp = MediaPlayer.create(this, R.raw.adhan)
+            if (mp != null) {
+                mediaPlayer = mp.apply {
+                    setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_ALARM)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build()
+                    )
+                    setOnCompletionListener {
+                        Log.d(TAG, "Adhan completed for $prayerName")
+                        stopSelf()
+                    }
+                    setOnErrorListener { _, what, extra ->
+                        Log.e(TAG, "MediaPlayer error: what=$what, extra=$extra")
+                        stopSelf()
+                        true
+                    }
+                    start()
+                }
+            } else {
+                // Fallback jika raw resource null: gunakan URL streaming adzan
+                mediaPlayer = MediaPlayer().apply {
                     setDataSource("https://islamicfinder.s3.amazonaws.com/prayer_times/adhan/adhan.mp3")
+                    setAudioAttributes(
+                        AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_ALARM)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build()
+                    )
+                    setOnCompletionListener { stopSelf() }
+                    setOnErrorListener { _, _, _ -> stopSelf(); true }
+                    prepareAsync()
+                    setOnPreparedListener { start() }
                 }
-
-                setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setUsage(AudioAttributes.USAGE_ALARM)
-                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                        .build()
-                )
-
-                setOnCompletionListener {
-                    Log.d(TAG, "Adhan completed for $prayerName")
-                    stopSelf()
-                }
-
-                setOnErrorListener { _, what, extra ->
-                    Log.e(TAG, "MediaPlayer error: what=$what, extra=$extra")
-                    stopSelf()
-                    true
-                }
-
-                prepareAsync()
-                setOnPreparedListener { start() }
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error playing adhan: ${e.message}")

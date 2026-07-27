@@ -33,7 +33,7 @@ object AdhanScheduler {
 
     fun scheduleForToday(context: Context) {
         val prefs = context.getSharedPreferences("adhan_prefs", Context.MODE_PRIVATE)
-        if (!prefs.getBoolean("adhan_enabled", false)) {
+        if (!prefs.getBoolean("adhan_enabled", true)) {
             Log.d(TAG, "Adhan notification is disabled, skipping schedule")
             return
         }
@@ -57,7 +57,7 @@ object AdhanScheduler {
      */
     fun scheduleForNextDay(context: Context) {
         val prefs = context.getSharedPreferences("adhan_prefs", Context.MODE_PRIVATE)
-        if (!prefs.getBoolean("adhan_enabled", false)) {
+        if (!prefs.getBoolean("adhan_enabled", true)) {
             Log.d(TAG, "Adhan disabled, skipping next day schedule")
             return
         }
@@ -224,7 +224,7 @@ object AdhanScheduler {
 
     fun isEnabled(context: Context): Boolean {
         return context.getSharedPreferences("adhan_prefs", Context.MODE_PRIVATE)
-            .getBoolean("adhan_enabled", false)
+            .getBoolean("adhan_enabled", true)
     }
 
     fun setEnabled(context: Context, enabled: Boolean) {
