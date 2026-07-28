@@ -4,12 +4,12 @@ $pass = 'f1D022013.';
 $host = '153.92.10.174';
 $port = 65002;
 
-$localFile = 'c:/xampp/htdocs/quran_android/web/child_safety.html';
-$remotePath = '/home/u290212134/domains/pondokquranmahasiswaadtin.com/public_html/child_safety.html';
+$localFile = 'c:/xampp/htdocs/quran_android/web/privacy_policy.html';
+$remotePath = '/home/u290212134/domains/pondokquranmahasiswaadtin.com/public_html/privacy_policy.html';
 
 $url = "sftp://{$user}:" . urlencode($pass) . "@{$host}:{$port}{$remotePath}";
 
-echo "Mengunggah file ke $remotePath...\n";
+echo "Mengunggah privacy_policy.html ke $remotePath...\n";
 
 $ch = curl_init();
 $fp = fopen($localFile, 'r');
@@ -28,8 +28,8 @@ curl_close($ch);
 fclose($fp);
 
 if ($result) {
-    echo "BERHASIL: File child_safety.html berhasil dipublikasikan!\n";
-    echo "URL Publik: https://pondokquranmahasiswaadtin.com/child_safety.html\n";
+    echo "BERHASIL: File privacy_policy.html dipublikasikan!\n";
+    echo "URL: https://pondokquranmahasiswaadtin.com/privacy_policy.html\n";
 } else {
     echo "ERROR: $error\n";
 }

@@ -71,12 +71,7 @@ class PendampingIbadahFragment : Fragment() {
         view.findViewById<View>(R.id.card_khatam)?.setOnClickListener {
             startActivity(Intent(activity, KhatamActivity::class.java))
         }
-        view.findViewById<View>(R.id.card_zakat)?.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ZakatFragment.newInstance())
-                .addToBackStack(null)
-                .commit()
-        }
+
         view.findViewById<View>(R.id.card_catatan)?.setOnClickListener {
             startActivity(Intent(activity, CatatanActivity::class.java))
         }
@@ -367,7 +362,7 @@ class PendampingIbadahFragment : Fragment() {
                                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(campaign.donateUrl))
                                     startActivity(intent)
                                 } else {
-                                    Toast.makeText(context, "Link donasi belum tersedia", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Link informasi belum tersedia", Toast.LENGTH_SHORT).show()
                                 }
                             },
                             onLongClick = { campaign ->
@@ -383,7 +378,7 @@ class PendampingIbadahFragment : Fragment() {
     }
 
     private fun showAdminCampaignOptions(campaign: CampaignItem, view: View) {
-        val options = arrayOf("✏️ Edit Campaign", "❌ Hapus Campaign")
+        val options = arrayOf("✏️ Edit Program", "❌ Hapus Program")
         AlertDialog.Builder(requireContext())
             .setTitle("Pilihan Admin")
             .setItems(options) { _, which ->
@@ -397,8 +392,8 @@ class PendampingIbadahFragment : Fragment() {
 
     private fun confirmDeleteCampaign(campaign: CampaignItem, view: View) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Hapus Campaign")
-            .setMessage("Yakin ingin menghapus campaign \"${campaign.title}\"?")
+            .setTitle("Hapus Program")
+            .setMessage("Yakin ingin menghapus program \"${campaign.title}\"?")
             .setPositiveButton("Ya, Hapus") { _, _ ->
                 val sessionManager = SessionManager(requireContext())
                 viewLifecycleOwner.lifecycleScope.launch {
@@ -409,10 +404,10 @@ class PendampingIbadahFragment : Fragment() {
                         )
                         activity?.runOnUiThread {
                             if (response.isSuccessful && response.body()?.success == true) {
-                                Toast.makeText(context, "Campaign berhasil dihapus", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Program berhasil dihapus", Toast.LENGTH_SHORT).show()
                                 loadCampaigns(view)
                             } else {
-                                Toast.makeText(context, "Gagal menghapus campaign", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Gagal menghapus program", Toast.LENGTH_SHORT).show()
                             }
                         }
                     } catch (e: Exception) {
@@ -486,7 +481,7 @@ class PendampingIbadahFragment : Fragment() {
         })
 
         AlertDialog.Builder(ctx)
-            .setTitle(if (campaignToEdit == null) "➕ Tambah Campaign" else "✏️ Edit Campaign")
+            .setTitle(if (campaignToEdit == null) "➕ Tambah Program" else "✏️ Edit Program")
             .setView(dialogView)
             .setPositiveButton("Simpan") { _, _ ->
                 val title = etTitle.text.toString().trim()
@@ -514,7 +509,7 @@ class PendampingIbadahFragment : Fragment() {
                         )
                         activity?.runOnUiThread {
                             if (response.isSuccessful && response.body()?.success == true) {
-                                Toast.makeText(ctx, "Campaign berhasil disimpan", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(ctx, "Program berhasil disimpan", Toast.LENGTH_SHORT).show()
                                 loadCampaigns(view)
                             } else {
                                 Toast.makeText(ctx, "Gagal menyimpan: ${response.body()?.message}", Toast.LENGTH_SHORT).show()
@@ -645,7 +640,7 @@ class PendampingIbadahFragment : Fragment() {
     private fun displayCurrentDonation(switcher: TextSwitcher) {
         if (donationItems.isEmpty()) return
         val item = donationItems[currentDonationIndex % donationItems.size]
-        val text = "${item.userName} berdonasi ${item.formattedAmount} • ${item.timeAgo}"
+        val text = "${item.userName} berkontribusi kebaikan ${item.formattedAmount} • ${item.timeAgo}"
         switcher.setText(text)
     }
 

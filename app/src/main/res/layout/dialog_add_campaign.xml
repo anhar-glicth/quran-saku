@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Judul Campaign"
+            android:text="Judul Program"
             android:textColor="#555555"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Deskripsi Campaign"
+            android:text="Deskripsi Program"
             android:textColor="#555555"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -42,7 +42,7 @@
             android:id="@+id/et_campaign_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ceritakan campaign ini..."
+            android:hint="Ceritakan program ini..."
             android:textSize="14sp"
             android:inputType="textMultiLine"
             android:minLines="3"
@@ -52,7 +52,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Foto Banner Campaign"
+            android:text="Foto Banner Program"
             android:textColor="#555555"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -100,7 +100,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="🔗 Link Donasi"
+            android:text="🔗 Link Informasi Program"
             android:textColor="#FF6D00"
             android:textSize="13sp"
             android:textStyle="bold"
@@ -110,7 +110,7 @@
             android:id="@+id/et_campaign_donate_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="https://kitabisa.com/campaign/..."
+            android:hint="https://example.com/program/..."
             android:textSize="14sp"
             android:inputType="textUri"
             android:layout_marginBottom="16dp"/>
@@ -120,7 +120,7 @@
             android:id="@+id/cb_campaign_active"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tampilkan campaign (Aktif)"
+            android:text="Tampilkan program (Aktif)"
             android:checked="true"
             android:textSize="13sp"/>
 

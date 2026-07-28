@@ -28,8 +28,8 @@ android {
   namespace = "com.quran.labs.androidquran"
 
   defaultConfig {
-    versionCode = 3631
-    versionName = "3.6.4"
+    versionCode = 3633
+    versionName = "3.6.6"
     testInstrumentationRunner = "com.quran.labs.androidquran.core.QuranTestRunner"
     manifestPlaceholders["oidcRedirectScheme"] = "com.quran.oauth"
   }
@@ -68,7 +68,7 @@ android {
   flavorDimensions += listOf("pageType")
   productFlavors {
     create("madani") {
-      applicationId = "com.pondokquranmahasiswaadtin.stravaquran"
+      applicationId = "com.velora.stravaquran"
     }
   }
 
